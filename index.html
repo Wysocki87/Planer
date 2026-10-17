@@ -282,7 +282,7 @@
             align-items: center;
             justify-content: space-between;
             gap: calc(10px * var(--kid-scale));
-            transition: background 0.2s, border-color 0.2s;
+            transition: transform 0.5s ease, background 0.2s, border-color 0.2s;
             flex-shrink: 0;
             cursor: grab;
         }
@@ -766,6 +766,43 @@
     let cloudConfig = loadCloudConfig();
     let appData = loadData();
 
+    function animateTaskListReorder(kidId, callback) {
+    const listEl = document.querySelector(`.task-list[data-kid-id="${kidId}"]`);
+    if (!listEl) {
+        callback();
+        return;
+    }
+
+    // 1. Zapisz początkowe pozycje elementów
+    const nodeMap = new Map();
+    listEl.querySelectorAll('.task-item').forEach(el => {
+        nodeMap.set(el.dataset.taskId, el.getBoundingClientRect());
+    });
+
+    // 2. Wykonaj zmianę danych i ponowne renderowanie
+    callback();
+
+    // 3. Uruchom animację płynnego przesunięcia (FLIP)
+    requestAnimationFrame(() => {
+        listEl.querySelectorAll('.task-item').forEach(el => {
+            const firstRect = nodeMap.get(el.dataset.taskId);
+            if (!firstRect) return;
+            const lastRect = el.getBoundingClientRect();
+            const deltaY = firstRect.top - lastRect.top;
+
+            if (deltaY !== 0) {
+                el.style.transform = `translateY(${deltaY}px)`;
+                el.style.transition = 'none';
+
+                requestAnimationFrame(() => {
+                    el.style.transition = 'transform 0.5s ease';
+                    el.style.transform = 'translateY(0)';
+                });
+            }
+        });
+    });
+}
+    
     function loadCloudConfig() {
         const params = new URLSearchParams(window.location.search);
         const urlDb = params.get('db');
@@ -1139,47 +1176,47 @@
         restoreScrolls();
     }
 
-    function toggleTaskDone(kidId, taskId, clickedLeftEl) {
-        const task = appData.tasks.find(t => t.id === taskId);
-        if (!task) return;
-        if (!task.statusByKid) task.statusByKid = {};
+    function toggleTaskDone(kidId, taskId) {
+    const task = appData.tasks.find(t => t.id === taskId);
+    if (!task) return;
+    if (!task.statusByKid) task.statusByKid = {};
 
-        const newState = !task.statusByKid[kidId];
-        task.statusByKid[kidId] = newState;
+    const newState = !task.statusByKid[kidId];
+    task.statusByKid[kidId] = newState;
 
-        const itemEl = clickedLeftEl.closest('.task-item');
-        const circleEl = clickedLeftEl.querySelector('.check-circle');
-        if (itemEl && circleEl) {
-            itemEl.classList.toggle('done', newState);
-            circleEl.textContent = newState ? '✔' : '';
-        }
-
+    // Jeśli zadanie zostało odznaczone jako ukończone, przesuwamy je na sam spód listy
+    if (newState) {
         const kidTasks = getTasksForKid(kidId);
-        const total = kidTasks.length;
-        const doneCount = kidTasks.filter(t => t.statusByKid && t.statusByKid[kidId]).length;
-        const percent = total === 0 ? 0 : Math.round((doneCount / total) * 100);
-
-        const colEl = document.querySelector(`.kid-column[data-kid-column="${kidId}"]`);
-        if (colEl) {
-            colEl.querySelector('.kid-subtitle').textContent = `Zrobione: ${doneCount} z ${total}`;
-            colEl.querySelector('.kid-stars').textContent = `⭐ ${doneCount}`;
-            colEl.querySelector('.progress-fill').style.width = `${percent}%`;
-            colEl.querySelector('.progress-label').textContent = `${percent}%`;
-            colEl.querySelector('.all-done-banner').style.display = (total > 0 && doneCount === total) ? 'block' : 'none';
-        }
-
-        if (newState) {
-            if (total > 0 && doneCount === total) {
-                playSound('win');
-                confetti({ particleCount: 110, spread: 80, origin: { y: 0.6 } });
-            } else {
-                playSound('check');
-                confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 } });
+        let maxOrder = 0;
+        kidTasks.forEach(t => {
+            if (t.id !== taskId && t.orderByKid && t.orderByKid[kidId] !== undefined) {
+                if (t.orderByKid[kidId] > maxOrder) maxOrder = t.orderByKid[kidId];
             }
-        }
-
-        saveData();
+        });
+        if (!task.orderByKid) task.orderByKid = {};
+        task.orderByKid[kidId] = maxOrder + 1;
     }
+
+    // Wywołanie płynnej animacji przejścia w dół (0.5s)
+    animateTaskListReorder(kidId, () => {
+        saveData();
+        renderKidsBoard();
+    });
+
+    const kidTasksCheck = getTasksForKid(kidId);
+    const total = kidTasksCheck.length;
+    const doneCount = kidTasksCheck.filter(t => t.statusByKid && t.statusByKid[kidId]).length;
+
+    if (newState) {
+        if (total > 0 && doneCount === total) {
+            playSound('win');
+            confetti({ particleCount: 110, spread: 80, origin: { y: 0.6 } });
+        } else {
+            playSound('check');
+            confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 } });
+        }
+    }
+}
 
     function changeKidZoom(kidId, delta) {
         const kid = appData.kids.find(k => k.id === kidId);
