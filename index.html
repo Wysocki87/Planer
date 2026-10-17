@@ -719,10 +719,11 @@
     let kidSelectedEmoji = {};
     let draggedTaskInfo = null;
     let lastSyncedUpdatedAt = 0;
+    let isInitialCloudSyncDone = false; // <-- NOWA ZMIENNA
 
     // Domyślny stan
     const DEFAULT_STATE = {
-        updatedAt: Date.now(),
+        updatedAt: 0,
         pin: '1234',
         layout: 'columns',
         globalScale: 1,
@@ -798,7 +799,8 @@
         appData.updatedAt = Date.now();
         lastSyncedUpdatedAt = appData.updatedAt;
         localStorage.setItem('rodzinnyPlanFull_v3', JSON.stringify(appData));
-        if (!skipCloudPush && cloudConfig.dbUrl) {
+        // Nie wysyłaj do chmury, dopóki nie sprawdzimy, co już w niej jest!
+        if (!skipCloudPush && cloudConfig.dbUrl && isInitialCloudSyncDone) {
             pushToCloud();
         }
     }
@@ -840,7 +842,10 @@
                 return;
             }
             const remoteData = await res.json();
+            isInitialCloudSyncDone = true; // Odblokuj zapis po sprawdzeniu bazy
+
             if (!remoteData) {
+                // Tylko gdy baza w Firebase jest całkowicie pusta, wyślij obecny stan
                 await pushToCloud();
                 return;
             }
@@ -886,7 +891,8 @@
             ✅ Połączono! Skopiuj ten link i otwórz go na innych urządzeniach (automatycznie połączy je z tą samą tablicą):<br>
             <input type="text" class="input-text" style="width:100%; margin-top:6px; font-size:0.8rem;" value="${shareUrl}" onclick="this.select()" readonly>
         `;
-        pushToCloud();
+        // Wewnątrz saveCloudConfig() na samym końcu:
+        pullFromCloud(true); // <-- ZMIANA z pushToCloud() na pullFromCloud(true)
     }
 
     function forceCloudPull() {
@@ -1673,7 +1679,10 @@
     applyBoardLayout();
     renderKidsBoard();
     if (cloudConfig.dbUrl) {
-        pullFromCloud(false);
+        // Przy otwarciu strony najpierw pobierz dane z bazy!
+        pullFromCloud(appData.updatedAt === 0);
+    } else {
+        isInitialCloudSyncDone = true;
     }
 </script>
 </body>
