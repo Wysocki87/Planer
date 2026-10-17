@@ -1264,80 +1264,76 @@
     }
 
     function toggleTaskDone(kidId, taskId) {
-        const task = appData.tasks.find(t => t.id === taskId);
-        if (!task) return;
-        if (!task.statusByKid) task.statusByKid = {};
+    const task = appData.tasks.find(t => t.id === taskId);
+    if (!task) return;
+    if (!task.statusByKid) task.statusByKid = {};
 
-        const newState = !task.statusByKid[kidId];
-        task.statusByKid[kidId] = newState;
+    const newState = !task.statusByKid[kidId];
+    task.statusByKid[kidId] = newState;
 
-        if (newState) {
-            const kidTasks = getTasksForKid(kidId);
-            let maxOrder = 0;
-            kidTasks.forEach(t => {
-                if (t.id !== taskId && t.orderByKid && t.orderByKid[kidId] !== undefined) {
-                    if (t.orderByKid[kidId] > maxOrder) maxOrder = t.orderByKid[kidId];
-                }
-            });
-            if (!task.orderByKid) task.orderByKid = {};
-            task.orderByKid[kidId] = maxOrder + 1;
-        }
+    // Znajdź element w DOM odpowiadający temu zadaniu
+    const listEl = document.querySelector(`.task-list[data-kid-id="${kidId}"]`);
+    const itemEl = listEl ? listEl.querySelector(`.task-item[data-task-id="${taskId}"]`) : null;
 
-        animateTaskListReorder(kidId, () => {
-            saveData();
-            renderKidsBoard();
-        });
+    if (itemEl && listEl && newState) {
+        // Oblicz, o ile pikseli w dół musi przesunąć się element (na sam koniec listy)
+        const items = Array.from(listEl.querySelectorAll('.task-item'));
+        const currentIndex = items.indexOf(itemEl);
+        const targetIndex = items.length - 1;
 
-        const kidTasksCheck = getTasksForKid(kidId);
-        const total = kidTasksCheck.length;
-        const doneCount = kidTasksCheck.filter(t => t.statusByKid && t.statusByKid[kidId]).length;
-
-        if (newState) {
-            if (total > 0 && doneCount === total) {
-                playSound('win');
-                confetti({ particleCount: 110, spread: 80, origin: { y: 0.6 } });
-            } else {
-                playSound('check');
-                confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 } });
+        if (currentIndex < targetIndex) {
+            // Pobierz wysokość elementu wraz z odstępem (gap)
+            let distance = 0;
+            for (let i = currentIndex; i < targetIndex; i++) {
+                distance += items[i].offsetHeight + 8; // 8px to gap między zadaniami
             }
+
+            // Nadaj płynną animację przemieszczenia w dół trwającą 0.5s
+            itemEl.style.transition = 'transform 0.5s ease, background 0.2s, border-color 0.2s';
+            itemEl.style.transform = `translateY(${distance}px)`;
+            itemEl.style.zIndex = '10'; // aby przesuwający się element był na wierzchu
         }
     }
 
-    function animateTaskListReorder(kidId, callback) {
-        const listEl = document.querySelector(`.task-list[data-kid-id="${kidId}"]`);
-        if (!listEl) {
-            callback();
-            return;
-        }
-
-        const nodeMap = new Map();
-        listEl.querySelectorAll('.task-item').forEach(el => {
-            nodeMap.set(el.dataset.taskId, el.getBoundingClientRect());
+    // Jeśli zadanie zostało ukończone, zaktualizuj jego indeks dopiero po rozpoczęciu animacji
+    if (newState) {
+        const kidTasks = getTasksForKid(kidId);
+        let maxOrder = 0;
+        kidTasks.forEach(t => {
+            if (t.id !== taskId && t.orderByKid && t.orderByKid[kidId] !== undefined) {
+                if (t.orderByKid[kidId] > maxOrder) maxOrder = t.orderByKid[kidId];
+            }
         });
-
-        callback();
-
-        requestAnimationFrame(() => {
-            listEl.querySelectorAll('.task-item').forEach(el => {
-                const firstRect = nodeMap.get(el.dataset.taskId);
-                if (!firstRect) return;
-                const lastRect = el.getBoundingClientRect();
-                const deltaY = firstRect.top - lastRect.top;
-
-                if (deltaY !== 0) {
-                    el.style.transform = `translateY(${deltaY}px)`;
-                    el.style.transition = 'none';
-
-                    requestAnimationFrame(() => {
-                        el.style.transition = 'transform 0.5s ease';
-                        el.style.transform = 'translateY(0)';
-                    });
-                }
-            });
-        });
+        if (!task.orderByKid) task.orderByKid = {};
+        task.orderByKid[kidId] = maxOrder + 1;
     }
 
-    function changeKidZoom(kidId, delta) {
+    // Zapisz stan w pamięci / chmurze
+    saveData();
+
+    // Dźwięk i konfetti
+    const kidTasksCheck = getTasksForKid(kidId);
+    const total = kidTasksCheck.length;
+    const doneCount = kidTasksCheck.filter(t => t.statusByKid && t.statusByKid[kidId]).length;
+
+    if (newState) {
+        if (total > 0 && doneCount === total) {
+            playSound('win');
+            confetti({ particleCount: 110, spread: 80, origin: { y: 0.6 } });
+        } else {
+            playSound('check');
+            confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 } });
+        }
+    }
+
+    // Odśwież widok dopiero PO zakończeniu animacji (po 500 milisekundach), 
+    // aby użytkownik widział płynny ruch zjeżdżania w dół.
+    setTimeout(() => {
+        renderKidsBoard();
+    }, 500);
+}
+
+     function changeKidZoom(kidId, delta) {
         const kid = appData.kids.find(k => k.id === kidId);
         if (!kid) return;
         let next = Math.round(((kid.zoom || 1) + delta) * 100) / 100;
