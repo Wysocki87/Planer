@@ -90,59 +90,6 @@
             color: #c92a2a;
         }
 
-        /* SEKJA NAGROD - TĘCZOWA, MAX 20% WYSOKOŚCI, PRZEWIJANA */
-.rewards-section {
-    flex-shrink: 0;
-    max-height: 20%;
-    overflow-y: auto;
-    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 20%, #fad0c4 40%, #a1c4fd 60%, #c2e9fb 80%, #d4fc79 100%);
-    border-radius: 14px;
-    padding: 10px 12px;
-    border: 2px solid rgba(255,255,255,0.8);
-    box-shadow: inset 0 2px 6px rgba(0,0,0,0.06);
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.rewards-header {
-    font-size: 0.85rem;
-    font-weight: 900;
-    color: #2d3436;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    text-shadow: 0 1px 2px rgba(255,255,255,0.8);
-}
-
-.rewards-list-container {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.reward-item {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.95);
-    border-radius: 10px;
-    padding: 6px 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 800;
-    font-size: 0.9rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-}
-
-.reward-icon {
-    font-size: 1.2rem;
-}
-
-.reward-title {
-    color: #2d3436;
-    word-break: break-word;
-}
-
         .nav-buttons {
             display: flex;
             gap: 8px;
@@ -324,6 +271,7 @@
             gap: 8px;
             padding-right: 4px;
             --kid-scale: 1;
+            position: relative;
         }
 
         .task-item {
@@ -420,11 +368,64 @@
             flex-shrink: 0;
         }
 
+        /* SEKJA NAGROD - TĘCZOWA, MAX 20% WYSOKOŚCI, PRZEWIJANA */
+        .rewards-section {
+            flex-shrink: 0;
+            max-height: 20%;
+            overflow-y: auto;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 20%, #fad0c4 40%, #a1c4fd 60%, #c2e9fb 80%, #d4fc79 100%);
+            border-radius: 14px;
+            padding: 10px 12px;
+            border: 2px solid rgba(255,255,255,0.8);
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .rewards-header {
+            font-size: 0.85rem;
+            font-weight: 900;
+            color: #2d3436;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+        }
+
+        .rewards-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .reward-item {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 6px 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+        }
+
+        .reward-icon {
+            font-size: 1.2rem;
+        }
+
+        .reward-title {
+            color: #2d3436;
+            word-break: break-word;
+        }
+
         /* SZYBKIE DODAWANIE ZADANIA PRZEZ DZIECKO */
         .kid-add-footer {
             flex-shrink: 0;
             border-top: 1px solid #f1f2f6;
-            padding-top: 8px;
+            padding-top: 6px;
         }
 
         .kid-add-drawer {
@@ -640,25 +641,7 @@
 
     <!-- PANEL ADMINISTRACYJNY RODZICA -->
     <div id="parentView" class="parent-panel">
-        <!-- 3. NAGRODY DLA DZIECI -->
-        <div class="admin-section">
-            <h2>🎁 3. Nagrody dla dzieci (wyświetlane na dole tablicy)</h2>
-            <div class="emoji-grid" id="rewardEmojiPicker"></div>
-            <div class="form-row">
-                <input type="text" id="newRewardText" class="input-text" style="flex:1;" placeholder="Wpisz nagrodę (np. 30 minut bajki / Wyjście na lody 🍦)">
-            </div>
-            <div class="kids-Checkboxes">
-                <span style="font-weight:900;">Dla kogo nagroda?</span>
-                <button type="button" class="btn btn-outline" style="padding:4px 8px; font-size:0.78rem;" onclick="selectAllKidsForReward(true)">Wszyscy</button>
-                <div id="rewardKidsCheckboxes" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
-            </div>
-            <button class="btn btn-success" onclick="addRewardFromAdmin()">➕ Dodaj nagrodę</button>
 
-            <h3 style="margin: 18px 0 10px 0; font-size:1.05rem;">Aktualne nagrody:</h3>
-            <div id="adminRewardsList"></div>
-        </div>
-
-        
         <!-- 0. SYNCHRONIZACJA MIĘDZY URZĄDZENIAMI (CHMURA) -->
         <div class="admin-section" style="border: 2px solid #74b9ff; background: #f1f9ff;">
             <h2>☁️ 0. Synchronizacja Online (Wiele urządzeń w czasie rzeczywistym)</h2>
@@ -668,8 +651,8 @@
             <div class="form-row">
                 <input type="text" id="cloudDbUrlInput" class="input-text" style="flex:1; min-width:260px;" placeholder="https://twoj-projekt-default-rtdb.firebasedatabase.app">
                 <input type="text" id="cloudRoomIdInput" class="input-text" style="width:160px;" placeholder="Kod rodziny (np. dom1)">
-                <button class="btn btn-primary" onclick="saveCloudConfig()">🔗 Połącz urządzenia</button>
-                <button class="btn btn-outline" onclick="forceCloudPull()">⬇️ Pobierz z chmury</button>
+                <button class="btn btn-primary" onclick="saveCloudConfig()">🔗 Połącz i pobierz z bazy</button>
+                <button class="btn btn-warning" onclick="pushToCloud()">⬆️ Wyślij obecny stan do bazy</button>
             </div>
             <div id="cloudHelpText" style="font-size:0.82rem; color:#0984e3; font-weight:700;"></div>
         </div>
@@ -719,9 +702,27 @@
             <div id="adminTasksList"></div>
         </div>
 
-        <!-- 3. SCHEMATY DNIA -->
+        <!-- 3. NAGRODY DLA DZIECI -->
         <div class="admin-section">
-            <h2>💾 3. Domyślne schematy zadań (Szablony)</h2>
+            <h2>🎁 3. Nagrody dla dzieci (wyświetlane na dole tablicy)</h2>
+            <div class="emoji-grid" id="rewardEmojiPicker"></div>
+            <div class="form-row">
+                <input type="text" id="newRewardText" class="input-text" style="flex:1;" placeholder="Wpisz nagrodę (np. 30 minut bajki / Wyjście na lody 🍦)">
+            </div>
+            <div class="kids-Checkboxes">
+                <span style="font-weight:900;">Dla kogo nagroda?</span>
+                <button type="button" class="btn btn-outline" style="padding:4px 8px; font-size:0.78rem;" onclick="selectAllKidsForReward(true)">Wszyscy</button>
+                <div id="rewardKidsCheckboxes" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
+            </div>
+            <button class="btn btn-success" onclick="addRewardFromAdmin()">➕ Dodaj nagrodę</button>
+
+            <h3 style="margin: 18px 0 10px 0; font-size:1.05rem;">Aktualne nagrody:</h3>
+            <div id="adminRewardsList"></div>
+        </div>
+
+        <!-- 4. SCHEMATY DNIA -->
+        <div class="admin-section">
+            <h2>💾 4. Domyślne schematy zadań (Szablony)</h2>
             <div class="form-row">
                 <input type="text" id="newPresetName" class="input-text" style="flex:1;" placeholder="Nazwa schematu (np. Dzień szkolny - 3 klasa)">
                 <button class="btn btn-primary" onclick="saveCurrentAsPreset()">💾 Zapisz obecny plan jako schemat</button>
@@ -729,9 +730,9 @@
             <div id="presetsList" class="presets-grid"></div>
         </div>
 
-        <!-- 4. PIN -->
+        <!-- 5. PIN -->
         <div class="admin-section">
-            <h2>🔐 4. Kod PIN Rodzica</h2>
+            <h2>🔐 5. Kod PIN Rodzica</h2>
             <div class="form-row">
                 <input type="password" id="newPinInput" class="input-text" placeholder="Nowy PIN (np. 1234)" maxlength="8">
                 <button class="btn btn-warning" onclick="changePin()">Zmień PIN</button>
@@ -753,6 +754,23 @@
         <div style="display:flex; justify-content:flex-end; gap:8px;">
             <button class="btn btn-outline" onclick="closeEditModal()">Anuluj</button>
             <button class="btn btn-primary" onclick="saveEditedTask()">Zapisz</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EDYCJI NAGRODY -->
+<div id="editRewardModal" class="modal-overlay">
+    <div class="modal-box">
+        <h3 style="margin-bottom:12px; color:var(--primary);">✏️ Edytuj nagrodę</h3>
+        <input type="hidden" id="editRewardId">
+        <div class="form-row">
+            <input type="text" id="editRewardIcon" class="input-text" style="width:65px; text-align:center;">
+            <input type="text" id="editRewardTitle" class="input-text" style="flex:1;">
+        </div>
+        <div id="editRewardKidsBox" class="kids-Checkboxes"></div>
+        <div style="display:flex; justify-content:flex-end; gap:8px;">
+            <button class="btn btn-outline" onclick="closeEditRewardModal()">Anuluj</button>
+            <button class="btn btn-primary" onclick="saveEditedReward()">Zapisz</button>
         </div>
     </div>
 </div>
@@ -783,16 +801,17 @@
 
 <script>
     const EMOJIS = ['📚', '🎒', '🛏️', '🪥', '🍽️', '🧹', '🐕', '⚽', '🎨', '🎹', '🚿', '👕', '🍎', '🚲', '🇬🇧', '🧩'];
+    const REWARD_EMOJIS = ['🍦', '🎮', '🚲', '🍿', '🧸', '🏆', '⭐', '🎁', '🎨', '⚽', '🍕', '🎉'];
     let selectedEmoji = '📚';
+    let selectedRewardEmoji = '🍦';
     let isParentMode = false;
     let scrollPositions = {};
     let openKidDrawers = {};
     let kidSelectedEmoji = {};
     let draggedTaskInfo = null;
     let lastSyncedUpdatedAt = 0;
-    let isInitialCloudSyncDone = false; // <-- NOWA ZMIENNA
+    let isInitialCloudSyncDone = false;
 
-    // Domyślny stan
     const DEFAULT_STATE = {
         updatedAt: 0,
         pin: '1234',
@@ -809,6 +828,10 @@
             { id: 't_4', title: 'Spakować plecak na jutro', icon: '🎒', assignedKids: ['kid_1', 'kid_2'], statusByKid: {}, orderByKid: { kid_1: 3, kid_2: 3 } },
             { id: 't_5', title: 'Nakarmić pupila / Wyprowadzić psa', icon: '🐕', assignedKids: ['kid_1'], statusByKid: {}, orderByKid: { kid_1: 4 } },
             { id: 't_6', title: 'Poćwiczyć czytanie przez 15 minut', icon: '🎨', assignedKids: ['kid_2'], statusByKid: {}, orderByKid: { kid_2: 4 } }
+        ],
+        rewards: [
+            { id: 'r_1', title: '30 minut ulubionej gry lub bajki 🎮', icon: '🎮', assignedKids: ['kid_1', 'kid_2'], orderByKid: { kid_1: 0, kid_2: 0 } },
+            { id: 'r_2', title: 'Wyjście na lody lub deser 🍦', icon: '🍦', assignedKids: ['kid_1', 'kid_2'], orderByKid: { kid_1: 1, kid_2: 1 } }
         ],
         presets: [
             {
@@ -831,16 +854,11 @@
                 ]
             }
         ]
-        rewards: [
-            { id: 'r_1', title: '30 minut ulubionej gry lub bajki 🎮', icon: '🎮', assignedKids: ['kid_1', 'kid_2'], orderByKid: { kid_1: 0, kid_2: 0 } },
-            { id: 'r_2', title: 'Wyjście na lody lub deser 🍦', icon: '🍦', assignedKids: ['kid_1', 'kid_2'], orderByKid: { kid_1: 1, kid_2: 1 } }
-        ],
     };
 
-    // Konfiguracja chmury z URL lub localStorage
     let cloudConfig = loadCloudConfig();
     let appData = loadData();
-    
+
     function loadCloudConfig() {
         const params = new URLSearchParams(window.location.search);
         const urlDb = params.get('db');
@@ -864,6 +882,8 @@
             const parsed = JSON.parse(raw);
             if (!parsed.layout) parsed.layout = 'columns';
             if (!parsed.globalScale) parsed.globalScale = 1;
+            if (parsed.updatedAt === undefined) parsed.updatedAt = 0;
+            if (!parsed.rewards) parsed.rewards = JSON.parse(JSON.stringify(DEFAULT_STATE.rewards));
             return parsed;
         } catch (e) {
             return JSON.parse(JSON.stringify(DEFAULT_STATE));
@@ -874,13 +894,11 @@
         appData.updatedAt = Date.now();
         lastSyncedUpdatedAt = appData.updatedAt;
         localStorage.setItem('rodzinnyPlanFull_v3', JSON.stringify(appData));
-        // Nie wysyłaj do chmury, dopóki nie sprawdzimy, co już w niej jest!
         if (!skipCloudPush && cloudConfig.dbUrl && isInitialCloudSyncDone) {
             pushToCloud();
         }
     }
 
-    // ================= SYNCHRONIZACJA W CHMURZE (FIREBASE REST API) =================
     function getCloudEndpoint() {
         if (!cloudConfig.dbUrl) return null;
         const cleanUrl = cloudConfig.dbUrl.replace(/\/+$/, '');
@@ -892,6 +910,7 @@
         const endpoint = getCloudEndpoint();
         if (!endpoint) return;
         try {
+            if (!appData.updatedAt) appData.updatedAt = Date.now();
             const res = await fetch(endpoint, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -917,16 +936,21 @@
                 return;
             }
             const remoteData = await res.json();
-            isInitialCloudSyncDone = true; // Odblokuj zapis po sprawdzeniu bazy
+            isInitialCloudSyncDone = true;
 
             if (!remoteData) {
-                // Tylko gdy baza w Firebase jest całkowicie pusta, wyślij obecny stan
+                appData.updatedAt = Date.now();
                 await pushToCloud();
                 return;
             }
+
             if (force || (remoteData.updatedAt && remoteData.updatedAt > (appData.updatedAt || 0))) {
                 appData = remoteData;
-                lastSyncedUpdatedAt = appData.updatedAt;
+                if (!appData.tasks) appData.tasks = [];
+                if (!appData.kids) appData.kids = [];
+                if (!appData.presets) appData.presets = [];
+                if (!appData.rewards) appData.rewards = [];
+                lastSyncedUpdatedAt = appData.updatedAt || Date.now();
                 localStorage.setItem('rodzinnyPlanFull_v3', JSON.stringify(appData));
                 applyGlobalScale();
                 applyBoardLayout();
@@ -963,14 +987,9 @@
 
         const shareUrl = `${window.location.origin}${window.location.pathname}?db=${encodeURIComponent(dbUrl)}&room=${encodeURIComponent(roomId)}`;
         document.getElementById('cloudHelpText').innerHTML = `
-            ✅ Połączono! Skopiuj ten link i otwórz go na innych urządzeniach (automatycznie połączy je z tą samą tablicą):<br>
+            ✅ Połączono! Skopiuj ten link i otwórz go na innych urządzeniach (automatycznie pobierze dane z tej bazy):<br>
             <input type="text" class="input-text" style="width:100%; margin-top:6px; font-size:0.8rem;" value="${shareUrl}" onclick="this.select()" readonly>
         `;
-        // Wewnątrz saveCloudConfig() na samym końcu:
-        pullFromCloud(true); // <-- ZMIANA z pushToCloud() na pullFromCloud(true)
-    }
-
-    function forceCloudPull() {
         pullFromCloud(true);
     }
 
@@ -986,7 +1005,6 @@
         }
     }, 3000);
 
-    // ================= SKALOWANIE GLOBALNE I UKŁAD =================
     function applyGlobalScale() {
         const scale = appData.globalScale || 1;
         const root = document.getElementById('appRoot');
@@ -1009,16 +1027,6 @@
         appData.globalScale = 1;
         applyGlobalScale();
         saveData();
-    }
-
-    function getRewardsForKid(kidId) {
-        return (appData.rewards || [])
-            .filter(r => r.assignedKids && r.assignedKids.includes(kidId))
-            .sort((a, b) => {
-                const ordA = (a.orderByKid && a.orderByKid[kidId] !== undefined) ? a.orderByKid[kidId] : 999;
-                const ordB = (b.orderByKid && b.orderByKid[kidId] !== undefined) ? b.orderByKid[kidId] : 999;
-                return ordA - ordB;
-            });
     }
 
     function applyBoardLayout() {
@@ -1049,7 +1057,6 @@
         }
     }
 
-    // ================= DŹWIĘKI =================
     function playSound(type) {
         try {
             const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1080,10 +1087,19 @@
         } catch (e) {}
     }
 
-    // ================= WIDOK DZIECI =================
     function getTasksForKid(kidId) {
-        return appData.tasks
+        return (appData.tasks || [])
             .filter(t => t.assignedKids && t.assignedKids.includes(kidId))
+            .sort((a, b) => {
+                const ordA = (a.orderByKid && a.orderByKid[kidId] !== undefined) ? a.orderByKid[kidId] : 999;
+                const ordB = (b.orderByKid && b.orderByKid[kidId] !== undefined) ? b.orderByKid[kidId] : 999;
+                return ordA - ordB;
+            });
+    }
+
+    function getRewardsForKid(kidId) {
+        return (appData.rewards || [])
+            .filter(r => r.assignedKids && r.assignedKids.includes(kidId))
             .sort((a, b) => {
                 const ordA = (a.orderByKid && a.orderByKid[kidId] !== undefined) ? a.orderByKid[kidId] : 999;
                 const ordB = (b.orderByKid && b.orderByKid[kidId] !== undefined) ? b.orderByKid[kidId] : 999;
@@ -1109,8 +1125,9 @@
         const board = document.getElementById('kidsView');
         board.innerHTML = '';
 
-        appData.kids.forEach(kid => {
+        (appData.kids || []).forEach(kid => {
             const kidTasks = getTasksForKid(kid.id);
+            const kidRewards = getRewardsForKid(kid.id);
             const total = kidTasks.length;
             const doneCount = kidTasks.filter(t => t.statusByKid && t.statusByKid[kid.id]).length;
             const percent = total === 0 ? 0 : Math.round((doneCount / total) * 100);
@@ -1121,6 +1138,26 @@
             col.className = 'kid-column';
             col.dataset.kidColumn = kid.id;
             col.style.borderTopColor = kid.color;
+
+            // Tworzenie HTML sekcji nagród (tęczowa, max 20% wysokości, przewijana, po wszystkich zadaniach i przed dodaniem zadania)
+            let rewardsHtml = '';
+            if (kidRewards.length > 0) {
+                const rewardsItemsHtml = kidRewards.map(rew => `
+                    <div class="reward-item">
+                        <span class="reward-icon">${rew.icon}</span>
+                        <span class="reward-title">${rew.title}</span>
+                    </div>
+                `).join('');
+
+                rewardsHtml = `
+                    <div class="rewards-section">
+                        <div class="rewards-header">🎁 Nagrody za Twoje starania:</div>
+                        <div class="rewards-list-container">
+                            ${rewardsItemsHtml}
+                        </div>
+                    </div>
+                `;
+            }
 
             col.innerHTML = `
                 <div class="kid-header">
@@ -1191,7 +1228,7 @@
                 item.dataset.kidId = kid.id;
 
                 item.innerHTML = `
-                    <div class="task-left" onclick="toggleTaskDone('${kid.id}', '${task.id}', this)">
+                    <div class="task-left" onclick="toggleTaskDone('${kid.id}', '${task.id}')">
                         <div class="check-circle">${isDone ? '✔' : ''}</div>
                         <span class="task-icon">${task.icon}</span>
                         <span class="task-title">${task.title}</span>
@@ -1224,96 +1261,81 @@
         });
 
         restoreScrolls();
-
-        let rewardsHtml = '';
-            if (kidRewards.length > 0) {
-                const rewardsItemsHtml = kidRewards.map(rew => `
-                    <div class="reward-item">
-                        <span class="reward-icon">${rew.icon}</span>
-                        <span class="reward-title">${rew.title}</span>
-                    </div>
-                `).join('');
-
-                rewardsHtml = `
-                    <div class="rewards-section">
-                        <div class="rewards-header">🎁 Nagrody za Twoje starania:</div>
-                        <div class="rewards-list-container">
-                            ${rewardsItemsHtml}
-                        </div>
-                    </div>
-                `;
-            }
     }
 
     function toggleTaskDone(kidId, taskId) {
-    const task = appData.tasks.find(t => t.id === taskId);
-    if (!task) return;
-    if (!task.statusByKid) task.statusByKid = {};
+        const task = appData.tasks.find(t => t.id === taskId);
+        if (!task) return;
+        if (!task.statusByKid) task.statusByKid = {};
 
-    const newState = !task.statusByKid[kidId];
-    task.statusByKid[kidId] = newState;
+        const newState = !task.statusByKid[kidId];
+        task.statusByKid[kidId] = newState;
 
-    // Znajdź element w DOM odpowiadający temu zadaniu
-    const listEl = document.querySelector(`.task-list[data-kid-id="${kidId}"]`);
-    const itemEl = listEl ? listEl.querySelector(`.task-item[data-task-id="${taskId}"]`) : null;
-
-    if (itemEl && listEl && newState) {
-        // Oblicz, o ile pikseli w dół musi przesunąć się element (na sam koniec listy)
-        const items = Array.from(listEl.querySelectorAll('.task-item'));
-        const currentIndex = items.indexOf(itemEl);
-        const targetIndex = items.length - 1;
-
-        if (currentIndex < targetIndex) {
-            // Pobierz wysokość elementu wraz z odstępem (gap)
-            let distance = 0;
-            for (let i = currentIndex; i < targetIndex; i++) {
-                distance += items[i].offsetHeight + 8; // 8px to gap między zadaniami
-            }
-
-            // Nadaj płynną animację przemieszczenia w dół trwającą 0.5s
-            itemEl.style.transition = 'transform 0.5s ease, background 0.2s, border-color 0.2s';
-            itemEl.style.transform = `translateY(${distance}px)`;
-            itemEl.style.zIndex = '10'; // aby przesuwający się element był na wierzchu
+        if (newState) {
+            const kidTasks = getTasksForKid(kidId);
+            let maxOrder = 0;
+            kidTasks.forEach(t => {
+                if (t.id !== taskId && t.orderByKid && t.orderByKid[kidId] !== undefined) {
+                    if (t.orderByKid[kidId] > maxOrder) maxOrder = t.orderByKid[kidId];
+                }
+            });
+            if (!task.orderByKid) task.orderByKid = {};
+            task.orderByKid[kidId] = maxOrder + 1;
         }
-    }
 
-    // Jeśli zadanie zostało ukończone, zaktualizuj jego indeks dopiero po rozpoczęciu animacji
-    if (newState) {
-        const kidTasks = getTasksForKid(kidId);
-        let maxOrder = 0;
-        kidTasks.forEach(t => {
-            if (t.id !== taskId && t.orderByKid && t.orderByKid[kidId] !== undefined) {
-                if (t.orderByKid[kidId] > maxOrder) maxOrder = t.orderByKid[kidId];
-            }
+        animateTaskListReorder(kidId, () => {
+            saveData();
+            renderKidsBoard();
         });
-        if (!task.orderByKid) task.orderByKid = {};
-        task.orderByKid[kidId] = maxOrder + 1;
-    }
 
-    // Zapisz stan w pamięci / chmurze
-    saveData();
+        const kidTasksCheck = getTasksForKid(kidId);
+        const total = kidTasksCheck.length;
+        const doneCount = kidTasksCheck.filter(t => t.statusByKid && t.statusByKid[kidId]).length;
 
-    // Dźwięk i konfetti
-    const kidTasksCheck = getTasksForKid(kidId);
-    const total = kidTasksCheck.length;
-    const doneCount = kidTasksCheck.filter(t => t.statusByKid && t.statusByKid[kidId]).length;
-
-    if (newState) {
-        if (total > 0 && doneCount === total) {
-            playSound('win');
-            confetti({ particleCount: 110, spread: 80, origin: { y: 0.6 } });
-        } else {
-            playSound('check');
-            confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 } });
+        if (newState) {
+            if (total > 0 && doneCount === total) {
+                playSound('win');
+                confetti({ particleCount: 110, spread: 80, origin: { y: 0.6 } });
+            } else {
+                playSound('check');
+                confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 } });
+            }
         }
     }
 
-    // Odśwież widok dopiero PO zakończeniu animacji (po 500 milisekundach), 
-    // aby użytkownik widział płynny ruch zjeżdżania w dół.
-    setTimeout(() => {
-        renderKidsBoard();
-    }, 500);
-}
+    function animateTaskListReorder(kidId, callback) {
+        const listEl = document.querySelector(`.task-list[data-kid-id="${kidId}"]`);
+        if (!listEl) {
+            callback();
+            return;
+        }
+
+        const nodeMap = new Map();
+        listEl.querySelectorAll('.task-item').forEach(el => {
+            nodeMap.set(el.dataset.taskId, el.getBoundingClientRect());
+        });
+
+        callback();
+
+        requestAnimationFrame(() => {
+            listEl.querySelectorAll('.task-item').forEach(el => {
+                const firstRect = nodeMap.get(el.dataset.taskId);
+                if (!firstRect) return;
+                const lastRect = el.getBoundingClientRect();
+                const deltaY = firstRect.top - lastRect.top;
+
+                if (deltaY !== 0) {
+                    el.style.transform = `translateY(${deltaY}px)`;
+                    el.style.transition = 'none';
+
+                    requestAnimationFrame(() => {
+                        el.style.transition = 'transform 0.5s ease';
+                        el.style.transform = 'translateY(0)';
+                    });
+                }
+            });
+        });
+    }
 
     function changeKidZoom(kidId, delta) {
         const kid = appData.kids.find(k => k.id === kidId);
@@ -1457,9 +1479,19 @@
             emojiPicker.appendChild(d);
         });
 
+        const rewardEmojiPicker = document.getElementById('rewardEmojiPicker');
+        rewardEmojiPicker.innerHTML = '';
+        REWARD_EMOJIS.forEach(em => {
+            const d = document.createElement('div');
+            d.className = `emoji-option ${em === selectedRewardEmoji ? 'selected' : ''}`;
+            d.textContent = em;
+            d.onclick = () => { selectedRewardEmoji = em; renderAdminPanel(); };
+            rewardEmojiPicker.appendChild(d);
+        });
+
         const kidsList = document.getElementById('adminKidsList');
         kidsList.innerHTML = '';
-        appData.kids.forEach((kid, idx) => {
+        (appData.kids || []).forEach((kid, idx) => {
             const card = document.createElement('div');
             card.style.cssText = `background:#f8f9fa; border:2px solid #e9ecef; border-left:6px solid ${kid.color}; border-radius:12px; padding:8px 12px; display:flex; align-items:center; gap:8px; font-weight:800;`;
             card.innerHTML = `
@@ -1473,14 +1505,24 @@
 
         const cbContainer = document.getElementById('taskKidsCheckboxes');
         cbContainer.innerHTML = '';
-        appData.kids.forEach(kid => {
+        (appData.kids || []).forEach(kid => {
             const lbl = document.createElement('label');
             lbl.className = 'kid-checkbox-label';
             lbl.innerHTML = `<input type="checkbox" name="newTaskKid" value="${kid.id}" checked> <span>${kid.avatar} ${kid.name}</span>`;
             cbContainer.appendChild(lbl);
         });
 
+        const rewardCbContainer = document.getElementById('rewardKidsCheckboxes');
+        rewardCbContainer.innerHTML = '';
+        (appData.kids || []).forEach(kid => {
+            const lbl = document.createElement('label');
+            lbl.className = 'kid-checkbox-label';
+            lbl.innerHTML = `<input type="checkbox" name="newRewardKid" value="${kid.id}" checked> <span>${kid.avatar} ${kid.name}</span>`;
+            rewardCbContainer.appendChild(lbl);
+        });
+
         renderAdminTasksList();
+        renderAdminRewardsList();
         renderPresets();
     }
 
@@ -1514,12 +1556,18 @@
         appData.kids = appData.kids.filter(k => k.id !== kidId);
         appData.tasks.forEach(t => t.assignedKids = t.assignedKids.filter(id => id !== kidId));
         appData.tasks = appData.tasks.filter(t => t.assignedKids.length > 0);
+        appData.rewards.forEach(r => r.assignedKids = r.assignedKids.filter(id => id !== kidId));
+        appData.rewards = appData.rewards.filter(r => r.assignedKids.length > 0);
         saveData();
         renderAdminPanel();
     }
 
     function selectAllKidsForTask(state) {
         document.querySelectorAll('input[name="newTaskKid"]').forEach(cb => cb.checked = state);
+    }
+
+    function selectAllKidsForReward(state) {
+        document.querySelectorAll('input[name="newRewardKid"]').forEach(cb => cb.checked = state);
     }
 
     function addTaskFromAdmin() {
@@ -1545,11 +1593,34 @@
         renderAdminTasksList();
     }
 
+    function addRewardFromAdmin() {
+        const title = document.getElementById('newRewardText').value.trim();
+        if (!title) return alert('Wpisz treść nagrody!');
+        const checkedKids = Array.from(document.querySelectorAll('input[name="newRewardKid"]:checked')).map(cb => cb.value);
+        if (checkedKids.length === 0) return alert('Zaznacz przynajmniej jedno dziecko dla nagrody!');
+
+        if (!appData.rewards) appData.rewards = [];
+        const orderByKid = {};
+        checkedKids.forEach(kId => orderByKid[kId] = getRewardsForKid(kId).length);
+
+        appData.rewards.push({
+            id: 'r_' + Date.now(),
+            title,
+            icon: selectedRewardEmoji,
+            assignedKids: checkedKids,
+            orderByKid
+        });
+
+        document.getElementById('newRewardText').value = '';
+        saveData();
+        renderAdminRewardsList();
+    }
+
     function renderAdminTasksList() {
         const container = document.getElementById('adminTasksList');
         container.innerHTML = '';
-        appData.tasks.forEach((task, idx) => {
-            const badges = task.assignedKids.map(kId => {
+        (appData.tasks || []).forEach((task, idx) => {
+            const badges = (task.assignedKids || []).map(kId => {
                 const k = appData.kids.find(x => x.id === kId);
                 return k ? `<span class="badge-kid" style="background:${k.color}">${k.avatar} ${k.name}</span>` : '';
             }).join('');
@@ -1575,6 +1646,37 @@
         });
     }
 
+    function renderAdminRewardsList() {
+        const container = document.getElementById('adminRewardsList');
+        if (!container) return;
+        container.innerHTML = '';
+        (appData.rewards || []).forEach((rew, idx) => {
+            const badges = (rew.assignedKids || []).map(kId => {
+                const k = appData.kids.find(x => x.id === kId);
+                return k ? `<span class="badge-kid" style="background:${k.color}">${k.avatar} ${k.name}</span>` : '';
+            }).join('');
+
+            const row = document.createElement('div');
+            row.className = 'admin-task-row';
+            row.innerHTML = `
+                <div style="display:flex; align-items:center; gap:10px; flex:1;">
+                    <span style="font-size:1.4rem;">${rew.icon}</span>
+                    <div>
+                        <div style="font-weight:800;">${rew.title}</div>
+                        <div style="margin-top:3px;">${badges}</div>
+                    </div>
+                </div>
+                <div style="display:flex; gap:6px; align-items:center;">
+                    <button class="btn-move" onclick="moveAdminReward(${idx}, -1)">⬆️</button>
+                    <button class="btn-move" onclick="moveAdminReward(${idx}, 1)">⬇️</button>
+                    <button class="btn btn-warning" style="padding:5px 10px; font-size:0.8rem;" onclick="openEditRewardModal('${rew.id}')">✏️ Edytuj</button>
+                    <button class="btn btn-danger" style="padding:5px 10px; font-size:0.8rem;" onclick="deleteReward('${rew.id}')">🗑️</button>
+                </div>
+            `;
+            container.appendChild(row);
+        });
+    }
+
     function moveAdminTask(idx, dir) {
         const target = idx + dir;
         if (target < 0 || target >= appData.tasks.length) return;
@@ -1591,10 +1693,32 @@
         renderAdminTasksList();
     }
 
+    function moveAdminReward(idx, dir) {
+        const target = idx + dir;
+        if (!appData.rewards || target < 0 || target >= appData.rewards.length) return;
+        const temp = appData.rewards[idx];
+        appData.rewards[idx] = appData.rewards[target];
+        appData.rewards[target] = temp;
+        appData.kids.forEach(k => {
+            appData.rewards.filter(r => r.assignedKids.includes(k.id)).forEach((r, i) => {
+                if (!r.orderByKid) r.orderByKid = {};
+                r.orderByKid[k.id] = i;
+            });
+        });
+        saveData();
+        renderAdminRewardsList();
+    }
+
     function deleteTask(taskId) {
         appData.tasks = appData.tasks.filter(t => t.id !== taskId);
         saveData();
         renderAdminTasksList();
+    }
+
+    function deleteReward(rewardId) {
+        appData.rewards = (appData.rewards || []).filter(r => r.id !== rewardId);
+        saveData();
+        renderAdminRewardsList();
     }
 
     function openEditModal(taskId) {
@@ -1634,18 +1758,54 @@
         renderAdminTasksList();
     }
 
-    // ================= SCHEMATY (SZABLONY) =================
+    function openEditRewardModal(rewardId) {
+        const rew = (appData.rewards || []).find(r => r.id === rewardId);
+        if (!rew) return;
+        document.getElementById('editRewardId').value = rew.id;
+        document.getElementById('editRewardIcon').value = rew.icon;
+        document.getElementById('editRewardTitle').value = rew.title;
+
+        const box = document.getElementById('editRewardKidsBox');
+        box.innerHTML = '';
+        appData.kids.forEach(kid => {
+            const checked = rew.assignedKids.includes(kid.id) ? 'checked' : '';
+            const lbl = document.createElement('label');
+            lbl.className = 'kid-checkbox-label';
+            lbl.innerHTML = `<input type="checkbox" name="editRewardKid" value="${kid.id}" ${checked}> <span>${kid.avatar} ${kid.name}</span>`;
+            box.appendChild(lbl);
+        });
+        document.getElementById('editRewardModal').style.display = 'flex';
+    }
+
+    function closeEditRewardModal() {
+        document.getElementById('editRewardModal').style.display = 'none';
+    }
+
+    function saveEditedReward() {
+        const id = document.getElementById('editRewardId').value;
+        const rew = (appData.rewards || []).find(r => r.id === id);
+        if (!rew) return;
+        const checkedKids = Array.from(document.querySelectorAll('input[name="editRewardKid"]:checked')).map(cb => cb.value);
+        if (checkedKids.length === 0) return alert('Przypisz nagrodę do przynajmniej jednego dziecka!');
+        rew.icon = document.getElementById('editRewardIcon').value.trim() || '🎁';
+        rew.title = document.getElementById('editRewardTitle').value.trim();
+        rew.assignedKids = checkedKids;
+        saveData();
+        closeEditRewardModal();
+        renderAdminRewardsList();
+    }
+
     function renderPresets() {
         const container = document.getElementById('presetsList');
         container.innerHTML = '';
-        appData.presets.forEach((preset, idx) => {
+        (appData.presets || []).forEach((preset, idx) => {
             const card = document.createElement('div');
             card.className = 'preset-card';
             card.innerHTML = `
                 <div style="display:flex; justify-content:space-between; align-items:start;">
                     <div>
                         <div style="font-weight:900; font-size:1.05rem;">${preset.name}</div>
-                        <div style="font-size:0.8rem; color:var(--text-muted); font-weight:700;">Zadań: ${preset.tasks.length}</div>
+                        <div style="font-size:0.8rem; color:var(--text-muted); font-weight:700;">Zadań: ${(preset.tasks || []).length}</div>
                     </div>
                     <div style="display:flex; gap:4px;">
                         <button class="btn-move" onclick="movePreset(${idx}, -1)">⬆️</button>
@@ -1694,7 +1854,7 @@
         const preset = appData.presets.find(p => p.id === presetId);
         if (!preset || !confirm(`Wczytać schemat "${preset.name}"?`)) return;
         const allKidIds = appData.kids.map(k => k.id);
-        appData.tasks = preset.tasks.map((pt, index) => {
+        appData.tasks = (preset.tasks || []).map((pt, index) => {
             let assigned = pt.assignedKids.includes('ALL') ? [...allKidIds] : pt.assignedKids.filter(id => allKidIds.includes(id));
             if (assigned.length === 0) assigned = [...allKidIds];
             const orderByKid = {};
@@ -1732,7 +1892,7 @@
     function renderEditedPresetTasks(preset) {
         const container = document.getElementById('editPresetTasksContainer');
         container.innerHTML = '';
-        preset.tasks.forEach((pt, idx) => {
+        (preset.tasks || []).forEach((pt, idx) => {
             const row = document.createElement('div');
             row.className = 'admin-task-row';
             row.innerHTML = `
@@ -1781,6 +1941,7 @@
         const icon = document.getElementById('presetNewTaskIcon').value.trim() || '📌';
         const title = document.getElementById('presetNewTaskTitle').value.trim();
         if (!title) return;
+        if (!preset.tasks) preset.tasks = [];
         preset.tasks.push({ id: 'pt_' + Date.now(), icon, title, assignedKids: ['ALL'] });
         document.getElementById('presetNewTaskTitle').value = '';
         saveData();
@@ -1813,7 +1974,6 @@
     applyBoardLayout();
     renderKidsBoard();
     if (cloudConfig.dbUrl) {
-        // Przy otwarciu strony najpierw pobierz dane z bazy!
         pullFromCloud(appData.updatedAt === 0);
     } else {
         isInitialCloudSyncDone = true;
