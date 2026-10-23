@@ -17,599 +17,151 @@
             --danger: #ff7675;
             --warning: #fdcb6e;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Nunito', sans-serif;
-            user-select: none;
-        }
-
-        html, body {
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-            background: var(--bg-gradient);
-            color: var(--text-dark);
-        }
-
-        #appRoot {
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            padding: 12px;
-            gap: 12px;
-            transform-origin: top left;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', sans-serif; user-select: none; }
+        html, body { width: 100%; height: 100vh; overflow: hidden; background: var(--bg-gradient); color: var(--text-dark); }
+        #appRoot { width: 100%; height: 100vh; display: flex; flex-direction: column; padding: 12px; gap: 12px; transform-origin: top left; }
+        
         /* GÓRNY PASEK NAWIGACJI */
-        .top-bar {
-            background: rgba(255, 255, 255, 0.96);
-            padding: 10px 18px;
-            border-radius: 18px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-            flex-wrap: wrap;
-            gap: 10px;
-            flex-shrink: 0;
-        }
-
-        .app-title {
-            font-size: 1.35rem;
-            font-weight: 900;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .sync-badge {
-            font-size: 0.78rem;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: 800;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: #dfe6e9;
-            color: #636e72;
-            cursor: pointer;
-        }
-
-        .sync-badge.online {
-            background: #d3f9d8;
-            color: #2b8a3e;
-        }
-
-        .sync-badge.error {
-            background: #ffe3e3;
-            color: #c92a2a;
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .btn {
-            border: none;
-            padding: 8px 14px;
-            border-radius: 11px;
-            font-weight: 800;
-            font-size: 0.88rem;
-            cursor: pointer;
-            transition: transform 0.12s, background 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
+        .top-bar { background: rgba(255, 255, 255, 0.96); padding: 10px 18px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 6px 20px rgba(0,0,0,0.08); flex-wrap: wrap; gap: 10px; flex-shrink: 0; }
+        .app-title { font-size: 1.35rem; font-weight: 900; color: var(--primary); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .sync-badge { font-size: 0.78rem; padding: 4px 10px; border-radius: 20px; font-weight: 800; display: inline-flex; align-items: center; gap: 5px; background: #dfe6e9; color: #636e72; cursor: pointer; }
+        .sync-badge.online { background: #d3f9d8; color: #2b8a3e; }
+        .sync-badge.error { background: #ffe3e3; color: #c92a2a; }
+        .nav-buttons { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+        
+        .btn { border: none; padding: 8px 14px; border-radius: 11px; font-weight: 800; font-size: 0.88rem; cursor: pointer; transition: transform 0.12s, background 0.2s; display: inline-flex; align-items: center; gap: 6px; }
         .btn:active { transform: scale(0.96); }
         .btn-primary { background: var(--primary); color: white; }
         .btn-success { background: var(--success); color: white; }
         .btn-warning { background: var(--warning); color: #2d3436; }
         .btn-danger { background: var(--danger); color: white; }
         .btn-outline { background: #f1f2f6; color: var(--text-dark); }
+        
+        .global-zoom-box { display: inline-flex; align-items: center; background: #f1f2f6; border-radius: 11px; padding: 3px; gap: 3px; }
+        .global-zoom-box button { border: none; background: white; padding: 5px 9px; border-radius: 8px; font-weight: 900; cursor: pointer; font-size: 0.82rem; }
 
-        .global-zoom-box {
-            display: inline-flex;
-            align-items: center;
-            background: #f1f2f6;
-            border-radius: 11px;
-            padding: 3px;
-            gap: 3px;
-        }
-
-        .global-zoom-box button {
-            border: none;
-            background: white;
-            padding: 5px 9px;
-            border-radius: 8px;
-            font-weight: 900;
-            cursor: pointer;
-            font-size: 0.82rem;
-        }
-
-        /* WIDOK DZIECI - PEŁNY EKRAN */
-        .kids-board {
-            flex: 1;
-            min-height: 0;
-            display: flex;
-            gap: 14px;
-            width: 100%;
-        }
-
-        .kids-board.layout-columns {
-            flex-direction: row;
-        }
-
-        .kids-board.layout-rows {
-            flex-direction: column;
-        }
-
-        .kid-column {
-            flex: 1;
-            min-width: 0;
-            min-height: 0;
-            background: rgba(255, 255, 255, 0.96);
-            border-radius: 22px;
-            padding: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border-top: 8px solid var(--primary);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            overflow: hidden;
-        }
-
-        .kid-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
-            flex-wrap: wrap;
-        }
-
-        .kid-identity {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .kid-avatar {
-            font-size: 2.1rem;
-            background: #f1f2f6;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .kid-name {
-            font-size: 1.35rem;
-            font-weight: 900;
-        }
-
-        .kid-header-controls {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .zoom-controls {
-            display: flex;
-            align-items: center;
-            background: #f1f2f6;
-            border-radius: 10px;
-            padding: 2px;
-            gap: 2px;
-        }
-
-        .zoom-btn {
-            border: none;
-            background: white;
-            padding: 4px 8px;
-            border-radius: 7px;
-            font-weight: 900;
-            font-size: 0.78rem;
-            cursor: pointer;
-        }
-
-        .kid-stars {
-            background: #fff9db;
-            border: 2px solid #ffd43b;
-            color: #f08c00;
-            padding: 4px 12px;
-            border-radius: 18px;
-            font-weight: 900;
-            font-size: 1rem;
-        }
+        /* WIDOK DZIECI */
+        .kids-board { flex: 1; min-height: 0; display: flex; gap: 14px; width: 100%; }
+        .kids-board.layout-columns { flex-direction: row; }
+        .kids-board.layout-rows { flex-direction: column; }
+        .kid-column { flex: 1; min-width: 0; min-height: 0; background: rgba(255, 255, 255, 0.96); border-radius: 22px; padding: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-top: 8px solid var(--primary); display: flex; flex-direction: column; gap: 10px; overflow: hidden; --kid-scale: 1; }
+        .kid-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-shrink: 0; flex-wrap: wrap; }
+        .kid-identity { display: flex; align-items: center; gap: 10px; }
+        .kid-avatar { font-size: 2.1rem; background: #f1f2f6; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .kid-name { font-size: 1.35rem; font-weight: 900; }
+        .kid-header-controls { display: flex; align-items: center; gap: 8px; }
+        .zoom-controls { display: flex; align-items: center; background: #f1f2f6; border-radius: 10px; padding: 2px; gap: 2px; }
+        .zoom-btn { border: none; background: white; padding: 4px 8px; border-radius: 7px; font-weight: 900; font-size: 0.78rem; cursor: pointer; }
+        .kid-stars { background: #fff9db; border: 2px solid #ffd43b; color: #f08c00; padding: 4px 12px; border-radius: 18px; font-weight: 900; font-size: 1rem; }
 
         /* PASEK POSTĘPU */
-        .progress-container {
-            background: #dfe6e9;
-            height: 18px;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            flex-shrink: 0;
-        }
+        .progress-container { background: #dfe6e9; height: 18px; border-radius: 10px; overflow: hidden; position: relative; flex-shrink: 0; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #00b894, #55efc4); width: 0%; transition: width 0.35s ease; }
+        .progress-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 0.75rem; font-weight: 900; color: #2d3436; }
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #00b894, #55efc4);
-            width: 0%;
-            transition: width 0.35s ease;
-        }
+        /* LISTA ZADAŃ I SEKCJE */
+        .task-list { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: calc(8px * var(--kid-scale)); padding-right: 4px; position: relative; }
+        .kid-section-group { display: flex; flex-direction: column; gap: calc(6px * var(--kid-scale)); margin-bottom: calc(4px * var(--kid-scale)); }
+        .kid-section-header { background: linear-gradient(90deg, #eef2ff, #f8f9fa); border: 2px solid #dee2ff; border-radius: calc(12px * var(--kid-scale)); padding: calc(7px * var(--kid-scale)) calc(12px * var(--kid-scale)); display: flex; align-items: center; justify-content: space-between; cursor: pointer; font-weight: 900; font-size: calc(0.95rem * var(--kid-scale)); color: #3b4252; transition: background 0.2s; }
+        .kid-section-header:hover { background: #e5dbff; }
+        .kid-section-left { display: flex; align-items: center; gap: calc(8px * var(--kid-scale)); }
+        .kid-section-tasks { display: flex; flex-direction: column; gap: calc(7px * var(--kid-scale)); padding-left: calc(6px * var(--kid-scale)); border-left: 3px solid #dee2ff; margin-left: calc(6px * var(--kid-scale)); }
+        .kid-section-tasks.collapsed { display: none; }
 
-        .progress-label {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 0.75rem;
-            font-weight: 900;
-            color: #2d3436;
-        }
+        .task-item { background: #f8f9fa; border: 2px solid #e9ecef; border-radius: calc(14px * var(--kid-scale)); padding: calc(10px * var(--kid-scale)) calc(12px * var(--kid-scale)); display: flex; align-items: center; justify-content: space-between; gap: calc(10px * var(--kid-scale)); transition: transform 0.5s ease, background 0.2s, border-color 0.2s; flex-shrink: 0; cursor: pointer; }
+        .task-item.dragging { opacity: 0.4; border: 2px dashed var(--primary); cursor: grab; }
+        .task-item.done { background: #e6fcf5; border-color: #63e6be; opacity: 0.85; }
+        .task-item.done .task-title { text-decoration: line-through; color: #636e72; }
+        .task-left { display: flex; align-items: center; gap: calc(10px * var(--kid-scale)); flex: 1; }
+        .check-circle { width: calc(28px * var(--kid-scale)); height: calc(28px * var(--kid-scale)); border-radius: 50%; border: 3px solid #b2bec3; display: flex; align-items: center; justify-content: center; font-size: calc(0.95rem * var(--kid-scale)); color: transparent; background: white; flex-shrink: 0; }
+        .task-item.done .check-circle, .reward-item.done .check-circle { background: var(--success); border-color: var(--success); color: white; }
+        .task-icon { font-size: calc(1.5rem * var(--kid-scale)); }
+        .task-content-box { display: flex; flex-direction: column; gap: calc(3px * var(--kid-scale)); flex: 1; }
+        .task-title { font-size: calc(1rem * var(--kid-scale)); font-weight: 800; word-break: break-word; }
 
-        /* LISTA ZADAŃ Z NIEZALEŻNYM PRZEWIJANIEM */
-        .task-list {
-            flex: 1;
-            min-height: 0;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            padding-right: 4px;
-            --kid-scale: 1;
-            position: relative;
-        }
+        /* ETYKIETY CZASU I TIMERA */
+        .task-time-badge { display: inline-flex; align-items: center; gap: 4px; font-size: calc(0.76rem * var(--kid-scale)); font-weight: 800; padding: calc(2px * var(--kid-scale)) calc(8px * var(--kid-scale)); border-radius: calc(10px * var(--kid-scale)); background: #e3fafc; color: #0c8599; border: 1px solid #99e9f2; width: fit-content; }
+        .task-time-badge.soon { background: #fff3bf; color: #e67700; border-color: #ffd43b; }
+        .task-time-badge.overdue { background: #ffe3e3; color: #c92a2a; border-color: #ffa8a8; animation: pulseOverdue 1.5s infinite; }
+        .task-time-badge.completed { background: #d3f9d8; color: #2b8a3e; border-color: #8ce99a; animation: none; }
+        @keyframes pulseOverdue { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
 
-        .task-item {
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
-            border-radius: calc(14px * var(--kid-scale));
-            padding: calc(10px * var(--kid-scale)) calc(12px * var(--kid-scale));
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: calc(10px * var(--kid-scale));
-            transition: transform 0.5s ease, background 0.2s, border-color 0.2s;
-            flex-shrink: 0;
-            cursor: grab;
-        }
+        .task-timer-running { display: inline-flex; align-items: center; gap: 5px; font-size: calc(0.8rem * var(--kid-scale)); font-weight: 900; padding: calc(3px * var(--kid-scale)) calc(10px * var(--kid-scale)); border-radius: calc(12px * var(--kid-scale)); background: #fff0f6; color: #c2255c; border: 2px solid #f06595; animation: pulseTimer 1s infinite alternate; width: fit-content; }
+        @keyframes pulseTimer { 0% { transform: scale(1); box-shadow: 0 0 0 rgba(240, 101, 149, 0.4); } 100% { transform: scale(1.02); box-shadow: 0 0 8px rgba(240, 101, 149, 0.8); } }
 
-        .task-item.dragging {
-            opacity: 0.4;
-            border: 2px dashed var(--primary);
-        }
+        .order-buttons { display: flex; flex-direction: column; gap: 2px; }
+        .btn-move { background: #e9ecef; border: none; border-radius: 5px; padding: calc(3px * var(--kid-scale)) calc(6px * var(--kid-scale)); font-size: calc(0.7rem * var(--kid-scale)); cursor: pointer; }
+        .all-done-banner { background: linear-gradient(135deg, #ffeaa7, #fdcb6e); padding: calc(10px * var(--kid-scale)); border-radius: calc(12px * var(--kid-scale)); text-align: center; font-weight: 900; color: #d35400; font-size: calc(0.9rem * var(--kid-scale)); flex-shrink: 0; }
 
-        .task-item.done {
-            background: #e6fcf5;
-            border-color: #63e6be;
-            opacity: 0.85;
-        }
+        /* SEKCJA NAGRÓD */
+        .rewards-section { flex-shrink: 0; max-height: 20%; overflow-y: auto; background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 20%, #fbc2eb 40%, #a1c4fd 60%, #c2e9fb 80%, #d4fc79 100%); border-radius: calc(14px * var(--kid-scale)); padding: calc(8px * var(--kid-scale)) calc(10px * var(--kid-scale)); border: 2px solid rgba(255,255,255,0.85); box-shadow: inset 0 2px 6px rgba(0,0,0,0.06); display: flex; flex-direction: column; gap: calc(6px * var(--kid-scale)); }
+        .rewards-header { font-size: calc(0.85rem * var(--kid-scale)); font-weight: 900; color: #2d3436; display: flex; align-items: center; gap: calc(6px * var(--kid-scale)); text-shadow: 0 1px 2px rgba(255,255,255,0.9); }
+        .rewards-list-container { display: flex; flex-direction: column; gap: calc(5px * var(--kid-scale)); }
+        .reward-item { background: rgba(255, 255, 255, 0.92); border: 2px solid rgba(255, 255, 255, 0.95); border-radius: calc(11px * var(--kid-scale)); padding: calc(6px * var(--kid-scale)) calc(10px * var(--kid-scale)); display: flex; align-items: center; justify-content: space-between; gap: calc(8px * var(--kid-scale)); font-weight: 800; font-size: calc(0.92rem * var(--kid-scale)); box-shadow: 0 2px 4px rgba(0,0,0,0.05); cursor: pointer; transition: all 0.2s ease; }
+        .reward-item.done { background: rgba(230, 252, 245, 0.92); border-color: #63e6be; opacity: 0.85; }
+        .reward-item.done .reward-title { text-decoration: line-through; color: #636e72; }
+        .reward-left { display: flex; align-items: center; gap: calc(8px * var(--kid-scale)); flex: 1; }
+        .reward-icon { font-size: calc(1.3rem * var(--kid-scale)); }
+        .reward-title { color: #2d3436; word-break: break-word; font-size: calc(0.92rem * var(--kid-scale)); }
 
-        .task-item.done .task-title {
-            text-decoration: line-through;
-            color: #636e72;
-        }
-
-        .task-left {
-            display: flex;
-            align-items: center;
-            gap: calc(10px * var(--kid-scale));
-            flex: 1;
-            cursor: pointer;
-        }
-
-        .check-circle {
-            width: calc(28px * var(--kid-scale));
-            height: calc(28px * var(--kid-scale));
-            border-radius: 50%;
-            border: 3px solid #b2bec3;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: calc(0.95rem * var(--kid-scale));
-            color: transparent;
-            background: white;
-            flex-shrink: 0;
-        }
-
-        .task-item.done .check-circle {
-            background: var(--success);
-            border-color: var(--success);
-            color: white;
-        }
-
-        .task-icon {
-            font-size: calc(1.5rem * var(--kid-scale));
-        }
-
-        .task-title {
-            font-size: calc(1rem * var(--kid-scale));
-            font-weight: 800;
-            word-break: break-word;
-        }
-
-        .order-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .btn-move {
-            background: #e9ecef;
-            border: none;
-            border-radius: 5px;
-            padding: calc(3px * var(--kid-scale)) calc(6px * var(--kid-scale));
-            font-size: calc(0.7rem * var(--kid-scale));
-            cursor: pointer;
-        }
-
-        .all-done-banner {
-            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
-            padding: 10px;
-            border-radius: 12px;
-            text-align: center;
-            font-weight: 900;
-            color: #d35400;
-            font-size: 0.9rem;
-            flex-shrink: 0;
-        }
-
-        /* SEKJA NAGROD - TĘCZOWA, MAX 20% WYSOKOŚCI, PRZEWIJANA */
-        .rewards-section {
-            flex-shrink: 0;
-            max-height: 20%;
-            overflow-y: auto;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 20%, #fad0c4 40%, #a1c4fd 60%, #c2e9fb 80%, #d4fc79 100%);
-            border-radius: 14px;
-            padding: 10px 12px;
-            border: 2px solid rgba(255,255,255,0.8);
-            box-shadow: inset 0 2px 6px rgba(0,0,0,0.06);
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .rewards-header {
-            font-size: 0.85rem;
-            font-weight: 900;
-            color: #2d3436;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            text-shadow: 0 1px 2px rgba(255,255,255,0.8);
-        }
-
-        .rewards-list-container {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .reward-item {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.95);
-            border-radius: 10px;
-            padding: 6px 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 800;
-            font-size: 0.9rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-        }
-
-        .reward-icon {
-            font-size: 1.2rem;
-        }
-
-        .reward-title {
-            color: #2d3436;
-            word-break: break-word;
-        }
-
-        /* SZYBKIE DODAWANIE ZADANIA PRZEZ DZIECKO */
-        .kid-add-footer {
-            flex-shrink: 0;
-            border-top: 1px solid #f1f2f6;
-            padding-top: 6px;
-        }
-
-        .kid-add-drawer {
-            display: none;
-            background: #f8f9fa;
-            border: 2px solid #dfe6e9;
-            border-radius: 14px;
-            padding: 10px;
-            margin-top: 6px;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .kid-add-drawer.open {
-            display: flex;
-        }
-
-        .quick-chips {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
-
-        .quick-chip {
-            background: white;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 4px 8px;
-            font-size: 0.78rem;
-            font-weight: 800;
-            cursor: pointer;
-        }
+        /* SZYBKIE DODAWANIE PRZEZ DZIECKO */
+        .kid-add-footer { flex-shrink: 0; border-top: 1px solid #f1f2f6; padding-top: 6px; }
+        .kid-add-drawer { display: none; background: #f8f9fa; border: 2px solid #dfe6e9; border-radius: 14px; padding: 10px; margin-top: 6px; flex-direction: column; gap: 8px; }
+        .kid-add-drawer.open { display: flex; }
+        .quick-chips { display: flex; gap: 5px; flex-wrap: wrap; }
+        .quick-chip { background: white; border: 1px solid #dee2e6; border-radius: 8px; padding: 4px 8px; font-size: 0.78rem; font-weight: 800; cursor: pointer; }
 
         /* PANEL RODZICA */
-        .parent-panel {
-            flex: 1;
-            min-height: 0;
-            overflow-y: auto;
-            display: none;
-            flex-direction: column;
-            gap: 18px;
-            max-width: 1150px;
-            width: 100%;
-            margin: 0 auto;
-            padding-bottom: 30px;
-        }
+        .parent-panel { flex: 1; min-height: 0; overflow-y: auto; display: none; flex-direction: column; gap: 18px; max-width: 1150px; width: 100%; margin: 0 auto; padding-bottom: 30px; }
+        .admin-section { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+        .admin-section h2 { font-size: 1.2rem; margin-bottom: 14px; color: var(--primary); border-bottom: 2px solid #f1f2f6; padding-bottom: 8px; }
+        .form-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
+        .input-text, .select-input { padding: 9px 13px; border-radius: 10px; border: 2px solid #dfe6e9; font-size: 0.95rem; font-weight: 700; outline: none; }
+        .emoji-grid { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; align-items: center; }
+        .emoji-option { font-size: 1.35rem; padding: 6px; border-radius: 10px; border: 2px solid #e9ecef; background: #f8f9fa; cursor: pointer; transition: transform 0.1s; }
+        .emoji-option:hover { transform: scale(1.08); }
+        .emoji-option.selected { border-color: var(--primary); background: #efecff; }
+        .emoji-more-btn { font-size: 0.9rem; font-weight: 900; padding: 8px 12px; border-radius: 10px; border: 2px dashed var(--primary); background: #f3f0ff; color: var(--primary); cursor: pointer; }
+        .kids-Checkboxes { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; background: #f8f9fa; padding: 10px 14px; border-radius: 12px; margin-bottom: 12px; }
+        .kid-checkbox-label { display: flex; align-items: center; gap: 6px; font-weight: 800; cursor: pointer; background: white; padding: 5px 10px; border-radius: 8px; border: 2px solid #dfe6e9; }
 
-        .admin-section {
-            background: white;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-        }
+        .admin-category-accordion { border: 2px solid #e9ecef; border-radius: 14px; margin-bottom: 12px; overflow: hidden; background: #ffffff; }
+        .admin-category-header { background: #f3f0ff; padding: 11px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 900; font-size: 1rem; color: #2d3436; transition: background 0.15s; gap: 10px; flex-wrap: wrap; }
+        .admin-category-header:hover { background: #e5dbff; }
+        .admin-category-body { padding: 12px; background: #fafbfc; border-top: 1px solid #e9ecef; }
+        .admin-category-body.collapsed { display: none; }
+        .admin-task-row { display: flex; justify-content: space-between; align-items: center; background: #f8f9fa; padding: 10px 14px; border-radius: 12px; border: 1px solid #e9ecef; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; }
+        .badge-kid { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; color: white; margin-right: 4px; }
+        .badge-time { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; background: #e3fafc; color: #0c8599; border: 1px solid #99e9f2; margin-right: 4px; }
+        .badge-timer-set { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; background: #fff0f6; color: #c2255c; border: 1px solid #f06595; margin-right: 4px; }
 
-        .admin-section h2 {
-            font-size: 1.2rem;
-            margin-bottom: 14px;
-            color: var(--primary);
-            border-bottom: 2px solid #f1f2f6;
-            padding-bottom: 8px;
-        }
+        .presets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 12px; }
+        .preset-card { background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); display: none; align-items: center; justify-content: center; z-index: 999; padding: 16px; }
+        .modal-box { background: white; padding: 22px; border-radius: 20px; max-width: 680px; width: 100%; max-height: 90vh; overflow-y: auto; }
+        .emoji-category-title { font-size: 0.9rem; font-weight: 900; color: var(--text-muted); margin: 10px 0 6px 0; }
 
-        .form-row {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            align-items: center;
-            margin-bottom: 12px;
-        }
+        /* AUTOUZUPEŁNIANIE */
+        .autocomplete-wrapper { position: relative; flex: 1; min-width: 180px; display: flex; }
+        .autocomplete-wrapper .input-text { width: 100%; }
+        .autocomplete-dropdown { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #ffffff; border: 2px solid var(--primary); border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.16); max-height: 230px; overflow-y: auto; z-index: 1200; display: none; flex-direction: column; }
+        .autocomplete-dropdown.open { display: flex; }
+        .autocomplete-item { padding: 8px 12px; display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 800; font-size: 0.9rem; color: var(--text-dark); border-bottom: 1px solid #f1f2f6; transition: background 0.12s; }
+        .autocomplete-item:last-child { border-bottom: none; }
+        .autocomplete-item:hover, .autocomplete-item.active { background: #f3f0ff; color: var(--primary); }
+        .autocomplete-icon { font-size: 1.25rem; flex-shrink: 0; }
 
-        .input-text, .select-input {
-            padding: 9px 13px;
-            border-radius: 10px;
-            border: 2px solid #dfe6e9;
-            font-size: 0.95rem;
-            font-weight: 700;
-            outline: none;
-        }
-
-        .emoji-grid {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin-bottom: 12px;
-        }
-
-        .emoji-option {
-            font-size: 1.35rem;
-            padding: 6px;
-            border-radius: 10px;
-            border: 2px solid #e9ecef;
-            background: #f8f9fa;
-            cursor: pointer;
-        }
-
-        .emoji-option.selected {
-            border-color: var(--primary);
-            background: #efecff;
-        }
-
-        .kids-Checkboxes {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            align-items: center;
-            background: #f8f9fa;
-            padding: 10px 14px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-        }
-
-        .kid-checkbox-label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: 800;
-            cursor: pointer;
-            background: white;
-            padding: 5px 10px;
-            border-radius: 8px;
-            border: 2px solid #dfe6e9;
-        }
-
-        .admin-task-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #f8f9fa;
-            padding: 10px 14px;
-            border-radius: 12px;
-            border: 1px solid #e9ecef;
-            margin-bottom: 8px;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .badge-kid {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            color: white;
-            margin-right: 4px;
-        }
-
-        .presets-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 12px;
-            margin-top: 12px;
-        }
-
-        .preset-card {
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
-            border-radius: 14px;
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: 10px;
-        }
-
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.55);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 999;
-            padding: 16px;
-        }
-
-        .modal-box {
-            background: white;
-            padding: 22px;
-            border-radius: 20px;
-            max-width: 650px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
+        /* KOMUNIKAT CELEBRACYJNY (80% WIDOKU PRZEZ 20 SEKUND) */
+        .completion-modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); display: none; align-items: center; justify-content: center; z-index: 3000; padding: 20px; }
+        .completion-modal-overlay.open { display: flex; }
+        .completion-modal-box { width: 80vw; height: 80vh; max-width: 1000px; max-height: 750px; background: linear-gradient(135deg, #fff9db 0%, #ffec99 50%, #ffd43b 100%); border: 8px solid #f59f00; border-radius: 36px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; box-shadow: 0 25px 60px rgba(0,0,0,0.4); animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes bounceIn { 0% { transform: scale(0.4); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        .completion-emoji { font-size: 6rem; margin-bottom: 15px; animation: spinEmoji 2s infinite ease-in-out; }
+        @keyframes spinEmoji { 0%, 100% { transform: rotate(-8deg); } 50% { transform: rotate(8deg); } }
+        .completion-title { font-size: 2.4rem; font-weight: 900; color: #d9480f; margin-bottom: 10px; }
+        .completion-text { font-size: 1.6rem; font-weight: 800; color: #2d3436; margin-bottom: 25px; word-break: break-word; }
+        .completion-timer-bar { width: 100%; max-width: 400px; height: 14px; background: rgba(255,255,255,0.7); border-radius: 7px; overflow: hidden; margin-bottom: 20px; border: 2px solid #f08c00; }
+        .completion-timer-fill { height: 100%; background: #e8590c; width: 100%; transition: width 1s linear; }
     </style>
 </head>
 <body>
@@ -618,21 +170,19 @@
     <div class="top-bar">
         <div class="app-title">
             <span>🚀</span> Rodzinny Plan Dnia
-            <span id="syncStatusBadge" class="sync-badge" onclick="handleSyncBadgeClick()" title="Status synchronizacji między urządzeniami">
-                ☁️ Tryb lokalny
-            </span>
+            <span id="syncStatusBadge" class="sync-badge" onclick="handleSyncBadgeClick()" title="Status synchronizacji między urządzeniami">☁️ Tryb lokalny</span>
         </div>
         <div class="nav-buttons">
-            <button class="btn btn-outline" id="layoutToggleBtn" onclick="toggleBoardLayout()">📐 Układ: Obok siebie</button>
-            <div class="global-zoom-box">
-                <span style="font-size:0.78rem; font-weight:800; padding:0 6px;">Skala:</span>
-                <button onclick="changeGlobalScale(-0.1)">🔍-</button>
-                <button id="globalScaleLabel" onclick="resetGlobalScale()">100%</button>
-                <button onclick="changeGlobalScale(0.1)">🔍+</button>
+            <button type="button" class="btn btn-outline" id="layoutToggleBtn" onclick="toggleBoardLayout()" title="Ustawienie lokalne dla tego urządzenia">📐 Układ: Obok siebie</button>
+            <div class="global-zoom-box" title="Skala lokalna dla tego urządzenia (nie synchronizuje się)">
+                <span style="font-size:0.78rem; font-weight:800; padding:0 6px;">Skala (40-120%):</span>
+                <button type="button" onclick="changeGlobalScale(-0.1)">🔍-</button>
+                <button type="button" id="globalScaleLabel" onclick="resetGlobalScale()">100%</button>
+                <button type="button" onclick="changeGlobalScale(0.1)">🔍+</button>
             </div>
-            <button class="btn btn-outline" onclick="toggleFullScreen()">⛶ Pełny ekran</button>
-            <button class="btn btn-success" onclick="resetAllProgress()">🔄 Nowy Dzień</button>
-            <button class="btn btn-primary" id="toggleViewBtn" onclick="handleViewSwitch()">🔒 Panel Rodzica</button>
+            <button type="button" class="btn btn-outline" onclick="toggleFullScreen()">⛶ Pełny ekran</button>
+            <button type="button" class="btn btn-success" onclick="resetAllProgress()">🔄 Nowy Dzień</button>
+            <button type="button" class="btn btn-primary" id="toggleViewBtn" onclick="handleViewSwitch()">🔒 Panel Rodzica</button>
         </div>
     </div>
 
@@ -642,17 +192,36 @@
     <!-- PANEL ADMINISTRACYJNY RODZICA -->
     <div id="parentView" class="parent-panel">
 
-        <!-- 0. SYNCHRONIZACJA MIĘDZY URZĄDZENIAMI (CHMURA) -->
+        <!-- 0. SYNCHRONIZACJA I USTAWIENIA DŹWIĘKU -->
         <div class="admin-section" style="border: 2px solid #74b9ff; background: #f1f9ff;">
-            <h2>☁️ 0. Synchronizacja Online (Wiele urządzeń w czasie rzeczywistym)</h2>
-            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:10px; font-weight:700;">
-                Aby telefon rodzica i tablety dzieci widziały te same zadania w czasie rzeczywistym, wklej tutaj darmowy link do bazy <b>Firebase Realtime Database</b> (np. <code>https://twoja-baza-default-rtdb.europe-west1.firebasedatabase.app</code>).
+            <h2>☁️ 0. Synchronizacja Online + Dźwięk Celebracji</h2>
+            <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:10px; font-weight:700;">
+                Możesz korzystać z bazy publicznej (sam Database URL) lub zabezpieczonej hasłem (Web API Key, E-mail, Hasło). Skala ekranu i orientacja tablic są zawsze trzymane lokalnie na urządzeniu.
             </p>
             <div class="form-row">
-                <input type="text" id="cloudDbUrlInput" class="input-text" style="flex:1; min-width:260px;" placeholder="https://twoj-projekt-default-rtdb.firebasedatabase.app">
-                <input type="text" id="cloudRoomIdInput" class="input-text" style="width:160px;" placeholder="Kod rodziny (np. dom1)">
-                <button class="btn btn-primary" onclick="saveCloudConfig()">🔗 Połącz i pobierz z bazy</button>
-                <button class="btn btn-warning" onclick="pushToCloud()">⬆️ Wyślij obecny stan do bazy</button>
+                <input type="text" id="cloudDbUrlInput" class="input-text" style="flex:2; min-width:240px;" placeholder="Database URL (np. https://twoja-baza.firebasedatabase.app)">
+                <input type="text" id="cloudRoomIdInput" class="input-text" style="flex:1; min-width:130px;" placeholder="Kod rodziny (np. dom1)">
+            </div>
+            <div class="form-row" style="background: rgba(255,255,255,0.7); padding: 10px; border-radius: 12px; border: 1px solid #cce5ff;">
+                <span style="font-weight:900; font-size:0.85rem; width:100%; color:#0984e3;">🔐 Dane logowania do bazy (opcjonalnie dla reguł auth != null):</span>
+                <input type="text" id="cloudApiKeyInput" class="input-text" style="flex:1; min-width:180px;" placeholder="Firebase Web API Key (AIzaSy...)">
+                <input type="email" id="cloudEmailInput" class="input-text" style="flex:1; min-width:170px;" placeholder="E-mail (np. rodzic@dom.pl)">
+                <input type="password" id="cloudPasswordInput" class="input-text" style="flex:1; min-width:140px;" placeholder="Hasło do bazy">
+            </div>
+            <div class="form-row" style="background: rgba(255,255,255,0.7); padding: 10px; border-radius: 12px; border: 1px solid #cce5ff;">
+                <span style="font-weight:900; font-size:0.85rem; width:100%; color:#0984e3;">🎉 Dźwięk celebracji ukończenia zadania z timerem:</span>
+                <select id="celebrationSoundSelect" class="select-input" style="flex:1; min-width:260px;" onchange="saveCelebrationSoundSetting()">
+                    <option value="https://actions.google.com/sounds/v1/crowds/applause.ogg">👏 Oklaski (Publiczność)</option>
+                    <option value="https://actions.google.com/sounds/v1/alarms/bugle_tune.ogg">🎺 Fanfary trąbki</option>
+                    <option value="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg">✨ Dzwonek sukcesu (Cartoon)</option>
+                    <option value="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg">🎉 Sukces radosny (Wood flick)</option>
+                </select>
+                <button type="button" class="btn btn-outline" onclick="testCelebrationSound()">🔊 Testuj dźwięk</button>
+            </div>
+            <div class="form-row">
+                <button type="button" class="btn btn-primary" onclick="saveCloudConfig()">🔗 Zaloguj, połącz i pobierz z bazy</button>
+                <button type="button" class="btn btn-warning" onclick="pushToCloud()">⬆️ Wyślij obecny stan do bazy</button>
+                <button type="button" class="btn btn-outline" onclick="logoutCloudSession()">🚪 Wyloguj z chmury</button>
             </div>
             <div id="cloudHelpText" style="font-size:0.82rem; color:#0984e3; font-weight:700;"></div>
         </div>
@@ -662,43 +231,75 @@
             <h2>👧👦 1. Dzieci (Kolumny na tablicy)</h2>
             <div class="form-row">
                 <input type="text" id="newKidName" class="input-text" placeholder="Imię dziecka (np. Zosia)">
-                <select id="newKidAvatar" class="select-input">
-                    <option value="👦">👦 Chłopiec</option>
-                    <option value="👧">👧 Dziewczynka</option>
-                    <option value="🦊">🦊 Lisek</option>
-                    <option value="🐱">🐱 Kotek</option>
-                    <option value="🐶">🐶 Piesek</option>
-                    <option value="🦄">🦄 Jednorożec</option>
-                    <option value="🦖">🦖 Dinozaur</option>
-                    <option value="🐼">🐼 Panda</option>
-                </select>
+                <div style="display:flex; align-items:center; gap:6px;">
+                    <select id="newKidAvatar" class="select-input">
+                        <option value="👦">👦 Chłopiec</option>
+                        <option value="👧">👧 Dziewczynka</option>
+                        <option value="🦊">🦊 Lisek</option>
+                        <option value="🐱">🐱 Kotek</option>
+                        <option value="🐶">🐶 Piesek</option>
+                        <option value="🦄">🦄 Jednorożec</option>
+                        <option value="🦖">🦖 Dinozaur</option>
+                        <option value="🐼">🐼 Panda</option>
+                        <option value="🦁">🦁 Lew</option>
+                        <option value="🐸">🐸 Żabka</option>
+                    </select>
+                    <button type="button" class="emoji-more-btn" onclick="openEmojiLibrary('newKidAvatar')">➕</button>
+                </div>
                 <select id="newKidColor" class="select-input">
                     <option value="#6c5ce7">🟣 Fioletowy</option>
                     <option value="#0984e3">🔵 Niebieski</option>
                     <option value="#00b894">🟢 Zielony</option>
                     <option value="#e84393">🩷 Różowy</option>
                     <option value="#e17055">🟠 Pomarańczowy</option>
+                    <option value="#d63031">🔴 Czerwony</option>
+                    <option value="#fdcb6e">🟡 Złoty</option>
                 </select>
-                <button class="btn btn-primary" onclick="addKid()">➕ Dodaj dziecko</button>
+                <button type="button" class="btn btn-primary" onclick="addKid()">➕ Dodaj dziecko</button>
             </div>
             <div id="adminKidsList" style="display:flex; gap:10px; flex-wrap:wrap;"></div>
         </div>
 
-        <!-- 2. DODAWANIE I EDYCJA ZADAŃ -->
+        <!-- 2. SEKCJE ZADAŃ + DODAWANIE I EDYCJA ZADAŃ -->
         <div class="admin-section">
-            <h2>📋 2. Dodaj nowe zadanie</h2>
+            <h2>🗂️ 2A. Sekcje (kategorie) zadań – np. Rano, Po południu, Wieczór</h2>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:10px; font-weight:700;">
+                Twórz dowolne sekcje z obrazkiem. Kliknięcie sekcji poniżej rozwija lub zwija przypisane do niej zadania.
+            </p>
+            <div class="emoji-grid" id="sectionEmojiPicker"></div>
+            <div class="form-row">
+                <input type="text" id="newSectionName" class="input-text" style="flex:1;" placeholder="Nazwa sekcji (np. Rano / Po południu / Wieczór)">
+                <button type="button" class="btn btn-primary" onclick="addSectionFromAdmin()">➕ Dodaj sekcję</button>
+            </div>
+            <div id="adminSectionsList" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;"></div>
+
+            <h2>📋 2B. Dodaj nowe zadanie</h2>
             <div class="emoji-grid" id="emojiPicker"></div>
             <div class="form-row">
-                <input type="text" id="newTaskText" class="input-text" style="flex:1;" placeholder="Wpisz czynność (np. Odrobić lekcje z matematyki)">
+                <input type="text" id="newTaskText" class="input-text" style="flex:2; min-width:200px;" placeholder="Wpisz czynność (np. Odrobić lekcje z matematyki)">
+                <div style="display:flex; align-items:center; gap:6px; background:#f8f9fa; padding:6px 10px; border-radius:10px; border:2px solid #dfe6e9;">
+                    <span style="font-weight:800; font-size:0.85rem;">🗂️ Sekcja:</span>
+                    <select id="newTaskSectionSelect" class="select-input" style="padding:5px 8px; border:none; background:white;"></select>
+                </div>
+                <div style="display:flex; align-items:center; gap:6px; background:#f8f9fa; padding:6px 10px; border-radius:10px; border:2px solid #dfe6e9;" title="Opcjonalna godzina wykonania (odliczanie do godziny urządzenia)">
+                    <span style="font-weight:800; font-size:0.85rem;">⏰ Czas wykonania:</span>
+                    <input type="time" id="newTaskDueTime" class="input-text" style="padding:4px 8px; background:white;">
+                    <button type="button" class="btn btn-outline" style="padding:4px 7px; font-size:0.75rem;" onclick="document.getElementById('newTaskDueTime').value=''">✖</button>
+                </div>
+                <div style="display:flex; align-items:center; gap:6px; background:#fff0f6; padding:6px 10px; border-radius:10px; border:2px solid #f06595;" title="Opcjonalny czas odliczania timera w formacie hh:mm:ss (kliknięcie zadania startuje odliczanie)">
+                    <span style="font-weight:800; font-size:0.85rem; color:#c2255c;">⏱️ Timer (hh:mm:ss):</span>
+                    <input type="time" id="newTaskTimerDuration" class="input-text" step="1" value="00:00:00" style="padding:4px 8px; background:white;">
+                    <button type="button" class="btn btn-outline" style="padding:4px 7px; font-size:0.75rem;" onclick="document.getElementById('newTaskTimerDuration').value='00:00:00'">✖</button>
+                </div>
             </div>
             <div class="kids-Checkboxes">
                 <span style="font-weight:900;">Dla kogo?</span>
                 <button type="button" class="btn btn-outline" style="padding:4px 8px; font-size:0.78rem;" onclick="selectAllKidsForTask(true)">Wszyscy</button>
                 <div id="taskKidsCheckboxes" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
             </div>
-            <button class="btn btn-success" onclick="addTaskFromAdmin()">➕ Dodaj zadanie do planu</button>
+            <button type="button" class="btn btn-success" onclick="addTaskFromAdmin()">➕ Dodaj zadanie do planu</button>
 
-            <h3 style="margin: 18px 0 10px 0; font-size:1.05rem;">Aktualne zadania na tablicy:</h3>
+            <h3 style="margin: 22px 0 10px 0; font-size:1.05rem;">Aktualne zadania (kliknij nagłówek sekcji, aby rozwinąć / zwinąć):</h3>
             <div id="adminTasksList"></div>
         </div>
 
@@ -707,36 +308,120 @@
             <h2>🎁 3. Nagrody dla dzieci (wyświetlane na dole tablicy)</h2>
             <div class="emoji-grid" id="rewardEmojiPicker"></div>
             <div class="form-row">
-                <input type="text" id="newRewardText" class="input-text" style="flex:1;" placeholder="Wpisz nagrodę (np. 30 minut bajki / Wyjście na lody 🍦)">
+                <input type="text" id="newRewardText" class="input-text" style="flex:1;" placeholder="Wpisz nagrodę (np. 30 minut bajki)">
             </div>
             <div class="kids-Checkboxes">
                 <span style="font-weight:900;">Dla kogo nagroda?</span>
                 <button type="button" class="btn btn-outline" style="padding:4px 8px; font-size:0.78rem;" onclick="selectAllKidsForReward(true)">Wszyscy</button>
                 <div id="rewardKidsCheckboxes" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
             </div>
-            <button class="btn btn-success" onclick="addRewardFromAdmin()">➕ Dodaj nagrodę</button>
+            <button type="button" class="btn btn-success" onclick="addRewardFromAdmin()">➕ Dodaj nagrodę</button>
 
             <h3 style="margin: 18px 0 10px 0; font-size:1.05rem;">Aktualne nagrody:</h3>
             <div id="adminRewardsList"></div>
         </div>
 
-        <!-- 4. SCHEMATY DNIA -->
+        <!-- 4. SCHEMATY ZADAŃ -->
         <div class="admin-section">
-            <h2>💾 4. Domyślne schematy zadań (Szablony)</h2>
+            <h2>💾 4. Domyślne schematy zadań (Szablony zadań)</h2>
             <div class="form-row">
-                <input type="text" id="newPresetName" class="input-text" style="flex:1;" placeholder="Nazwa schematu (np. Dzień szkolny - 3 klasa)">
-                <button class="btn btn-primary" onclick="saveCurrentAsPreset()">💾 Zapisz obecny plan jako schemat</button>
+                <input type="text" id="newPresetName" class="input-text" style="flex:1;" placeholder="Nazwa schematu zadań (np. Dzień szkolny)">
+                <button type="button" class="btn btn-primary" onclick="saveCurrentAsPreset()">💾 Zapisz obecne zadania jako schemat</button>
             </div>
             <div id="presetsList" class="presets-grid"></div>
         </div>
 
-        <!-- 5. PIN -->
+        <!-- 5. SCHEMATY NAGRÓD -->
         <div class="admin-section">
-            <h2>🔐 5. Kod PIN Rodzica</h2>
+            <h2>🏆 5. Domyślne schematy nagród (Szablony nagród)</h2>
+            <div class="form-row">
+                <input type="text" id="newRewardPresetName" class="input-text" style="flex:1;" placeholder="Nazwa schematu nagród">
+                <button type="button" class="btn btn-primary" onclick="saveCurrentRewardsAsPreset()">💾 Zapisz obecne nagrody jako schemat</button>
+            </div>
+            <div id="rewardPresetsList" class="presets-grid"></div>
+        </div>
+
+        <!-- 6. PIN -->
+        <div class="admin-section">
+            <h2>🔐 6. Kod PIN Rodzica</h2>
             <div class="form-row">
                 <input type="password" id="newPinInput" class="input-text" placeholder="Nowy PIN (np. 1234)" maxlength="8">
-                <button class="btn btn-warning" onclick="changePin()">Zmień PIN</button>
+                <button type="button" class="btn btn-warning" onclick="changePin()">Zmień PIN</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- KOMUNIKAT CELEBRACYJNY (Zajmuje 80% widoku przez 20 sekund) -->
+<div id="completionModalOverlay" class="completion-modal-overlay">
+    <div class="completion-modal-box">
+        <div class="completion-emoji">🏆</div>
+        <div class="completion-title">Super robota! 🎉</div>
+        <div id="completionModalText" class="completion-text">Zadanie zostało ukończone!</div>
+        <div class="completion-timer-bar">
+            <div id="completionTimerFill" class="completion-timer-fill"></div>
+        </div>
+        <button type="button" class="btn btn-primary" style="font-size: 1.1rem; padding: 12px 28px;" onclick="closeCompletionModalImmediately()">Super! 👍</button>
+    </div>
+</div>
+
+<!-- MODAL BIBLIOTEKI OBRAZKÓW (+) -->
+<div id="emojiLibraryModal" class="modal-overlay" style="z-index: 1100;">
+    <div class="modal-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h3 style="color:var(--primary);">🎨 Wybierz obrazek z pełnej listy</h3>
+            <button type="button" class="btn btn-outline" onclick="closeEmojiLibrary()">✖ Zamknij</button>
+        </div>
+        <div id="emojiLibraryContent"></div>
+    </div>
+</div>
+
+<!-- MODAL EDYCJI DZIECKA -->
+<div id="editKidModal" class="modal-overlay">
+    <div class="modal-box" style="max-width:460px;">
+        <h3 style="margin-bottom:12px; color:var(--primary);">✏️ Edytuj profil dziecka</h3>
+        <input type="hidden" id="editKidId">
+        <div class="form-row">
+            <input type="text" id="editKidAvatarInput" class="input-text" style="width:65px; text-align:center; font-size:1.4rem;">
+            <button type="button" class="emoji-more-btn" onclick="openEmojiLibrary('editKidAvatarInput')">➕ Wybierz obrazek</button>
+        </div>
+        <div class="form-row">
+            <input type="text" id="editKidNameInput" class="input-text" style="flex:1;" placeholder="Imię dziecka">
+        </div>
+        <div class="form-row">
+            <label style="font-weight:800;">Kolor tablicy:</label>
+            <select id="editKidColorInput" class="select-input" style="flex:1;">
+                <option value="#6c5ce7">🟣 Fioletowy</option>
+                <option value="#0984e3">🔵 Niebieski</option>
+                <option value="#00b894">🟢 Zielony</option>
+                <option value="#e84393">🩷 Różowy</option>
+                <option value="#e17055">🟠 Pomarańczowy</option>
+                <option value="#d63031">🔴 Czerwony</option>
+                <option value="#fdcb6e">🟡 Złoty</option>
+            </select>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:14px;">
+            <button type="button" class="btn btn-outline" onclick="closeEditKidModal()">Anuluj</button>
+            <button type="button" class="btn btn-primary" onclick="saveEditedKid()">💾 Zapisz</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EDYCJI SEKCJI -->
+<div id="editSectionModal" class="modal-overlay">
+    <div class="modal-box" style="max-width:460px;">
+        <h3 style="margin-bottom:12px; color:var(--primary);">✏️ Edytuj sekcję zadań</h3>
+        <input type="hidden" id="editSectionId">
+        <div class="form-row">
+            <input type="text" id="editSectionIconInput" class="input-text" style="width:65px; text-align:center; font-size:1.4rem;">
+            <button type="button" class="emoji-more-btn" onclick="openEmojiLibrary('editSectionIconInput')">➕ Wybierz obrazek</button>
+        </div>
+        <div class="form-row">
+            <input type="text" id="editSectionNameInput" class="input-text" style="flex:1;" placeholder="Nazwa sekcji">
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:14px;">
+            <button type="button" class="btn btn-outline" onclick="closeEditSectionModal()">Anuluj</button>
+            <button type="button" class="btn btn-primary" onclick="saveEditedSection()">💾 Zapisz sekcję</button>
         </div>
     </div>
 </div>
@@ -747,13 +432,30 @@
         <h3 style="margin-bottom:12px; color:var(--primary);">✏️ Edytuj zadanie</h3>
         <input type="hidden" id="editTaskId">
         <div class="form-row">
-            <input type="text" id="editTaskIcon" class="input-text" style="width:65px; text-align:center;">
+            <input type="text" id="editTaskIcon" class="input-text" style="width:65px; text-align:center; font-size:1.3rem;">
+            <button type="button" class="emoji-more-btn" onclick="openEmojiLibrary('editTaskIcon')">➕</button>
             <input type="text" id="editTaskTitle" class="input-text" style="flex:1;">
+        </div>
+        <div class="form-row">
+            <div style="display:flex; align-items:center; gap:6px; background:#f8f9fa; padding:6px 10px; border-radius:10px; border:2px solid #dfe6e9; flex:1;">
+                <span style="font-weight:800; font-size:0.85rem;">🗂️ Sekcja:</span>
+                <select id="editTaskSectionSelect" class="select-input" style="flex:1; padding:5px 8px; background:white;"></select>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; background:#f8f9fa; padding:6px 10px; border-radius:10px; border:2px solid #dfe6e9;">
+                <span style="font-weight:800; font-size:0.85rem;">⏰ Czas:</span>
+                <input type="time" id="editTaskDueTime" class="input-text" style="padding:4px 8px; background:white;">
+                <button type="button" class="btn btn-outline" style="padding:4px 7px; font-size:0.75rem;" onclick="document.getElementById('editTaskDueTime').value=''">✖</button>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; background:#fff0f6; padding:6px 10px; border-radius:10px; border:2px solid #f06595;">
+                <span style="font-weight:800; font-size:0.85rem; color:#c2255c;">⏱️ Timer (hh:mm:ss):</span>
+                <input type="time" id="editTaskTimerDuration" class="input-text" step="1" value="00:00:00" style="padding:4px 8px; background:white;">
+                <button type="button" class="btn btn-outline" style="padding:4px 7px; font-size:0.75rem;" onclick="document.getElementById('editTaskTimerDuration').value='00:00:00'">✖</button>
+            </div>
         </div>
         <div id="editTaskKidsBox" class="kids-Checkboxes"></div>
         <div style="display:flex; justify-content:flex-end; gap:8px;">
-            <button class="btn btn-outline" onclick="closeEditModal()">Anuluj</button>
-            <button class="btn btn-primary" onclick="saveEditedTask()">Zapisz</button>
+            <button type="button" class="btn btn-outline" onclick="closeEditModal()">Anuluj</button>
+            <button type="button" class="btn btn-primary" onclick="saveEditedTask()">Zapisz</button>
         </div>
     </div>
 </div>
@@ -764,21 +466,22 @@
         <h3 style="margin-bottom:12px; color:var(--primary);">✏️ Edytuj nagrodę</h3>
         <input type="hidden" id="editRewardId">
         <div class="form-row">
-            <input type="text" id="editRewardIcon" class="input-text" style="width:65px; text-align:center;">
+            <input type="text" id="editRewardIcon" class="input-text" style="width:65px; text-align:center; font-size:1.3rem;">
+            <button type="button" class="emoji-more-btn" onclick="openEmojiLibrary('editRewardIcon')">➕</button>
             <input type="text" id="editRewardTitle" class="input-text" style="flex:1;">
         </div>
         <div id="editRewardKidsBox" class="kids-Checkboxes"></div>
         <div style="display:flex; justify-content:flex-end; gap:8px;">
-            <button class="btn btn-outline" onclick="closeEditRewardModal()">Anuluj</button>
-            <button class="btn btn-primary" onclick="saveEditedReward()">Zapisz</button>
+            <button type="button" class="btn btn-outline" onclick="closeEditRewardModal()">Anuluj</button>
+            <button type="button" class="btn btn-primary" onclick="saveEditedReward()">Zapisz</button>
         </div>
     </div>
 </div>
 
-<!-- MODAL EDYCJI SCHEMATU -->
+<!-- MODAL EDYCJI SCHEMATU ZADAŃ -->
 <div id="editPresetModal" class="modal-overlay">
     <div class="modal-box">
-        <h3 style="margin-bottom:12px; color:var(--primary);">✏️ Edytuj schemat dnia</h3>
+        <h3 style="margin-bottom:12px; color:var(--primary);">✏️ Edytuj schemat zadań</h3>
         <input type="hidden" id="editPresetId">
         <div class="form-row">
             <input type="text" id="editPresetNameInput" class="input-text" style="flex:1;" placeholder="Nazwa schematu">
@@ -786,24 +489,68 @@
         <div style="background:#f1f2f6; padding:10px; border-radius:12px; margin-bottom:12px;">
             <div style="font-weight:800; font-size:0.88rem; margin-bottom:6px;">➕ Dodaj zadanie do tego schematu:</div>
             <div class="form-row" style="margin-bottom:0;">
-                <input type="text" id="presetNewTaskIcon" class="input-text" style="width:55px; text-align:center;" value="📚">
-                <input type="text" id="presetNewTaskTitle" class="input-text" style="flex:1;" placeholder="Treść zadania w schemacie">
-                <button class="btn btn-success" onclick="addTaskToEditedPreset()">Dodaj</button>
+                <input type="text" id="presetNewTaskIcon" class="input-text" style="width:50px; text-align:center;" value="📚">
+                <button type="button" class="emoji-more-btn" onclick="openEmojiLibrary('presetNewTaskIcon')">➕</button>
+                <input type="text" id="presetNewTaskTitle" class="input-text" style="flex:1;" placeholder="Treść zadania">
+                <input type="time" id="presetNewTaskTime" class="input-text" style="width:95px;" title="Godzina">
+                <input type="time" id="presetNewTaskTimer" class="input-text" step="1" value="00:00:00" style="width:125px;" title="Timer (hh:mm:ss)">
+                <button type="button" class="btn btn-success" onclick="addTaskToEditedPreset()">Dodaj</button>
             </div>
         </div>
         <div id="editPresetTasksContainer" style="max-height:300px; overflow-y:auto; margin-bottom:14px;"></div>
         <div style="display:flex; justify-content:flex-end; gap:8px;">
-            <button class="btn btn-outline" onclick="closePresetModal()">Zamknij</button>
-            <button class="btn btn-primary" onclick="saveEditedPresetModal()">💾 Zapisz schemat</button>
+            <button type="button" class="btn btn-outline" onclick="closePresetModal()">Zamknij</button>
+            <button type="button" class="btn btn-primary" onclick="saveEditedPresetModal()">💾 Zapisz schemat</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EDYCJI SCHEMATU NAGRÓD -->
+<div id="editRewardPresetModal" class="modal-overlay">
+    <div class="modal-box">
+        <h3 style="margin-bottom:12px; color:var(--primary);">✏️ Edytuj schemat nagród</h3>
+        <input type="hidden" id="editRewardPresetId">
+        <div class="form-row">
+            <input type="text" id="editRewardPresetNameInput" class="input-text" style="flex:1;" placeholder="Nazwa schematu nagród">
+        </div>
+        <div style="background:#f1f2f6; padding:10px; border-radius:12px; margin-bottom:12px;">
+            <div style="font-weight:800; font-size:0.88rem; margin-bottom:6px;">➕ Dodaj nagrodę do tego schematu:</div>
+            <div class="form-row" style="margin-bottom:0;">
+                <input type="text" id="rewardPresetNewIcon" class="input-text" style="width:55px; text-align:center;" value="🍦">
+                <button type="button" class="emoji-more-btn" onclick="openEmojiLibrary('rewardPresetNewIcon')">➕</button>
+                <input type="text" id="rewardPresetNewTitle" class="input-text" style="flex:1;" placeholder="Treść nagrody">
+                <button type="button" class="btn btn-success" onclick="addRewardToEditedPreset()">Dodaj</button>
+            </div>
+        </div>
+        <div id="editRewardPresetItemsContainer" style="max-height:300px; overflow-y:auto; margin-bottom:14px;"></div>
+        <div style="display:flex; justify-content:flex-end; gap:8px;">
+            <button type="button" class="btn btn-outline" onclick="closeRewardPresetModal()">Zamknij</button>
+            <button type="button" class="btn btn-primary" onclick="saveEditedRewardPresetModal()">💾 Zapisz schemat</button>
         </div>
     </div>
 </div>
 
 <script>
     const EMOJIS = ['📚', '🎒', '🛏️', '🪥', '🍽️', '🧹', '🐕', '⚽', '🎨', '🎹', '🚿', '👕', '🍎', '🚲', '🇬🇧', '🧩'];
+    const SECTION_EMOJIS = ['☀️', '🌅', '🏫', '🍽️', '🌇', '🌙', '⭐', '🏠', '🎒', '🧹'];
     const REWARD_EMOJIS = ['🍦', '🎮', '🚲', '🍿', '🧸', '🏆', '⭐', '🎁', '🎨', '⚽', '🍕', '🎉'];
+
+    const ALL_EMOJIS_CATALOG = {
+        "👧 Dzieci, Postacie i Emocje": ['👦','👧','🧒','👶','🦸‍♂️','🦸‍♀️','🧙‍♂️','🧙‍♀️','🧚‍♀️','🧚‍♂️','🧜‍♀️','🧜‍♂️','🤴','👸','🥷','🧑‍🚀','🧑‍🚒','👮','🕵️','🤠','🏴‍☠️','🤖','👽','👻','⛄','🎅','🤶','🧝‍♂️','🧝‍♀️','🧛‍♂️','🧟‍♂️','🧞‍♂️','🧑‍🎓','🧑‍🏫','🧑‍⚕️','🧑‍🍳','🧑‍🌾','🧑‍🔧','🧑‍🎨','🧑‍✈️','👑','😇','😎','🥳','🤩','😀','😃','😄','😁','😆','😅','😂','🤣','😊','🥹','🙂','🙃','😉','😌','😍','🥰','😘','🤪','🤓'],
+        "🧹 Dom i Porządki": ['🛏️','🧹','🌪️','🍽️','🧽','🗑️','♻️','🐠','🐟','🧺','👕','🪴','🪣','🪠','🛋️','🪑','🚪','🪟','🪞','🛎️','🖼️','🔑','🗝️','📦','⏰','⏳','⌚','📅','📆','💡','🔦','🕯️','🔌','🔋','🧰','🛠️','🔧','🔨','🪛','🪚','🧱','🪜','🧲','🧯','🛒','🛍️'],
+        "🧼 Higiena, Zdrowie i Ubranie": ['🪥','🦷','🧼','🫧','🚿','🛁','🪮','💇‍♀️','💇‍♂️','🧴','🧖‍♀️','🧖‍♂️','🪒','🧻','🚽','💅','💄','💊','🩹','🩺','🌡️','🩻','🩼','👕','👖','🧦','👟','👞','🥿','🥾','🩴','👗','👘','🧥','🧣','🧤','🧢','👒','🎩','👓','🕶️','☂️','🎒','👜','👛','🧷','🪡','🧵','🧶'],
+        "📚 Szkoła, Nauka i Czas": ['📚','📖','📗','📘','📙','📓','📔','📒','📝','✏️','🖊️','🖋️','✒️','🖌️','🖍️','📐','📏','📎','🖇️','📌','📍','✂️','🗂️','📁','📂','🗃️','📋','📊','📈','📉','💻','🖥️','🖨️','⌨️','🖱️','📱','🧮','🔬','🔭','🧬','🧪','🧫','⚗️','🌍','🌎','🌏','🌐','🗺️','🧭','🏫','🔔','🎓','🏆','🥇','🥈','🥉','🏅','🎖️','📜','🇬🇧','🇩🇪','🇪🇸','🇫🇷','🇮🇹','🇵🇱','🇺🇦','🇺🇸','🇯🇵','🇨🇳'],
+        "🍽️ Jedzenie, Napoje i Posiłki": ['🍽️','🥣','🥄','🍴','🥢','🔪','🏺','🍳','🥞','🧇','🥓','🥩','🍗','🍖','🌭','🍔','🍟','🍕','🫓','🥪','🥙','🧆','🌮','🌯','🫔','🥗','🥘','🫕','🥫','🍝','🍜','🍲','🍛','🍣','🍱','🥟','🍤','🍙','🍚','🍘','🍥','🥠','🍢','🥐','🥯','🍞','🥖','🥨','🧀','🥚','🧈','🍎','🍐','🍊','🍋','🍌','🍉','🍇','🍓','🫐','🍈','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🍆','🥑','🥦','🥬','🥒','🌶️','🫑','🌽','🥕','🫒','🧄','🧅','🥔','🍠','🥜','🫘','🌰','🍯','🥛','🧃','🫖','☕','🍵','🥤','🧋','🧊','💧'],
+        "🐶 Zwierzęta, Pupil i Przyroda": ['🐶','🐕','🦮','🐕‍🦺','🐩','🐾','🦴','🐱','🐈','🐈‍⬛','🐠','🐟','🐡','🦊','🐼','🐨','🐯','🦁','🐮','🐷','🐽','🐸','🐵','🙈','🙉','🙊','🦄','🐴','🏇','🦓','🦌','🦬','🐂','🐃','🐄','🐏','🐑','🐐','🐪','🐫','🦙','🦒','🐘','🦣','🦏','🦛','🐭','🐁','🐀','🐹','🐰','🐇','🐿️','🦫','🦔','🦇','🐻','🐻‍❄️','🦥','🦦','🦨','🦘','🦡','🦃','🐔','🐓','🐣','🐤','🐥','🐦','🐧','🕊️','🦅','🦆','🦢','🦉','🦤','🪶','🦩','🦚','🦜','🐢','🐊','🐍','🦎','🦖','🦕','🐙','🦑','🦐','🦞','🦀','🐬','🐳','🐋','🦈','🦋','🐛','🐜','🐝','🪲','🐞','🦗','🕷️','🕸️','🦂','🐌','🪱'],
+        "🌸 Rośliny, Pogoda i Pory Dnia": ['☀️','🌅','🌄','🌇','🌆','🌃','🌌','🌙','🌛','🌜','🌝','🌞','⭐','🌟','🌠','☁️','⛅','⛈️','🌤️','🌥️','🌦️','🌧️','🌨️','🌩️','🌪️','🌫️','🌬️','🌈','❄️','☃️','⚡','🔥','🌊','🌸','💮','🏵️','🌹','🥀','🌺','🌻','🌼','🌷','🌱','🪴','🌲','🌳','🌴','🌵','🌾','🌿','☘️','🍀','🍁','🍂','🍃','🍄','🐚','🪨'],
+        "⚽ Sport, Muzyka, Gry i Hobby": ['⚽','🏀','🏈','⚾','🥎','🎾','🏐','🏉','🥏','🎱','🪀','🏓','🏸','🏒','🏑','🥍','🏏','🪃','🥅','⛳','🪁','🏹','🎣','🤿','🥊','🥋','🎽','🛹','🛼','🛷','⛸️','🥌','🎿','⛷️','🏂','🪂','🏋️','🤼','🤸','⛹️','🤺','🤾','🏌️','🧘','🏄','🏊','🤽','🚣','🧗','🚵','🚴','🎨','🎭','🎪','🎤','🎧','🎼','🎹','🥁','🪘','🎷','🎺','🪗','🎸','🪕','🎻','🎬','🎯','🎳','🎮','🕹️','🎲','🧩','♟️','🃏','🀄','🎴','🪄','📷','📸','📹','🎥'],
+        "🍦 Nagrody, Słodycze, Wyjścia i Podróże": ['🍦','🍧','🍨','🍩','🍪','🎂','🍰','🧁','🥧','🍫','🍬','🍭','🍮','🍿','🎁','🎀','🎈','🎉','🎊','🪅','🪩','🧸','🪆','💎','💰','💵','🪙','💳','🛍️','🛒','🎟️','🎫','🎢','🎡','🎠','🛝','🏖️','🏝️','🏜️','🌋','⛰️','🏔️','🗻','🏕️','⛺','🛖','🏠','🏡','🏰','🏯','🏟️','⛲','🗽','🗼','🚗','🚕','🚙','🚌','🚎','🏎️','🚓','🚑','🚒','🚐','🛻','🚚','🚛','🚜','🏍️','🛵','🚲','🛴','🚏','🛣️','🛤️','⛽','🚨','🚥','🚦','🛑','🚧','⚓','⛵','🛶','🚤','🛳️','⛴️','🛥️','🚢','✈️','🛩️','🛫','🛬','🚁','🚟','🚠','🚡','🛰️','🚀','🛸']
+    };
+
     let selectedEmoji = '📚';
+    let selectedSectionEmoji = '☀️';
     let selectedRewardEmoji = '🍦';
+    let emojiPickerTarget = null;
     let isParentMode = false;
     let scrollPositions = {};
     let openKidDrawers = {};
@@ -812,49 +559,172 @@
     let lastSyncedUpdatedAt = 0;
     let isInitialCloudSyncDone = false;
 
+    let collapsedAdminSections = {};
+    let collapsedKidSections = {};
+    let activeTaskTimers = {};
+    let completionModalTimeout = null;
+
     const DEFAULT_STATE = {
         updatedAt: 0,
         pin: '1234',
-        layout: 'columns',
-        globalScale: 1,
+        celebrationSoundUrl: 'https://actions.google.com/sounds/v1/crowds/applause.ogg',
         kids: [
-            { id: 'kid_1', name: 'Kuba', avatar: '👦', color: '#6c5ce7', zoom: 1 },
-            { id: 'kid_2', name: 'Maja', avatar: '👧', color: '#e84393', zoom: 1 }
+            { id: 'kid_1', name: 'Kuba', avatar: '👦', color: '#6c5ce7' },
+            { id: 'kid_2', name: 'Maja', avatar: '👧', color: '#e84393' }
+        ],
+        sections: [
+            { id: 'sec_morning', name: 'Rano', icon: '☀️' },
+            { id: 'sec_afternoon', name: 'Po południu', icon: '🏫' },
+            { id: 'sec_evening', name: 'Wieczór', icon: '🌙' }
         ],
         tasks: [
-            { id: 't_1', title: 'Pościelić łóżko i przewietrzyć pokój', icon: '🛏️', assignedKids: ['kid_1', 'kid_2'], statusByKid: {}, orderByKid: { kid_1: 0, kid_2: 0 } },
-            { id: 't_2', title: 'Umyć zęby i ubrać się do szkoły', icon: '🪥', assignedKids: ['kid_1', 'kid_2'], statusByKid: {}, orderByKid: { kid_1: 1, kid_2: 1 } },
-            { id: 't_3', title: 'Odrobić pracę domową (3 klasa)', icon: '📚', assignedKids: ['kid_1', 'kid_2'], statusByKid: {}, orderByKid: { kid_1: 2, kid_2: 2 } },
-            { id: 't_4', title: 'Spakować plecak na jutro', icon: '🎒', assignedKids: ['kid_1', 'kid_2'], statusByKid: {}, orderByKid: { kid_1: 3, kid_2: 3 } },
-            { id: 't_5', title: 'Nakarmić pupila / Wyprowadzić psa', icon: '🐕', assignedKids: ['kid_1'], statusByKid: {}, orderByKid: { kid_1: 4 } },
-            { id: 't_6', title: 'Poćwiczyć czytanie przez 15 minut', icon: '🎨', assignedKids: ['kid_2'], statusByKid: {}, orderByKid: { kid_2: 4 } }
+            { id: 't_1', title: 'Pościelić łóżko i przewietrzyć pokój', icon: '🛏️', sectionId: 'sec_morning', dueTime: '07:30', timerSeconds: 0, assignedKids: ['kid_1', 'kid_2'], statusByKid: {}, orderByKid: { kid_1: 0, kid_2: 0 }, prevOrderByKid: {}, lateSecondsByKid: {} },
+            { id: 't_2', title: 'Umyć zęby i ubrać się do szkoły', icon: '🪥', sectionId: 'sec_morning', dueTime: '07:50', timerSeconds: 0, assignedKids: ['kid_1', 'kid_2'], statusByKid: {}, orderByKid: { kid_1: 1, kid_2: 1 }, prevOrderByKid: {}, lateSecondsByKid: {} },
+            { id: 't_3', title: 'Odrobić pracę domową (3 klasa)', icon: '📚', sectionId: 'sec_afternoon', dueTime: '16:30', timerSeconds: 900, assignedKids: ['kid_1', 'kid_2'], statusByKid: {}, orderByKid: { kid_1: 2, kid_2: 2 }, prevOrderByKid: {}, lateSecondsByKid: {} },
+            { id: 't_4', title: 'Nakarmić pupila / Wyprowadzić psa', icon: '🐕', sectionId: 'sec_afternoon', dueTime: '', timerSeconds: 0, assignedKids: ['kid_1'], statusByKid: {}, orderByKid: { kid_1: 3 }, prevOrderByKid: {}, lateSecondsByKid: {} },
+            { id: 't_5', title: 'Poćwiczyć czytanie przez 15 minut', icon: '🎨', sectionId: 'sec_afternoon', dueTime: '', timerSeconds: 900, assignedKids: ['kid_2'], statusByKid: {}, orderByKid: { kid_2: 3 }, prevOrderByKid: {}, lateSecondsByKid: {} },
+            { id: 't_6', title: 'Spakować plecak na jutro', icon: '🎒', sectionId: 'sec_evening', dueTime: '19:30', timerSeconds: 0, assignedKids: ['kid_1', 'kid_2'], statusByKid: {}, orderByKid: { kid_1: 4, kid_2: 4 }, prevOrderByKid: {}, lateSecondsByKid: {} }
         ],
         rewards: [
-            { id: 'r_1', title: '30 minut ulubionej gry lub bajki 🎮', icon: '🎮', assignedKids: ['kid_1', 'kid_2'], orderByKid: { kid_1: 0, kid_2: 0 } },
-            { id: 'r_2', title: 'Wyjście na lody lub deser 🍦', icon: '🍦', assignedKids: ['kid_1', 'kid_2'], orderByKid: { kid_1: 1, kid_2: 1 } }
+            { id: 'r_1', title: '30 minut ulubionej gry lub bajki 🎮', icon: '🎮', assignedKids: ['kid_1', 'kid_2'], statusByKid: {}, orderByKid: { kid_1: 0, kid_2: 0 } },
+            { id: 'r_2', title: 'Wyjście na lody lub deser 🍦', icon: '🍦', assignedKids: ['kid_1', 'kid_2'], statusByKid: {}, orderByKid: { kid_1: 1, kid_2: 1 } }
         ],
         presets: [
             {
                 id: 'preset_school',
                 name: '🏫 Dzień Szkolny (Standard)',
                 tasks: [
-                    { id: 'p1', title: 'Pościelić łóżko', icon: '🛏️', assignedKids: ['ALL'] },
-                    { id: 'p2', title: 'Mycie zębów i poranna toaleta', icon: '🪥', assignedKids: ['ALL'] },
-                    { id: 'p3', title: 'Odrobić lekcje', icon: '📚', assignedKids: ['ALL'] },
-                    { id: 'p4', title: 'Spakować plecak do szkoły', icon: '🎒', assignedKids: ['ALL'] }
+                    { id: 'p1', title: 'Pościelić łóżko', icon: '🛏️', sectionId: 'sec_morning', dueTime: '07:30', timerSeconds: 0, assignedKids: ['ALL'] },
+                    { id: 'p2', title: 'Mycie zębów i poranna toaleta', icon: '🪥', sectionId: 'sec_morning', dueTime: '07:50', timerSeconds: 0, assignedKids: ['ALL'] },
+                    { id: 'p3', title: 'Odrobić lekcje', icon: '📚', sectionId: 'sec_afternoon', dueTime: '16:30', timerSeconds: 1200, assignedKids: ['ALL'] },
+                    { id: 'p4', title: 'Spakować plecak do szkoły', icon: '🎒', sectionId: 'sec_evening', dueTime: '19:30', timerSeconds: 0, assignedKids: ['ALL'] }
                 ]
-            },
+            }
+        ],
+        rewardPresets: [
             {
-                id: 'preset_weekend',
-                name: '☀️ Weekend / Sobota',
-                tasks: [
-                    { id: 'w1', title: 'Śniadanie i pościelenie łóżka', icon: '🍽️', assignedKids: ['ALL'] },
-                    { id: 'w2', title: 'Porządki w pokoju', icon: '🧹', assignedKids: ['ALL'] },
-                    { id: 'w3', title: 'Spacer lub rower', icon: '🚲', assignedKids: ['ALL'] }
+                id: 'rpreset_standard',
+                name: '🍦 Nagrody Codzienne',
+                rewards: [
+                    { id: 'rp1', title: '30 minut bajki lub gry', icon: '🎮', assignedKids: ['ALL'] },
+                    { id: 'rp2', title: 'Słodki deser po obiedzie', icon: '🍦', assignedKids: ['ALL'] }
                 ]
             }
         ]
     };
+
+    function parseHmsToSeconds(hmsStr) {
+        if (!hmsStr || typeof hmsStr !== 'string') return 0;
+        const parts = hmsStr.trim().split(':').map(n => parseInt(n, 10) || 0);
+        if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
+        if (parts.length === 2) return parts[0] * 3600 + parts[1] * 60;
+        return 0;
+    }
+
+    function formatSecondsToHms(totalSec) {
+        const secNum = Math.max(0, Math.floor(Number(totalSec) || 0));
+        const h = Math.floor(secNum / 3600);
+        const m = Math.floor((secNum % 3600) / 60);
+        const s = secNum % 60;
+        return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    function sanitizeAppData(data) {
+        if (!data || typeof data !== 'object') return JSON.parse(JSON.stringify(DEFAULT_STATE));
+        if (data.updatedAt === undefined) data.updatedAt = 0;
+        if (typeof data.pin !== 'string') data.pin = '1234';
+        if (typeof data.celebrationSoundUrl !== 'string') data.celebrationSoundUrl = DEFAULT_STATE.celebrationSoundUrl;
+
+        const toArray = (val, fallback) => {
+            if (Array.isArray(val)) return val.filter(Boolean);
+            if (val && typeof val === 'object') return Object.values(val).filter(Boolean);
+            return JSON.parse(JSON.stringify(fallback));
+        };
+
+        data.kids = toArray(data.kids, DEFAULT_STATE.kids);
+        data.sections = toArray(data.sections, DEFAULT_STATE.sections);
+        data.tasks = toArray(data.tasks, []);
+        data.rewards = toArray(data.rewards, []);
+        data.presets = toArray(data.presets, DEFAULT_STATE.presets);
+        data.rewardPresets = toArray(data.rewardPresets, DEFAULT_STATE.rewardPresets);
+
+        const allKidIds = data.kids.map(k => k.id);
+
+        data.tasks.forEach((t, idx) => {
+            if (!t.id) t.id = 't_' + Date.now() + '_' + idx;
+            if (!t.title) t.title = 'Zadanie';
+            if (!t.icon) t.icon = '📌';
+            if (t.sectionId === undefined) t.sectionId = '';
+            if (t.dueTime === undefined) t.dueTime = '';
+            if (t.timerSeconds === undefined || isNaN(t.timerSeconds)) {
+                t.timerSeconds = (t.timerMinutes && !isNaN(t.timerMinutes)) ? Number(t.timerMinutes) * 60 : 0;
+            } else {
+                t.timerSeconds = Number(t.timerSeconds);
+            }
+            t.assignedKids = toArray(t.assignedKids, allKidIds);
+            if (!t.statusByKid || typeof t.statusByKid !== 'object') t.statusByKid = {};
+            if (!t.orderByKid || typeof t.orderByKid !== 'object') t.orderByKid = {};
+            if (!t.prevOrderByKid || typeof t.prevOrderByKid !== 'object') t.prevOrderByKid = {};
+            if (!t.lateSecondsByKid || typeof t.lateSecondsByKid !== 'object') t.lateSecondsByKid = {};
+        });
+
+        data.rewards.forEach((r, idx) => {
+            if (!r.id) r.id = 'r_' + Date.now() + '_' + idx;
+            if (!r.title) r.title = 'Nagroda';
+            if (!r.icon) r.icon = '🎁';
+            r.assignedKids = toArray(r.assignedKids, allKidIds);
+            if (!r.statusByKid || typeof r.statusByKid !== 'object') r.statusByKid = {};
+            if (!r.orderByKid || typeof r.orderByKid !== 'object') r.orderByKid = {};
+        });
+
+        data.presets.forEach(p => {
+            p.tasks = toArray(p.tasks, []);
+            p.tasks.forEach(pt => {
+                if (pt.timerSeconds === undefined || isNaN(pt.timerSeconds)) {
+                    pt.timerSeconds = (pt.timerMinutes && !isNaN(pt.timerMinutes)) ? Number(pt.timerMinutes) * 60 : 0;
+                } else {
+                    pt.timerSeconds = Number(pt.timerSeconds);
+                }
+                pt.assignedKids = toArray(pt.assignedKids, ['ALL']);
+            });
+        });
+
+        data.rewardPresets.forEach(rp => {
+            rp.rewards = toArray(rp.rewards, []);
+            rp.rewards.forEach(pr => { pr.assignedKids = toArray(pr.assignedKids, ['ALL']); });
+        });
+
+        delete data.globalScale;
+        delete data.layout;
+        return data;
+    }
+
+    let localDeviceSettings = loadLocalDeviceSettings();
+
+    function loadLocalDeviceSettings() {
+        try {
+            const raw = localStorage.getItem('rodzinnyPlan_localSettings_v1');
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                return {
+                    globalScale: Number(parsed.globalScale) || 1,
+                    layout: parsed.layout === 'rows' ? 'rows' : 'columns',
+                    kidZooms: (parsed.kidZooms && typeof parsed.kidZooms === 'object') ? parsed.kidZooms : {}
+                };
+            }
+        } catch (e) {}
+        const initial = { globalScale: 1, layout: 'columns', kidZooms: {} };
+        try { localStorage.setItem('rodzinnyPlan_localSettings_v1', JSON.stringify(initial)); } catch (e) {}
+        return initial;
+    }
+
+    function saveLocalDeviceSettings() {
+        try { localStorage.setItem('rodzinnyPlan_localSettings_v1', JSON.stringify(localDeviceSettings)); } catch (e) {}
+    }
+
+    function getKidLocalZoom(kidId) {
+        return (localDeviceSettings.kidZooms && Number(localDeviceSettings.kidZooms[kidId])) || 1;
+    }
 
     let cloudConfig = loadCloudConfig();
     let appData = loadData();
@@ -863,104 +733,141 @@
         const params = new URLSearchParams(window.location.search);
         const urlDb = params.get('db');
         const urlRoom = params.get('room');
+        const urlApiKey = params.get('apiKey');
+        const urlRt = params.get('rt');
+
+        let saved = {};
+        try { saved = JSON.parse(localStorage.getItem('rodzinnyPlan_cloudCfg') || '{}'); } catch (e) {}
+
         if (urlDb) {
-            const cfg = { dbUrl: urlDb.replace(/\/+$/, ''), roomId: (urlRoom || 'rodzina1').trim() };
-            localStorage.setItem('rodzinnyPlan_cloudCfg', JSON.stringify(cfg));
+            const cfg = {
+                dbUrl: urlDb.replace(/\/+$/, ''),
+                roomId: (urlRoom || saved.roomId || 'rodzina1').trim(),
+                apiKey: urlApiKey || saved.apiKey || '',
+                email: saved.email || '',
+                idToken: saved.idToken || '',
+                refreshToken: urlRt || saved.refreshToken || '',
+                tokenExpiresAt: saved.tokenExpiresAt || 0
+            };
+            try { localStorage.setItem('rodzinnyPlan_cloudCfg', JSON.stringify(cfg)); } catch (e) {}
             return cfg;
         }
-        const saved = localStorage.getItem('rodzinnyPlan_cloudCfg');
-        if (saved) {
-            try { return JSON.parse(saved); } catch (e) {}
-        }
-        return { dbUrl: '', roomId: 'rodzina1' };
+        return {
+            dbUrl: saved.dbUrl || '',
+            roomId: saved.roomId || 'rodzina1',
+            apiKey: saved.apiKey || '',
+            email: saved.email || '',
+            idToken: saved.idToken || '',
+            refreshToken: saved.refreshToken || '',
+            tokenExpiresAt: saved.tokenExpiresAt || 0
+        };
     }
 
     function loadData() {
         const raw = localStorage.getItem('rodzinnyPlanFull_v3');
-        if (!raw) return JSON.parse(JSON.stringify(DEFAULT_STATE));
-        try {
-            const parsed = JSON.parse(raw);
-            if (!parsed.layout) parsed.layout = 'columns';
-            if (!parsed.globalScale) parsed.globalScale = 1;
-            if (parsed.updatedAt === undefined) parsed.updatedAt = 0;
-            if (!parsed.rewards) parsed.rewards = JSON.parse(JSON.stringify(DEFAULT_STATE.rewards));
-            return parsed;
-        } catch (e) {
-            return JSON.parse(JSON.stringify(DEFAULT_STATE));
-        }
+        if (!raw) return sanitizeAppData(JSON.parse(JSON.stringify(DEFAULT_STATE)));
+        try { return sanitizeAppData(JSON.parse(raw)); } catch (e) { return sanitizeAppData(JSON.parse(JSON.stringify(DEFAULT_STATE))); }
     }
 
     function saveData(skipCloudPush = false) {
+        appData = sanitizeAppData(appData);
         appData.updatedAt = Date.now();
         lastSyncedUpdatedAt = appData.updatedAt;
-        localStorage.setItem('rodzinnyPlanFull_v3', JSON.stringify(appData));
-        if (!skipCloudPush && cloudConfig.dbUrl && isInitialCloudSyncDone) {
-            pushToCloud();
-        }
+        try { localStorage.setItem('rodzinnyPlanFull_v3', JSON.stringify(appData)); } catch (e) {}
+        if (!skipCloudPush && cloudConfig.dbUrl && isInitialCloudSyncDone) pushToCloud();
     }
 
-    function getCloudEndpoint() {
+    async function signInWithFirebaseEmail(apiKey, email, password) {
+        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${encodeURIComponent(apiKey)}`;
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password, returnSecureToken: true })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error((data.error && data.error.message) || 'Błąd logowania Firebase');
+        cloudConfig.idToken = data.idToken;
+        cloudConfig.refreshToken = data.refreshToken;
+        cloudConfig.tokenExpiresAt = Date.now() + (parseInt(data.expiresIn || '3600', 10) - 120) * 1000;
+        localStorage.setItem('rodzinnyPlan_cloudCfg', JSON.stringify(cloudConfig));
+    }
+
+    async function ensureValidFirebaseToken() {
+        if (!cloudConfig.apiKey || !cloudConfig.refreshToken) return cloudConfig.idToken || '';
+        if (cloudConfig.idToken && cloudConfig.tokenExpiresAt && Date.now() < cloudConfig.tokenExpiresAt) return cloudConfig.idToken;
+        try {
+            const url = `https://securetoken.googleapis.com/v1/token?key=${encodeURIComponent(cloudConfig.apiKey)}`;
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `grant_type=refresh_token&refresh_token=${encodeURIComponent(cloudConfig.refreshToken)}`
+            });
+            const data = await res.json();
+            if (res.ok && data.id_token) {
+                cloudConfig.idToken = data.id_token;
+                cloudConfig.refreshToken = data.refresh_token || cloudConfig.refreshToken;
+                cloudConfig.tokenExpiresAt = Date.now() + (parseInt(data.expires_in || '3600', 10) - 120) * 1000;
+                localStorage.setItem('rodzinnyPlan_cloudCfg', JSON.stringify(cloudConfig));
+                return cloudConfig.idToken;
+            }
+        } catch (e) {}
+        return cloudConfig.idToken || '';
+    }
+
+    async function getCloudEndpoint() {
         if (!cloudConfig.dbUrl) return null;
         const cleanUrl = cloudConfig.dbUrl.replace(/\/+$/, '');
         const cleanRoom = (cloudConfig.roomId || 'rodzina1').replace(/[^a-zA-Z0-9_-]/g, '');
-        return `${cleanUrl}/planer_${cleanRoom}.json`;
+        const token = await ensureValidFirebaseToken();
+        const base = `${cleanUrl}/planer_${cleanRoom}.json`;
+        return token ? `${base}?auth=${encodeURIComponent(token)}` : base;
     }
 
     async function pushToCloud() {
-        const endpoint = getCloudEndpoint();
+        const endpoint = await getCloudEndpoint();
         if (!endpoint) return;
         try {
             if (!appData.updatedAt) appData.updatedAt = Date.now();
+            const payload = JSON.parse(JSON.stringify(appData));
+            delete payload.globalScale;
+            delete payload.layout;
+            if (Array.isArray(payload.kids)) payload.kids.forEach(k => delete k.zoom);
+
             const res = await fetch(endpoint, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(appData)
+                body: JSON.stringify(payload)
             });
-            if (res.ok) {
-                updateSyncBadge('online', '☁️ Online (Zsynchronizowano)');
-            } else {
-                updateSyncBadge('error', '⚠️ Błąd zapisu chmury');
-            }
+            if (res.ok) updateSyncBadge('online', cloudConfig.refreshToken ? '🔒 Online (Zalogowano)' : '☁️ Online (Zsynchronizowano)');
+            else if (res.status === 401 || res.status === 403) updateSyncBadge('error', '🔒 Brak autoryzacji bazy (Zaloguj się)');
+            else updateSyncBadge('error', '⚠️ Błąd zapisu chmury');
         } catch (err) {
             updateSyncBadge('error', '⚠️ Brak połączenia z chmurą');
         }
     }
 
     async function pullFromCloud(force = false) {
-        const endpoint = getCloudEndpoint();
+        const endpoint = await getCloudEndpoint();
         if (!endpoint) return;
         try {
             const res = await fetch(endpoint);
-            if (!res.ok) {
-                updateSyncBadge('error', '⚠️ Błąd bazy danych');
-                return;
-            }
+            if (res.status === 401 || res.status === 403) { updateSyncBadge('error', '🔒 Wymagane logowanie do bazy'); return; }
+            if (!res.ok) { updateSyncBadge('error', '⚠️ Błąd bazy danych'); return; }
             const remoteData = await res.json();
             isInitialCloudSyncDone = true;
-
             if (!remoteData) {
                 appData.updatedAt = Date.now();
                 await pushToCloud();
                 return;
             }
-
             if (force || (remoteData.updatedAt && remoteData.updatedAt > (appData.updatedAt || 0))) {
-                appData = remoteData;
-                if (!appData.tasks) appData.tasks = [];
-                if (!appData.kids) appData.kids = [];
-                if (!appData.presets) appData.presets = [];
-                if (!appData.rewards) appData.rewards = [];
+                appData = sanitizeAppData(remoteData);
                 lastSyncedUpdatedAt = appData.updatedAt || Date.now();
                 localStorage.setItem('rodzinnyPlanFull_v3', JSON.stringify(appData));
-                applyGlobalScale();
-                applyBoardLayout();
-                if (isParentMode) {
-                    renderAdminPanel();
-                } else {
-                    renderKidsBoard();
-                }
+                if (isParentMode) renderAdminPanel();
+                else renderKidsBoard();
             }
-            updateSyncBadge('online', '☁️ Online (Na żywo)');
+            updateSyncBadge('online', cloudConfig.refreshToken ? '🔒 Online (Zabezpieczone)' : '☁️ Online (Na żywo)');
         } catch (err) {
             updateSyncBadge('error', '⚠️ Offline');
         }
@@ -973,66 +880,100 @@
         badge.textContent = text;
     }
 
-    function saveCloudConfig() {
+    async function saveCloudConfig() {
         const dbUrl = document.getElementById('cloudDbUrlInput').value.trim().replace(/\/+$/, '');
         const roomId = document.getElementById('cloudRoomIdInput').value.trim() || 'rodzina1';
-        cloudConfig = { dbUrl, roomId };
-        localStorage.setItem('rodzinnyPlan_cloudCfg', JSON.stringify(cloudConfig));
+        const apiKey = document.getElementById('cloudApiKeyInput').value.trim();
+        const email = document.getElementById('cloudEmailInput').value.trim();
+        const password = document.getElementById('cloudPasswordInput').value;
+
+        cloudConfig.dbUrl = dbUrl;
+        cloudConfig.roomId = roomId;
+        cloudConfig.apiKey = apiKey;
+        cloudConfig.email = email;
 
         if (!dbUrl) {
+            localStorage.setItem('rodzinnyPlan_cloudCfg', JSON.stringify(cloudConfig));
             updateSyncBadge('', '☁️ Tryb lokalny');
             document.getElementById('cloudHelpText').innerHTML = 'Wyłączono synchronizację w chmurze.';
             return;
         }
 
-        const shareUrl = `${window.location.origin}${window.location.pathname}?db=${encodeURIComponent(dbUrl)}&room=${encodeURIComponent(roomId)}`;
+        if (apiKey && email && password) {
+            try {
+                document.getElementById('cloudHelpText').innerHTML = '⏳ Logowanie do Firebase Authentication...';
+                await signInWithFirebaseEmail(apiKey, email, password);
+                document.getElementById('cloudPasswordInput').value = '';
+            } catch (err) {
+                alert('❌ Błąd logowania do Firebase: ' + err.message);
+                document.getElementById('cloudHelpText').innerHTML = '❌ Błąd logowania: ' + err.message;
+                return;
+            }
+        } else {
+            localStorage.setItem('rodzinnyPlan_cloudCfg', JSON.stringify(cloudConfig));
+        }
+
+        let shareUrl = `${window.location.origin}${window.location.pathname}?db=${encodeURIComponent(dbUrl)}&room=${encodeURIComponent(roomId)}`;
+        if (cloudConfig.apiKey && cloudConfig.refreshToken) {
+            shareUrl += `&apiKey=${encodeURIComponent(cloudConfig.apiKey)}&rt=${encodeURIComponent(cloudConfig.refreshToken)}`;
+        }
+
         document.getElementById('cloudHelpText').innerHTML = `
-            ✅ Połączono! Skopiuj ten link i otwórz go na innych urządzeniach (automatycznie pobierze dane z tej bazy):<br>
+            ✅ Połączono! Skopiuj ten link dla innych urządzeń:<br>
             <input type="text" class="input-text" style="width:100%; margin-top:6px; font-size:0.8rem;" value="${shareUrl}" onclick="this.select()" readonly>
         `;
-        pullFromCloud(true);
+        await pullFromCloud(true);
+    }
+
+    function logoutCloudSession() {
+        cloudConfig.idToken = '';
+        cloudConfig.refreshToken = '';
+        cloudConfig.tokenExpiresAt = 0;
+        localStorage.setItem('rodzinnyPlan_cloudCfg', JSON.stringify(cloudConfig));
+        document.getElementById('cloudHelpText').innerHTML = '🚪 Wylogowano sesję Firebase z tego urządzenia.';
+        updateSyncBadge('', '☁️ Wylogowano');
     }
 
     function handleSyncBadgeClick() {
-        if (!isParentMode) {
-            handleViewSwitch();
-        }
+        if (!isParentMode) handleViewSwitch();
     }
 
-    setInterval(() => {
-        if (cloudConfig.dbUrl) {
-            pullFromCloud(false);
-        }
-    }, 3000);
+    setInterval(() => { if (cloudConfig.dbUrl) pullFromCloud(false); }, 3000);
 
     function applyGlobalScale() {
-        const scale = appData.globalScale || 1;
+        let scale = Number(localDeviceSettings.globalScale) || 1;
+        if (scale < 0.4) scale = 0.4;
+        if (scale > 1.2) scale = 1.2;
+        localDeviceSettings.globalScale = scale;
+
         const root = document.getElementById('appRoot');
         root.style.transform = `scale(${scale})`;
         root.style.width = `${100 / scale}%`;
         root.style.height = `${100 / scale}vh`;
-        document.getElementById('globalScaleLabel').textContent = Math.round(scale * 100) + '%';
+        const lbl = document.getElementById('globalScaleLabel');
+        if (lbl) lbl.textContent = Math.round(scale * 100) + '%';
     }
 
     function changeGlobalScale(delta) {
-        let next = Math.round(((appData.globalScale || 1) + delta) * 100) / 100;
-        if (next < 0.6) next = 0.6;
-        if (next > 1.5) next = 1.5;
-        appData.globalScale = next;
+        let next = Math.round(((Number(localDeviceSettings.globalScale) || 1) + delta) * 100) / 100;
+        if (next < 0.4) next = 0.4;
+        if (next > 1.2) next = 1.2;
+        localDeviceSettings.globalScale = next;
         applyGlobalScale();
-        saveData();
+        saveLocalDeviceSettings();
     }
 
     function resetGlobalScale() {
-        appData.globalScale = 1;
+        localDeviceSettings.globalScale = 1;
         applyGlobalScale();
-        saveData();
+        saveLocalDeviceSettings();
     }
 
     function applyBoardLayout() {
         const board = document.getElementById('kidsView');
         const btn = document.getElementById('layoutToggleBtn');
-        if (appData.layout === 'rows') {
+        if (!board || !btn) return;
+        if (localDeviceSettings.layout === 'rows') {
             board.classList.remove('layout-columns');
             board.classList.add('layout-rows');
             btn.textContent = '📐 Układ: Jedno nad drugim';
@@ -1044,16 +985,117 @@
     }
 
     function toggleBoardLayout() {
-        appData.layout = appData.layout === 'rows' ? 'columns' : 'rows';
+        localDeviceSettings.layout = localDeviceSettings.layout === 'rows' ? 'columns' : 'rows';
         applyBoardLayout();
-        saveData();
+        saveLocalDeviceSettings();
     }
 
     function toggleFullScreen() {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen().catch(() => {});
-        } else {
-            document.exitFullscreen().catch(() => {});
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
+        else document.exitFullscreen().catch(() => {});
+    }
+
+    function getLateHexColor(lateSec) {
+        if (!lateSec || lateSec <= 0) return null;
+        const minSec = 3 * 60;
+        const maxSec = 15 * 60;
+        if (lateSec <= minSec) return '#FFFF00';
+        if (lateSec >= maxSec) return '#FF0000';
+        const ratio = (lateSec - minSec) / (maxSec - minSec);
+        const green = Math.round(255 * (1 - ratio));
+        return `#FF${green.toString(16).padStart(2, '0').toUpperCase()}00`;
+    }
+
+    function formatLateDuration(lateSec) {
+        const mins = Math.floor(lateSec / 60);
+        const secs = lateSec % 60;
+        const hours = Math.floor(mins / 60);
+        const remMins = mins % 60;
+        if (hours > 0) return `${hours}h ${remMins}m ${secs}s`;
+        if (mins > 0) return `${mins}m ${secs}s`;
+        return `${secs}s`;
+    }
+
+    function computeCountdownInfo(dueTimeStr, isDone, lateSec = 0) {
+        if (!dueTimeStr || typeof dueTimeStr !== 'string') return null;
+        if (isDone) {
+            if (lateSec > 0) {
+                const color = getLateHexColor(lateSec);
+                const textColor = lateSec > 9 * 60 ? '#ffffff' : '#2d3436';
+                return { text: `⚠️ ${dueTimeStr} (Spóźnienie: +${formatLateDuration(lateSec)})`, stateClass: 'completed', customColor: color, textColor: textColor };
+            }
+            return { text: `✅ ${dueTimeStr} (Wykonane o czasie)`, stateClass: 'completed', customColor: null };
+        }
+        const parts = dueTimeStr.split(':');
+        if (parts.length < 2) return null;
+        const targetH = parseInt(parts[0], 10);
+        const targetM = parseInt(parts[1], 10);
+        if (isNaN(targetH) || isNaN(targetM)) return null;
+
+        const now = new Date();
+        const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), targetH, targetM, 0, 0);
+        const diffSec = Math.floor((target.getTime() - now.getTime()) / 1000);
+
+        if (diffSec <= 0) {
+            const overMin = Math.floor(Math.abs(diffSec) / 60);
+            const overH = Math.floor(overMin / 60);
+            const remM = overMin % 60;
+            const overStr = overH > 0 ? `${overH}h ${remM}m temu` : `${remM}m temu`;
+            return { text: `⏰ Do ${dueTimeStr} (Po czasie: ${overStr})`, stateClass: 'overdue', customColor: null };
+        }
+
+        const hours = Math.floor(diffSec / 3600);
+        const minutes = Math.floor((diffSec % 3600) / 60);
+        const seconds = diffSec % 60;
+        let timeFormatted = hours > 0 ? `${hours}h ${minutes}m ${seconds}s` : (minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`);
+        return { text: `⏳ Do ${dueTimeStr} (zostało: ${timeFormatted})`, stateClass: diffSec <= 1800 ? 'soon' : '', customColor: null };
+    }
+
+    function updateAllTaskCountdowns() {
+        document.querySelectorAll('.task-time-badge[data-due-time]').forEach(badge => {
+            const dueTime = badge.getAttribute('data-due-time');
+            const isDone = badge.getAttribute('data-is-done') === 'true';
+            const lateSec = parseInt(badge.getAttribute('data-late-sec') || '0', 10);
+            const info = computeCountdownInfo(dueTime, isDone, lateSec);
+            if (info) {
+                badge.textContent = info.text;
+                badge.className = 'task-time-badge ' + info.stateClass;
+                if (info.customColor) {
+                    badge.style.background = info.customColor;
+                    badge.style.borderColor = info.customColor;
+                    badge.style.color = info.textColor;
+                } else {
+                    badge.style.background = '';
+                    badge.style.borderColor = '';
+                    badge.style.color = '';
+                }
+            }
+        });
+    }
+
+    setInterval(updateAllTaskCountdowns, 1000);
+
+    // ================= OBSŁUGA DŹWIĘKÓW I TIMERÓW ZADAŃ (hh:mm:ss) =================
+    function saveCelebrationSoundSetting() {
+        const sel = document.getElementById('celebrationSoundSelect');
+        if (sel) {
+            appData.celebrationSoundUrl = sel.value;
+            saveData();
+        }
+    }
+
+    function testCelebrationSound() {
+        const url = document.getElementById('celebrationSoundSelect') ? document.getElementById('celebrationSoundSelect').value : appData.celebrationSoundUrl;
+        playAudioFromUrl(url);
+    }
+
+    function playAudioFromUrl(url) {
+        try {
+            const audio = new Audio(url);
+            audio.volume = 1.0;
+            audio.play().catch(() => { playSound('win'); });
+        } catch (e) {
+            playSound('win');
         }
     }
 
@@ -1087,9 +1129,91 @@
         } catch (e) {}
     }
 
+    setInterval(() => {
+        let hasActive = false;
+        Object.keys(activeTaskTimers).forEach(key => {
+            if (activeTaskTimers[key] > 0) {
+                activeTaskTimers[key]--;
+                hasActive = true;
+                if (activeTaskTimers[key] === 0) {
+                    const [kidId, taskId] = key.split('__');
+                    delete activeTaskTimers[key];
+                    onTaskTimerFinished(kidId, taskId);
+                }
+            }
+        });
+        if (hasActive) updateLiveTimersOnBoard();
+    }, 1000);
+
+    function updateLiveTimersOnBoard() {
+        document.querySelectorAll('.task-timer-running[data-timer-key]').forEach(el => {
+            const key = el.getAttribute('data-timer-key');
+            const remSec = activeTaskTimers[key];
+            if (remSec !== undefined && remSec > 0) {
+                el.textContent = `⏱️ Czas: ${formatSecondsToHms(remSec)}`;
+            }
+        });
+    }
+
+    function handleTaskItemClick(kidId, taskId) {
+        const task = (appData.tasks || []).find(t => t.id === taskId);
+        if (!task) return;
+        const isDone = !!(task.statusByKid && task.statusByKid[kidId]);
+        const durationSec = Number(task.timerSeconds) || 0;
+
+        if (isDone || durationSec <= 0) {
+            toggleTaskDone(kidId, taskId);
+            return;
+        }
+
+        const timerKey = `${kidId}__${taskId}`;
+        if (activeTaskTimers[timerKey] !== undefined) return;
+
+        activeTaskTimers[timerKey] = durationSec;
+        renderKidsBoard();
+    }
+
+    function onTaskTimerFinished(kidId, taskId) {
+        const task = (appData.tasks || []).find(t => t.id === taskId);
+        if (!task) return;
+
+        playAudioFromUrl(appData.celebrationSoundUrl || DEFAULT_STATE.celebrationSoundUrl);
+        showCompletionModal(task.title);
+        toggleTaskDone(kidId, taskId);
+    }
+
+    function showCompletionModal(taskTitle) {
+        const overlay = document.getElementById('completionModalOverlay');
+        const textEl = document.getElementById('completionModalText');
+        const fillEl = document.getElementById('completionTimerFill');
+        if (!overlay || !textEl) return;
+
+        textEl.textContent = `Zadanie „${taskTitle}” zostało ukończone!`;
+        overlay.classList.add('open');
+        if (typeof confetti === 'function') confetti({ particleCount: 150, spread: 100, origin: { y: 0.5 } });
+
+        if (fillEl) {
+            fillEl.style.transition = 'none';
+            fillEl.style.width = '100%';
+            setTimeout(() => {
+                fillEl.style.transition = 'width 20s linear';
+                fillEl.style.width = '0%';
+            }, 50);
+        }
+
+        if (completionModalTimeout) clearTimeout(completionModalTimeout);
+        completionModalTimeout = setTimeout(() => { closeCompletionModalImmediately(); }, 20000);
+    }
+
+    function closeCompletionModalImmediately() {
+        const overlay = document.getElementById('completionModalOverlay');
+        if (overlay) overlay.classList.remove('open');
+        if (completionModalTimeout) clearTimeout(completionModalTimeout);
+    }
+
     function getTasksForKid(kidId) {
         return (appData.tasks || [])
-            .filter(t => t.assignedKids && t.assignedKids.includes(kidId))
+            .filter(t => t && Array.isArray(t.assignedKids) && t.assignedKids.includes(kidId))
             .sort((a, b) => {
                 const ordA = (a.orderByKid && a.orderByKid[kidId] !== undefined) ? a.orderByKid[kidId] : 999;
                 const ordB = (b.orderByKid && b.orderByKid[kidId] !== undefined) ? b.orderByKid[kidId] : 999;
@@ -1099,7 +1223,7 @@
 
     function getRewardsForKid(kidId) {
         return (appData.rewards || [])
-            .filter(r => r.assignedKids && r.assignedKids.includes(kidId))
+            .filter(r => r && Array.isArray(r.assignedKids) && r.assignedKids.includes(kidId))
             .sort((a, b) => {
                 const ordA = (a.orderByKid && a.orderByKid[kidId] !== undefined) ? a.orderByKid[kidId] : 999;
                 const ordB = (b.orderByKid && b.orderByKid[kidId] !== undefined) ? b.orderByKid[kidId] : 999;
@@ -1108,21 +1232,149 @@
     }
 
     function saveCurrentScrolls() {
-        document.querySelectorAll('.task-list[data-kid-id]').forEach(el => {
-            scrollPositions[el.dataset.kidId] = el.scrollTop;
-        });
+        document.querySelectorAll('.task-list[data-kid-id]').forEach(el => { scrollPositions['task_' + el.dataset.kidId] = el.scrollTop; });
+        document.querySelectorAll('.rewards-section[data-reward-kid-id]').forEach(el => { scrollPositions['rew_' + el.dataset.rewardKidId] = el.scrollTop; });
     }
 
     function restoreScrolls() {
         document.querySelectorAll('.task-list[data-kid-id]').forEach(el => {
-            const pos = scrollPositions[el.dataset.kidId];
+            const pos = scrollPositions['task_' + el.dataset.kidId];
             if (pos !== undefined) el.scrollTop = pos;
         });
+        document.querySelectorAll('.rewards-section[data-reward-kid-id]').forEach(el => {
+            const pos = scrollPositions['rew_' + el.dataset.rewardKidId];
+            if (pos !== undefined) el.scrollTop = pos;
+        });
+    }
+
+    function createTaskItemElement(kid, task) {
+        const isDone = !!(task.statusByKid && task.statusByKid[kid.id]);
+        const lateSec = (task.lateSecondsByKid && Number(task.lateSecondsByKid[kid.id])) || 0;
+        const timerKey = `${kid.id}__${task.id}`;
+        const isTimerRunning = activeTaskTimers[timerKey] !== undefined;
+
+        const item = document.createElement('div');
+        item.className = `task-item ${isDone ? 'done' : ''}`;
+        item.draggable = true;
+        item.dataset.taskId = task.id;
+        item.dataset.kidId = kid.id;
+        item.addEventListener('click', () => handleTaskItemClick(kid.id, task.id));
+
+        if (isDone && lateSec > 0) {
+            const lateColor = getLateHexColor(lateSec);
+            if (lateColor) {
+                item.style.borderColor = lateColor;
+                item.style.background = `linear-gradient(90deg, ${lateColor}44 0%, #f8f9fa 100%)`;
+            }
+        }
+
+        const leftDiv = document.createElement('div');
+        leftDiv.className = 'task-left';
+
+        const checkCircle = document.createElement('div');
+        checkCircle.className = 'check-circle';
+        checkCircle.textContent = isDone ? '✔' : '';
+
+        const iconSpan = document.createElement('span');
+        iconSpan.className = 'task-icon';
+        iconSpan.textContent = task.icon || '📌';
+
+        const contentBox = document.createElement('div');
+        contentBox.className = 'task-content-box';
+
+        const titleSpan = document.createElement('span');
+        titleSpan.className = 'task-title';
+        titleSpan.textContent = task.title || '';
+        contentBox.appendChild(titleSpan);
+
+        if (isTimerRunning) {
+            const remSec = activeTaskTimers[timerKey];
+            const timerBadge = document.createElement('div');
+            timerBadge.className = 'task-timer-running';
+            timerBadge.setAttribute('data-timer-key', timerKey);
+            timerBadge.textContent = `⏱️ Czas: ${formatSecondsToHms(remSec)}`;
+            contentBox.appendChild(timerBadge);
+        } else if (task.timerSeconds && Number(task.timerSeconds) > 0 && !isDone) {
+            const setBadge = document.createElement('div');
+            setBadge.className = 'task-time-badge';
+            setBadge.style.background = '#fff0f6';
+            setBadge.style.color = '#c2255c';
+            setBadge.style.borderColor = '#f06595';
+            setBadge.textContent = `⏱️ Timer: ${formatSecondsToHms(task.timerSeconds)} (kliknij, aby zacząć)`;
+            contentBox.appendChild(setBadge);
+        }
+
+        if (task.dueTime) {
+            const info = computeCountdownInfo(task.dueTime, isDone, lateSec);
+            if (info) {
+                const badgeDiv = document.createElement('div');
+                badgeDiv.className = `task-time-badge ${info.stateClass}`;
+                badgeDiv.setAttribute('data-due-time', task.dueTime);
+                badgeDiv.setAttribute('data-is-done', String(isDone));
+                badgeDiv.setAttribute('data-late-sec', String(lateSec));
+                badgeDiv.textContent = info.text;
+                if (info.customColor) {
+                    badgeDiv.style.background = info.customColor;
+                    badgeDiv.style.borderColor = info.customColor;
+                    badgeDiv.style.color = info.textColor;
+                }
+                contentBox.appendChild(badgeDiv);
+            }
+        }
+
+        leftDiv.appendChild(checkCircle);
+        leftDiv.appendChild(iconSpan);
+        leftDiv.appendChild(contentBox);
+
+        const orderButtons = document.createElement('div');
+        orderButtons.className = 'order-buttons';
+
+        const btnUp = document.createElement('button');
+        btnUp.type = 'button';
+        btnUp.className = 'btn-move';
+        btnUp.textContent = '⬆️';
+        btnUp.addEventListener('click', (e) => { e.stopPropagation(); moveTask(kid.id, task.id, -1); });
+
+        const btnDown = document.createElement('button');
+        btnDown.type = 'button';
+        btnDown.className = 'btn-move';
+        btnDown.textContent = '⬇️';
+        btnDown.addEventListener('click', (e) => { e.stopPropagation(); moveTask(kid.id, task.id, 1); });
+
+        orderButtons.appendChild(btnUp);
+        orderButtons.appendChild(btnDown);
+
+        item.appendChild(leftDiv);
+        item.appendChild(orderButtons);
+
+        item.addEventListener('dragstart', () => {
+            draggedTaskInfo = { kidId: kid.id, taskId: task.id };
+            item.classList.add('dragging');
+        });
+        item.addEventListener('dragend', () => {
+            item.classList.remove('dragging');
+            draggedTaskInfo = null;
+        });
+        item.addEventListener('dragover', (e) => e.preventDefault());
+        item.addEventListener('drop', (e) => {
+            e.preventDefault();
+            if (!draggedTaskInfo || draggedTaskInfo.kidId !== kid.id) return;
+            reorderTaskByDrop(kid.id, draggedTaskInfo.taskId, task.id);
+        });
+
+        return item;
+    }
+
+    function toggleKidSectionCollapse(kidId, secId) {
+        const key = `${kidId}_${secId}`;
+        collapsedKidSections[key] = !collapsedKidSections[key];
+        renderKidsBoard();
     }
 
     function renderKidsBoard() {
         saveCurrentScrolls();
         const board = document.getElementById('kidsView');
+        if (!board) return;
         board.innerHTML = '';
 
         (appData.kids || []).forEach(kid => {
@@ -1131,50 +1383,31 @@
             const total = kidTasks.length;
             const doneCount = kidTasks.filter(t => t.statusByKid && t.statusByKid[kid.id]).length;
             const percent = total === 0 ? 0 : Math.round((doneCount / total) * 100);
-            const zoom = kid.zoom || 1;
+            const zoom = getKidLocalZoom(kid.id);
             if (!kidSelectedEmoji[kid.id]) kidSelectedEmoji[kid.id] = '📚';
 
             const col = document.createElement('div');
             col.className = 'kid-column';
             col.dataset.kidColumn = kid.id;
-            col.style.borderTopColor = kid.color;
-
-            // Tworzenie HTML sekcji nagród (tęczowa, max 20% wysokości, przewijana, po wszystkich zadaniach i przed dodaniem zadania)
-            let rewardsHtml = '';
-            if (kidRewards.length > 0) {
-                const rewardsItemsHtml = kidRewards.map(rew => `
-                    <div class="reward-item">
-                        <span class="reward-icon">${rew.icon}</span>
-                        <span class="reward-title">${rew.title}</span>
-                    </div>
-                `).join('');
-
-                rewardsHtml = `
-                    <div class="rewards-section">
-                        <div class="rewards-header">🎁 Nagrody za Twoje starania:</div>
-                        <div class="rewards-list-container">
-                            ${rewardsItemsHtml}
-                        </div>
-                    </div>
-                `;
-            }
+            col.style.borderTopColor = kid.color || '#6c5ce7';
+            col.style.setProperty('--kid-scale', zoom);
 
             col.innerHTML = `
                 <div class="kid-header">
                     <div class="kid-identity">
-                        <div class="kid-avatar">${kid.avatar}</div>
+                        <div class="kid-avatar">${kid.avatar || '👦'}</div>
                         <div>
-                            <div class="kid-name" style="color:${kid.color}">${kid.name}</div>
+                            <div class="kid-name" style="color:${kid.color || '#6c5ce7'}">${kid.name}</div>
                             <div class="kid-subtitle" style="font-size:0.82rem; color:var(--text-muted); font-weight:700;">
                                 Zrobione: ${doneCount} z ${total}
                             </div>
                         </div>
                     </div>
                     <div class="kid-header-controls">
-                        <div class="zoom-controls">
-                            <button class="zoom-btn" onclick="changeKidZoom('${kid.id}', -0.1)">🔍-</button>
-                            <button class="zoom-btn" onclick="resetKidZoom('${kid.id}')">${Math.round(zoom * 100)}%</button>
-                            <button class="zoom-btn" onclick="changeKidZoom('${kid.id}', 0.1)">🔍+</button>
+                        <div class="zoom-controls" title="Skala tablicy dziecka (lokalna na tym urządzeniu: 40% - 200%)">
+                            <button type="button" class="zoom-btn" onclick="changeKidZoom('${kid.id}', -0.1)">🔍-</button>
+                            <button type="button" class="zoom-btn" onclick="resetKidZoom('${kid.id}')">${Math.round(zoom * 100)}%</button>
+                            <button type="button" class="zoom-btn" onclick="changeKidZoom('${kid.id}', 0.1)">🔍+</button>
                         </div>
                         <div class="kid-stars">⭐ ${doneCount}</div>
                     </div>
@@ -1185,16 +1418,16 @@
                     <div class="progress-label">${percent}%</div>
                 </div>
 
-                <div class="task-list" data-kid-id="${kid.id}" style="--kid-scale: ${zoom}"></div>
+                <div class="task-list" data-kid-id="${kid.id}"></div>
 
                 <div class="all-done-banner" style="display: ${total > 0 && doneCount === total ? 'block' : 'none'}">
                     🏆 Brawo ${kid.name}! Wszystkie zadania wykonane! 🎉
                 </div>
 
-                ${rewardsHtml}
+                <div class="rewards-placeholder"></div>
 
                 <div class="kid-add-footer">
-                    <button class="btn btn-outline" style="width:100%; justify-content:center;" onclick="toggleKidDrawer('${kid.id}')">
+                    <button type="button" class="btn btn-outline" style="width:100%; justify-content:center;" onclick="toggleKidDrawer('${kid.id}')">
                         ➕ Dodaj własne zadanie
                     </button>
                     <div class="kid-add-drawer ${openKidDrawers[kid.id] ? 'open' : ''}" id="drawer_${kid.id}">
@@ -1205,150 +1438,235 @@
                             <span class="quick-chip" onclick="quickFillKidTask('${kid.id}', '🐕', 'Nakarmić zwierzaka')">🐕 Zwierzak</span>
                             <span class="quick-chip" onclick="quickFillKidTask('${kid.id}', '🪥', 'Umyć zęby')">🪥 Zęby</span>
                         </div>
-                        <div style="display:flex; gap:6px;">
+                        <div style="display:flex; gap:6px; flex-wrap:wrap;">
                             <input type="text" id="kidEmoji_${kid.id}" class="input-text" style="width:52px; text-align:center;" value="${kidSelectedEmoji[kid.id]}">
-                            <input type="text" id="kidInput_${kid.id}" class="input-text" style="flex:1;" placeholder="Wpisz zadanie..." onkeydown="if(event.key==='Enter') addKidOwnTask('${kid.id}')">
-                            <button class="btn btn-success" onclick="addKidOwnTask('${kid.id}')">Dodaj</button>
+                            <button type="button" class="emoji-more-btn" onclick="openEmojiLibrary('kidEmoji_${kid.id}')">➕</button>
+                            <input type="text" id="kidInput_${kid.id}" class="input-text" style="flex:1; min-width:120px;" placeholder="Wpisz zadanie..." onkeydown="if(event.key==='Enter') addKidOwnTask('${kid.id}')">
+                            <input type="time" id="kidTime_${kid.id}" class="input-text" style="width:100px;" title="Opcjonalna godzina wykonania">
+                            <input type="time" id="kidTimer_${kid.id}" class="input-text" step="1" value="00:00:00" style="width:120px;" title="Opcjonalny timer (hh:mm:ss)">
+                            <button type="button" class="btn btn-success" onclick="addKidOwnTask('${kid.id}')">Dodaj</button>
                         </div>
                     </div>
                 </div>
             `;
 
+            const rewardsPlaceholder = col.querySelector('.rewards-placeholder');
+            if (kidRewards.length > 0) {
+                const rewSec = document.createElement('div');
+                rewSec.className = 'rewards-section';
+                rewSec.dataset.rewardKidId = kid.id;
+                rewSec.innerHTML = `<div class="rewards-header">🎁 Nagrody (kliknij, aby odebrać):</div>`;
+                const rewListContainer = document.createElement('div');
+                rewListContainer.className = 'rewards-list-container';
+
+                kidRewards.forEach(rew => {
+                    const isRewardDone = !!(rew.statusByKid && rew.statusByKid[kid.id]);
+                    const rItem = document.createElement('div');
+                    rItem.className = `reward-item ${isRewardDone ? 'done' : ''}`;
+                    rItem.addEventListener('click', () => toggleRewardDone(kid.id, rew.id));
+                    rItem.innerHTML = `
+                        <div class="reward-left">
+                            <div class="check-circle">${isRewardDone ? '✔' : ''}</div>
+                            <span class="reward-icon">${rew.icon || '🎁'}</span>
+                            <span class="reward-title"></span>
+                        </div>
+                    `;
+                    rItem.querySelector('.reward-title').textContent = rew.title || '';
+                    rewListContainer.appendChild(rItem);
+                });
+
+                rewSec.appendChild(rewListContainer);
+                rewSec.addEventListener('scroll', () => { scrollPositions['rew_' + kid.id] = rewSec.scrollTop; });
+                rewardsPlaceholder.replaceWith(rewSec);
+            } else {
+                rewardsPlaceholder.remove();
+            }
+
             const listEl = col.querySelector('.task-list');
-            listEl.addEventListener('scroll', () => {
-                scrollPositions[kid.id] = listEl.scrollTop;
-            });
+            listEl.addEventListener('scroll', () => { scrollPositions['task_' + kid.id] = listEl.scrollTop; });
 
-            kidTasks.forEach(task => {
-                const isDone = !!(task.statusByKid && task.statusByKid[kid.id]);
-                const item = document.createElement('div');
-                item.className = `task-item ${isDone ? 'done' : ''}`;
-                item.draggable = true;
-                item.dataset.taskId = task.id;
-                item.dataset.kidId = kid.id;
+            const sections = appData.sections || [];
+            const validSectionIds = new Set(sections.map(s => s.id));
 
-                item.innerHTML = `
-                    <div class="task-left" onclick="toggleTaskDone('${kid.id}', '${task.id}')">
-                        <div class="check-circle">${isDone ? '✔' : ''}</div>
-                        <span class="task-icon">${task.icon}</span>
-                        <span class="task-title">${task.title}</span>
+            sections.forEach(sec => {
+                const secTasks = kidTasks.filter(t => t.sectionId === sec.id);
+                if (secTasks.length === 0) return;
+
+                const secDone = secTasks.filter(t => t.statusByKid && t.statusByKid[kid.id]).length;
+                const isCollapsed = !!collapsedKidSections[`${kid.id}_${sec.id}`];
+
+                const groupEl = document.createElement('div');
+                groupEl.className = 'kid-section-group';
+
+                const headerEl = document.createElement('div');
+                headerEl.className = 'kid-section-header';
+                headerEl.addEventListener('click', () => toggleKidSectionCollapse(kid.id, sec.id));
+                headerEl.innerHTML = `
+                    <div class="kid-section-left">
+                        <span>${isCollapsed ? '▶' : '▼'}</span>
+                        <span>${sec.icon || '🗂️'}</span>
+                        <span class="sec-name-txt"></span>
                     </div>
-                    <div class="order-buttons">
-                        <button class="btn-move" onclick="moveTask('${kid.id}', '${task.id}', -1)">⬆️</button>
-                        <button class="btn-move" onclick="moveTask('${kid.id}', '${task.id}', 1)">⬇️</button>
-                    </div>
+                    <span style="font-size:calc(0.8rem * var(--kid-scale)); color:var(--text-muted);">${secDone}/${secTasks.length}</span>
                 `;
+                headerEl.querySelector('.sec-name-txt').textContent = sec.name || '';
 
-                item.addEventListener('dragstart', () => {
-                    draggedTaskInfo = { kidId: kid.id, taskId: task.id };
-                    item.classList.add('dragging');
-                });
-                item.addEventListener('dragend', () => {
-                    item.classList.remove('dragging');
-                    draggedTaskInfo = null;
-                });
-                item.addEventListener('dragover', (e) => e.preventDefault());
-                item.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    if (!draggedTaskInfo || draggedTaskInfo.kidId !== kid.id) return;
-                    reorderTaskByDrop(kid.id, draggedTaskInfo.taskId, task.id);
-                });
+                const tasksWrap = document.createElement('div');
+                tasksWrap.className = `kid-section-tasks ${isCollapsed ? 'collapsed' : ''}`;
+                secTasks.forEach(task => { tasksWrap.appendChild(createTaskItemElement(kid, task)); });
 
-                listEl.appendChild(item);
+                groupEl.appendChild(headerEl);
+                groupEl.appendChild(tasksWrap);
+                listEl.appendChild(groupEl);
             });
+
+            const uncategorizedTasks = kidTasks.filter(t => !t.sectionId || !validSectionIds.has(t.sectionId));
+            if (uncategorizedTasks.length > 0) {
+                if (sections.length > 0 && kidTasks.length > uncategorizedTasks.length) {
+                    const secId = 'uncategorized';
+                    const isCollapsed = !!collapsedKidSections[`${kid.id}_${secId}`];
+                    const secDone = uncategorizedTasks.filter(t => t.statusByKid && t.statusByKid[kid.id]).length;
+
+                    const groupEl = document.createElement('div');
+                    groupEl.className = 'kid-section-group';
+
+                    const headerEl = document.createElement('div');
+                    headerEl.className = 'kid-section-header';
+                    headerEl.addEventListener('click', () => toggleKidSectionCollapse(kid.id, secId));
+                    headerEl.innerHTML = `
+                        <div class="kid-section-left">
+                            <span>${isCollapsed ? '▶' : '▼'}</span>
+                            <span>📌</span>
+                            <span>Pozostałe zadania</span>
+                        </div>
+                        <span style="font-size:calc(0.8rem * var(--kid-scale)); color:var(--text-muted);">${secDone}/${uncategorizedTasks.length}</span>
+                    `;
+
+                    const tasksWrap = document.createElement('div');
+                    tasksWrap.className = `kid-section-tasks ${isCollapsed ? 'collapsed' : ''}`;
+                    uncategorizedTasks.forEach(task => { tasksWrap.appendChild(createTaskItemElement(kid, task)); });
+
+                    groupEl.appendChild(headerEl);
+                    groupEl.appendChild(tasksWrap);
+                    listEl.appendChild(groupEl);
+                } else {
+                    uncategorizedTasks.forEach(task => { listEl.appendChild(createTaskItemElement(kid, task)); });
+                }
+            }
 
             board.appendChild(col);
         });
 
         restoreScrolls();
+        setupAllAutocompletes();
     }
 
     function toggleTaskDone(kidId, taskId) {
-    const task = appData.tasks.find(t => t.id === taskId);
-    if (!task) return;
-    if (!task.statusByKid) task.statusByKid = {};
-
-    const newState = !task.statusByKid[kidId];
-    task.statusByKid[kidId] = newState;
-
-    // Znajdź element w DOM odpowiadający temu zadaniu
-    const listEl = document.querySelector(`.task-list[data-kid-id="${kidId}"]`);
-    const itemEl = listEl ? listEl.querySelector(`.task-item[data-task-id="${taskId}"]`) : null;
-
-    if (itemEl && listEl && newState) {
-        // Oblicz, o ile pikseli w dół musi przesunąć się element (na sam koniec listy)
-        const items = Array.from(listEl.querySelectorAll('.task-item'));
-        const currentIndex = items.indexOf(itemEl);
-        const targetIndex = items.length - 1;
-
-        if (currentIndex < targetIndex) {
-            // Pobierz wysokość elementu wraz z odstępem (gap)
-            let distance = 0;
-            for (let i = currentIndex; i < targetIndex; i++) {
-                distance += items[i].offsetHeight + 8; // 8px to gap między zadaniami
-            }
-
-            // Nadaj płynną animację przemieszczenia w dół trwającą 0.5s
-            itemEl.style.transition = 'transform 0.5s ease, background 0.2s, border-color 0.2s';
-            itemEl.style.transform = `translateY(${distance}px)`;
-            itemEl.style.zIndex = '10'; // aby przesuwający się element był na wierzchu
-        }
-    }
-
-    // Jeśli zadanie zostało ukończone, zaktualizuj jego indeks dopiero po rozpoczęciu animacji
-    if (newState) {
-        const kidTasks = getTasksForKid(kidId);
-        let maxOrder = 0;
-        kidTasks.forEach(t => {
-            if (t.id !== taskId && t.orderByKid && t.orderByKid[kidId] !== undefined) {
-                if (t.orderByKid[kidId] > maxOrder) maxOrder = t.orderByKid[kidId];
-            }
-        });
+        const task = (appData.tasks || []).find(t => t.id === taskId);
+        if (!task) return;
+        if (!task.statusByKid) task.statusByKid = {};
         if (!task.orderByKid) task.orderByKid = {};
-        task.orderByKid[kidId] = maxOrder + 1;
-    }
+        if (!task.prevOrderByKid) task.prevOrderByKid = {};
+        if (!task.lateSecondsByKid) task.lateSecondsByKid = {};
 
-    // Zapisz stan w pamięci / chmurze
-    saveData();
+        const newState = !task.statusByKid[kidId];
+        task.statusByKid[kidId] = newState;
 
-    // Dźwięk i konfetti
-    const kidTasksCheck = getTasksForKid(kidId);
-    const total = kidTasksCheck.length;
-    const doneCount = kidTasksCheck.filter(t => t.statusByKid && t.statusByKid[kidId]).length;
+        const kidTasks = getTasksForKid(kidId);
+        kidTasks.forEach((t, idx) => {
+            if (!t.orderByKid) t.orderByKid = {};
+            t.orderByKid[kidId] = idx;
+        });
 
-    if (newState) {
-        if (total > 0 && doneCount === total) {
-            playSound('win');
-            confetti({ particleCount: 110, spread: 80, origin: { y: 0.6 } });
+        const currentIndex = kidTasks.findIndex(t => t.id === taskId);
+
+        if (newState) {
+            if (task.dueTime && typeof task.dueTime === 'string') {
+                const parts = task.dueTime.split(':');
+                const targetH = parseInt(parts[0], 10);
+                const targetM = parseInt(parts[1], 10);
+                if (!isNaN(targetH) && !isNaN(targetM)) {
+                    const now = new Date();
+                    const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), targetH, targetM, 0, 0);
+                    const lateSec = Math.floor((now.getTime() - target.getTime()) / 1000);
+                    task.lateSecondsByKid[kidId] = lateSec > 0 ? lateSec : 0;
+                }
+            } else {
+                delete task.lateSecondsByKid[kidId];
+            }
+
+            if (currentIndex !== -1) {
+                task.prevOrderByKid[kidId] = currentIndex;
+                kidTasks.splice(currentIndex, 1);
+                kidTasks.push(task);
+                kidTasks.forEach((t, idx) => { t.orderByKid[kidId] = idx; });
+            }
         } else {
-            playSound('check');
-            confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 } });
+            delete task.lateSecondsByKid[kidId];
+
+            if (currentIndex !== -1 && task.prevOrderByKid[kidId] !== undefined) {
+                let targetIdx = Number(task.prevOrderByKid[kidId]);
+                kidTasks.splice(currentIndex, 1);
+                if (isNaN(targetIdx) || targetIdx < 0) targetIdx = 0;
+                if (targetIdx > kidTasks.length) targetIdx = kidTasks.length;
+                kidTasks.splice(targetIdx, 0, task);
+
+                kidTasks.forEach((t, idx) => { t.orderByKid[kidId] = idx; });
+                delete task.prevOrderByKid[kidId];
+            }
         }
+
+        saveData();
+
+        const kidTasksCheck = getTasksForKid(kidId);
+        const total = kidTasksCheck.length;
+        const doneCount = kidTasksCheck.filter(t => t.statusByKid && t.statusByKid[kidId]).length;
+
+        if (newState) {
+            if (total > 0 && doneCount === total) {
+                playSound('win');
+                if (typeof confetti === 'function') confetti({ particleCount: 110, spread: 80, origin: { y: 0.6 } });
+            } else {
+                playSound('check');
+                if (typeof confetti === 'function') confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 } });
+            }
+        }
+
+        renderKidsBoard();
     }
 
-    // Odśwież widok dopiero PO zakończeniu animacji (po 500 milisekundach), 
-    // aby użytkownik widział płynny ruch zjeżdżania w dół.
-    setTimeout(() => {
-        renderKidsBoard();
-    }, 500);
-}
+    function toggleRewardDone(kidId, rewardId) {
+        const rew = (appData.rewards || []).find(r => r.id === rewardId);
+        if (!rew) return;
+        if (!rew.statusByKid) rew.statusByKid = {};
 
-     function changeKidZoom(kidId, delta) {
-        const kid = appData.kids.find(k => k.id === kidId);
-        if (!kid) return;
-        let next = Math.round(((kid.zoom || 1) + delta) * 100) / 100;
-        if (next < 0.7) next = 0.7;
-        if (next > 1.6) next = 1.6;
-        kid.zoom = next;
+        const newState = !rew.statusByKid[kidId];
+        rew.statusByKid[kidId] = newState;
+
+        if (newState) {
+            playSound('win');
+            if (typeof confetti === 'function') confetti({ particleCount: 60, spread: 70, origin: { y: 0.75 } });
+        }
+
         saveData();
+        renderKidsBoard();
+    }
+
+    function changeKidZoom(kidId, delta) {
+        const current = getKidLocalZoom(kidId);
+        let next = Math.round((current + delta) * 100) / 100;
+        if (next < 0.4) next = 0.4;
+        if (next > 2.0) next = 2.0;
+        if (!localDeviceSettings.kidZooms) localDeviceSettings.kidZooms = {};
+        localDeviceSettings.kidZooms[kidId] = next;
+        saveLocalDeviceSettings();
         renderKidsBoard();
     }
 
     function resetKidZoom(kidId) {
-        const kid = appData.kids.find(k => k.id === kidId);
-        if (!kid) return;
-        kid.zoom = 1;
-        saveData();
+        if (!localDeviceSettings.kidZooms) localDeviceSettings.kidZooms = {};
+        localDeviceSettings.kidZooms[kidId] = 1;
+        saveLocalDeviceSettings();
         renderKidsBoard();
     }
 
@@ -1400,15 +1718,20 @@
     }
 
     function quickFillKidTask(kidId, icon, title) {
-        document.getElementById(`kidEmoji_${kidId}`).value = icon;
-        document.getElementById(`kidInput_${kidId}`).value = title;
-        document.getElementById(`kidInput_${kidId}`).focus();
+        const emEl = document.getElementById(`kidEmoji_${kidId}`);
+        const inEl = document.getElementById(`kidInput_${kidId}`);
+        if (emEl) emEl.value = icon;
+        if (inEl) { inEl.value = title; inEl.focus(); }
     }
 
     function addKidOwnTask(kidId) {
         saveCurrentScrolls();
         const icon = document.getElementById(`kidEmoji_${kidId}`).value.trim() || '⭐';
         const title = document.getElementById(`kidInput_${kidId}`).value.trim();
+        const dueTimeEl = document.getElementById(`kidTime_${kidId}`);
+        const dueTime = dueTimeEl ? dueTimeEl.value : '';
+        const timerEl = document.getElementById(`kidTimer_${kidId}`);
+        const timerSeconds = timerEl ? parseHmsToSeconds(timerEl.value) : 0;
         if (!title) return;
 
         const orderByKid = {};
@@ -1418,9 +1741,14 @@
             id: 't_' + Date.now(),
             title,
             icon,
+            sectionId: '',
+            dueTime: dueTime || '',
+            timerSeconds,
             assignedKids: [kidId],
             statusByKid: {},
-            orderByKid
+            orderByKid,
+            prevOrderByKid: {},
+            lateSecondsByKid: {}
         });
 
         saveData();
@@ -1430,22 +1758,86 @@
     }
 
     function resetAllProgress() {
-        if (!confirm('Rozpocząć Nowy Dzień i odznaczyć wszystkie wykonane zadania?')) return;
-        appData.tasks.forEach(t => t.statusByKid = {});
+        if (!confirm('Rozpocząć Nowy Dzień i odznaczyć wszystkie wykonane zadania oraz odebrane nagrody?')) return;
+        activeTaskTimers = {};
+        (appData.tasks || []).forEach(t => {
+            t.statusByKid = {};
+            t.lateSecondsByKid = {};
+            if (t.prevOrderByKid) {
+                Object.keys(t.prevOrderByKid).forEach(kId => {
+                    if (!t.orderByKid) t.orderByKid = {};
+                    t.orderByKid[kId] = t.prevOrderByKid[kId];
+                });
+                t.prevOrderByKid = {};
+            }
+        });
+        (appData.rewards || []).forEach(r => r.statusByKid = {});
         saveData();
         renderKidsBoard();
     }
 
-    // ================= PANEL RODZICA =================
+    function openEmojiLibrary(target) {
+        emojiPickerTarget = target;
+        const container = document.getElementById('emojiLibraryContent');
+        container.innerHTML = '';
+
+        Object.entries(ALL_EMOJIS_CATALOG).forEach(([category, emojis]) => {
+            const catTitle = document.createElement('div');
+            catTitle.className = 'emoji-category-title';
+            catTitle.textContent = category;
+            container.appendChild(catTitle);
+
+            const grid = document.createElement('div');
+            grid.className = 'emoji-grid';
+            emojis.forEach(em => {
+                const btn = document.createElement('div');
+                btn.className = 'emoji-option';
+                btn.textContent = em;
+                btn.onclick = () => selectEmojiFromLibrary(em);
+                grid.appendChild(btn);
+            });
+            container.appendChild(grid);
+        });
+
+        document.getElementById('emojiLibraryModal').style.display = 'flex';
+    }
+
+    function closeEmojiLibrary() {
+        document.getElementById('emojiLibraryModal').style.display = 'none';
+        emojiPickerTarget = null;
+    }
+
+    function selectEmojiFromLibrary(em) {
+        if (emojiPickerTarget === 'taskAdmin') {
+            selectedEmoji = em;
+            if (!EMOJIS.includes(em)) EMOJIS.unshift(em);
+            renderAdminPanel();
+        } else if (emojiPickerTarget === 'sectionAdmin') {
+            selectedSectionEmoji = em;
+            if (!SECTION_EMOJIS.includes(em)) SECTION_EMOJIS.unshift(em);
+            renderAdminPanel();
+        } else if (emojiPickerTarget === 'rewardAdmin') {
+            selectedRewardEmoji = em;
+            if (!REWARD_EMOJIS.includes(em)) REWARD_EMOJIS.unshift(em);
+            renderAdminPanel();
+        } else if (emojiPickerTarget === 'newKidAvatar') {
+            const sel = document.getElementById('newKidAvatar');
+            let opt = Array.from(sel.options).find(o => o.value === em);
+            if (!opt) { opt = new Option(`${em} Wybrany`, em); sel.add(opt, 0); }
+            sel.value = em;
+        } else if (emojiPickerTarget) {
+            const inputEl = document.getElementById(emojiPickerTarget);
+            if (inputEl) inputEl.value = em;
+        }
+        closeEmojiLibrary();
+    }
+
     function handleViewSwitch() {
         if (!isParentMode) {
             if (appData.pin && appData.pin.trim() !== '') {
                 const entered = prompt('🔒 Podaj kod PIN Rodzica (domyślny: 1234):');
                 if (entered === null) return;
-                if (entered !== appData.pin) {
-                    alert('❌ Nieprawidłowy kod PIN!');
-                    return;
-                }
+                if (entered !== appData.pin) { alert('❌ Nieprawidłowy kod PIN!'); return; }
             }
             isParentMode = true;
             document.getElementById('kidsView').style.display = 'none';
@@ -1464,6 +1856,30 @@
     function renderAdminPanel() {
         document.getElementById('cloudDbUrlInput').value = cloudConfig.dbUrl || '';
         document.getElementById('cloudRoomIdInput').value = cloudConfig.roomId || 'rodzina1';
+        document.getElementById('cloudApiKeyInput').value = cloudConfig.apiKey || '';
+        document.getElementById('cloudEmailInput').value = cloudConfig.email || '';
+
+        const soundSel = document.getElementById('celebrationSoundSelect');
+        if (soundSel && appData.celebrationSoundUrl) soundSel.value = appData.celebrationSoundUrl;
+
+        const sectionEmojiPicker = document.getElementById('sectionEmojiPicker');
+        sectionEmojiPicker.innerHTML = '';
+        SECTION_EMOJIS.forEach(em => {
+            const d = document.createElement('div');
+            d.className = `emoji-option ${em === selectedSectionEmoji ? 'selected' : ''}`;
+            d.textContent = em;
+            d.onclick = () => { selectedSectionEmoji = em; renderAdminPanel(); };
+            sectionEmojiPicker.appendChild(d);
+        });
+        const moreSecBtn = document.createElement('button');
+        moreSecBtn.type = 'button';
+        moreSecBtn.className = 'emoji-more-btn';
+        moreSecBtn.textContent = '➕ Więcej obrazków';
+        moreSecBtn.onclick = () => openEmojiLibrary('sectionAdmin');
+        sectionEmojiPicker.appendChild(moreSecBtn);
+
+        renderAdminSectionsList();
+        populateSectionSelects();
 
         const emojiPicker = document.getElementById('emojiPicker');
         emojiPicker.innerHTML = '';
@@ -1474,6 +1890,12 @@
             d.onclick = () => { selectedEmoji = em; renderAdminPanel(); };
             emojiPicker.appendChild(d);
         });
+        const moreTaskBtn = document.createElement('button');
+        moreTaskBtn.type = 'button';
+        moreTaskBtn.className = 'emoji-more-btn';
+        moreTaskBtn.textContent = '➕ Więcej obrazków';
+        moreTaskBtn.onclick = () => openEmojiLibrary('taskAdmin');
+        emojiPicker.appendChild(moreTaskBtn);
 
         const rewardEmojiPicker = document.getElementById('rewardEmojiPicker');
         rewardEmojiPicker.innerHTML = '';
@@ -1484,6 +1906,12 @@
             d.onclick = () => { selectedRewardEmoji = em; renderAdminPanel(); };
             rewardEmojiPicker.appendChild(d);
         });
+        const moreRewardBtn = document.createElement('button');
+        moreRewardBtn.type = 'button';
+        moreRewardBtn.className = 'emoji-more-btn';
+        moreRewardBtn.textContent = '➕ Więcej obrazków';
+        moreRewardBtn.onclick = () => openEmojiLibrary('rewardAdmin');
+        rewardEmojiPicker.appendChild(moreRewardBtn);
 
         const kidsList = document.getElementById('adminKidsList');
         kidsList.innerHTML = '';
@@ -1491,10 +1919,12 @@
             const card = document.createElement('div');
             card.style.cssText = `background:#f8f9fa; border:2px solid #e9ecef; border-left:6px solid ${kid.color}; border-radius:12px; padding:8px 12px; display:flex; align-items:center; gap:8px; font-weight:800;`;
             card.innerHTML = `
-                <span>${kid.avatar} ${kid.name}</span>
-                <button class="btn-move" onclick="moveKidOrder(${idx}, -1)">⬅️</button>
-                <button class="btn-move" onclick="moveKidOrder(${idx}, 1)">➡️</button>
-                <button class="btn btn-danger" style="padding:3px 8px; font-size:0.75rem;" onclick="removeKid('${kid.id}')">Usuń</button>
+                <span style="font-size:1.3rem;">${kid.avatar}</span>
+                <span>${kid.name}</span>
+                <button type="button" class="btn-move" onclick="moveKidOrder(${idx}, -1)">⬅️</button>
+                <button type="button" class="btn-move" onclick="moveKidOrder(${idx}, 1)">➡️</button>
+                <button type="button" class="btn btn-warning" style="padding:3px 8px; font-size:0.75rem;" onclick="openEditKidModal('${kid.id}')">✏️ Edytuj</button>
+                <button type="button" class="btn btn-danger" style="padding:3px 8px; font-size:0.75rem;" onclick="removeKid('${kid.id}')">Usuń</button>
             `;
             kidsList.appendChild(card);
         });
@@ -1520,6 +1950,99 @@
         renderAdminTasksList();
         renderAdminRewardsList();
         renderPresets();
+        renderRewardPresets();
+        setupAllAutocompletes();
+    }
+
+    function renderAdminSectionsList() {
+        const container = document.getElementById('adminSectionsList');
+        if (!container) return;
+        container.innerHTML = '';
+        if (!appData.sections) appData.sections = [];
+
+        appData.sections.forEach((sec, idx) => {
+            const card = document.createElement('div');
+            card.style.cssText = `background:#f3f0ff; border:2px solid #d0bfff; border-radius:12px; padding:7px 12px; display:flex; align-items:center; gap:8px; font-weight:800;`;
+            card.innerHTML = `
+                <span style="font-size:1.3rem;">${sec.icon}</span>
+                <span class="sec-admin-name"></span>
+                <button type="button" class="btn-move" onclick="moveSectionOrder(${idx}, -1)" title="Przesuń sekcję w lewo/górę">⬅️</button>
+                <button type="button" class="btn-move" onclick="moveSectionOrder(${idx}, 1)" title="Przesuń sekcję w prawo/dół">➡️</button>
+                <button type="button" class="btn btn-warning" style="padding:3px 8px; font-size:0.75rem;" onclick="openEditSectionModal('${sec.id}')">✏️ Edytuj</button>
+                <button type="button" class="btn btn-danger" style="padding:3px 8px; font-size:0.75rem;" onclick="removeSection('${sec.id}')">🗑️</button>
+            `;
+            card.querySelector('.sec-admin-name').textContent = sec.name;
+            container.appendChild(card);
+        });
+    }
+
+    function populateSectionSelects() {
+        const selects = ['newTaskSectionSelect', 'editTaskSectionSelect'];
+        selects.forEach(selId => {
+            const sel = document.getElementById(selId);
+            if (!sel) return;
+            const currentVal = sel.value;
+            sel.innerHTML = `<option value="">-- Bez sekcji (Ogólne) --</option>`;
+            (appData.sections || []).forEach(sec => {
+                const opt = document.createElement('option');
+                opt.value = sec.id;
+                opt.textContent = `${sec.icon} ${sec.name}`;
+                sel.appendChild(opt);
+            });
+            if (currentVal && Array.from(sel.options).some(o => o.value === currentVal)) sel.value = currentVal;
+        });
+    }
+
+    function addSectionFromAdmin() {
+        const name = document.getElementById('newSectionName').value.trim();
+        if (!name) return alert('Podaj nazwę sekcji!');
+        if (!appData.sections) appData.sections = [];
+        appData.sections.push({ id: 'sec_' + Date.now(), name, icon: selectedSectionEmoji || '☀️' });
+        document.getElementById('newSectionName').value = '';
+        saveData();
+        renderAdminPanel();
+    }
+
+    function moveSectionOrder(idx, dir) {
+        const target = idx + dir;
+        if (!appData.sections || target < 0 || target >= appData.sections.length) return;
+        const temp = appData.sections[idx];
+        appData.sections[idx] = appData.sections[target];
+        appData.sections[target] = temp;
+        saveData();
+        renderAdminPanel();
+    }
+
+    function openEditSectionModal(secId) {
+        const sec = (appData.sections || []).find(s => s.id === secId);
+        if (!sec) return;
+        document.getElementById('editSectionId').value = sec.id;
+        document.getElementById('editSectionIconInput').value = sec.icon;
+        document.getElementById('editSectionNameInput').value = sec.name;
+        document.getElementById('editSectionModal').style.display = 'flex';
+    }
+
+    function closeEditSectionModal() { document.getElementById('editSectionModal').style.display = 'none'; }
+
+    function saveEditedSection() {
+        const id = document.getElementById('editSectionId').value;
+        const sec = (appData.sections || []).find(s => s.id === id);
+        if (!sec) return;
+        const newName = document.getElementById('editSectionNameInput').value.trim();
+        if (!newName) return alert('Nazwa sekcji nie może być pusta!');
+        sec.icon = document.getElementById('editSectionIconInput').value.trim() || '🗂️';
+        sec.name = newName;
+        saveData();
+        closeEditSectionModal();
+        renderAdminPanel();
+    }
+
+    function removeSection(secId) {
+        if (!confirm('Usunąć tę sekcję? Zadania z tej sekcji trafią do grupy „Bez sekcji”.')) return;
+        appData.sections = (appData.sections || []).filter(s => s.id !== secId);
+        (appData.tasks || []).forEach(t => { if (t.sectionId === secId) t.sectionId = ''; });
+        saveData();
+        renderAdminPanel();
     }
 
     function moveKidOrder(idx, dir) {
@@ -1539,38 +2062,62 @@
             id: 'kid_' + Date.now(),
             name,
             avatar: document.getElementById('newKidAvatar').value,
-            color: document.getElementById('newKidColor').value,
-            zoom: 1
+            color: document.getElementById('newKidColor').value
         });
         document.getElementById('newKidName').value = '';
         saveData();
         renderAdminPanel();
     }
 
+    function openEditKidModal(kidId) {
+        const kid = appData.kids.find(k => k.id === kidId);
+        if (!kid) return;
+        document.getElementById('editKidId').value = kid.id;
+        document.getElementById('editKidAvatarInput').value = kid.avatar;
+        document.getElementById('editKidNameInput').value = kid.name;
+        document.getElementById('editKidColorInput').value = kid.color;
+        document.getElementById('editKidModal').style.display = 'flex';
+    }
+
+    function closeEditKidModal() { document.getElementById('editKidModal').style.display = 'none'; }
+
+    function saveEditedKid() {
+        const id = document.getElementById('editKidId').value;
+        const kid = appData.kids.find(k => k.id === id);
+        if (!kid) return;
+        const newName = document.getElementById('editKidNameInput').value.trim();
+        if (!newName) return alert('Imię nie może być puste!');
+        kid.avatar = document.getElementById('editKidAvatarInput').value.trim() || '👦';
+        kid.name = newName;
+        kid.color = document.getElementById('editKidColorInput').value;
+        saveData();
+        closeEditKidModal();
+        renderAdminPanel();
+    }
+
     function removeKid(kidId) {
         if (!confirm('Usunąć profil tego dziecka?')) return;
         appData.kids = appData.kids.filter(k => k.id !== kidId);
-        appData.tasks.forEach(t => t.assignedKids = t.assignedKids.filter(id => id !== kidId));
+        appData.tasks.forEach(t => t.assignedKids = (t.assignedKids || []).filter(id => id !== kidId));
         appData.tasks = appData.tasks.filter(t => t.assignedKids.length > 0);
-        appData.rewards.forEach(r => r.assignedKids = r.assignedKids.filter(id => id !== kidId));
+        appData.rewards.forEach(r => r.assignedKids = (r.assignedKids || []).filter(id => id !== kidId));
         appData.rewards = appData.rewards.filter(r => r.assignedKids.length > 0);
         saveData();
         renderAdminPanel();
     }
 
-    function selectAllKidsForTask(state) {
-        document.querySelectorAll('input[name="newTaskKid"]').forEach(cb => cb.checked = state);
-    }
-
-    function selectAllKidsForReward(state) {
-        document.querySelectorAll('input[name="newRewardKid"]').forEach(cb => cb.checked = state);
-    }
+    function selectAllKidsForTask(state) { document.querySelectorAll('input[name="newTaskKid"]').forEach(cb => cb.checked = state); }
+    function selectAllKidsForReward(state) { document.querySelectorAll('input[name="newRewardKid"]').forEach(cb => cb.checked = state); }
 
     function addTaskFromAdmin() {
         const title = document.getElementById('newTaskText').value.trim();
         if (!title) return alert('Wpisz treść zadania!');
         const checkedKids = Array.from(document.querySelectorAll('input[name="newTaskKid"]:checked')).map(cb => cb.value);
         if (checkedKids.length === 0) return alert('Zaznacz przynajmniej jedno dziecko!');
+
+        const sectionId = document.getElementById('newTaskSectionSelect').value || '';
+        const dueTime = document.getElementById('newTaskDueTime').value || '';
+        const timerSeconds = parseHmsToSeconds(document.getElementById('newTaskTimerDuration').value);
 
         const orderByKid = {};
         checkedKids.forEach(kId => orderByKid[kId] = getTasksForKid(kId).length);
@@ -1579,12 +2126,18 @@
             id: 't_' + Date.now(),
             title,
             icon: selectedEmoji,
+            sectionId,
+            dueTime,
+            timerSeconds,
             assignedKids: checkedKids,
             statusByKid: {},
-            orderByKid
+            orderByKid,
+            prevOrderByKid: {},
+            lateSecondsByKid: {}
         });
 
         document.getElementById('newTaskText').value = '';
+        document.getElementById('newTaskTimerDuration').value = '00:00:00';
         saveData();
         renderAdminTasksList();
     }
@@ -1593,7 +2146,7 @@
         const title = document.getElementById('newRewardText').value.trim();
         if (!title) return alert('Wpisz treść nagrody!');
         const checkedKids = Array.from(document.querySelectorAll('input[name="newRewardKid"]:checked')).map(cb => cb.value);
-        if (checkedKids.length === 0) return alert('Zaznacz przynajmniej jedno dziecko dla nagrody!');
+        if (checkedKids.length === 0) return alert('Zaznacz przynajmniej jedno dziecko!');
 
         if (!appData.rewards) appData.rewards = [];
         const orderByKid = {};
@@ -1604,6 +2157,7 @@
             title,
             icon: selectedRewardEmoji,
             assignedKids: checkedKids,
+            statusByKid: {},
             orderByKid
         });
 
@@ -1612,34 +2166,137 @@
         renderAdminRewardsList();
     }
 
-    function renderAdminTasksList() {
-        const container = document.getElementById('adminTasksList');
-        container.innerHTML = '';
-        (appData.tasks || []).forEach((task, idx) => {
-            const badges = (task.assignedKids || []).map(kId => {
-                const k = appData.kids.find(x => x.id === kId);
-                return k ? `<span class="badge-kid" style="background:${k.color}">${k.avatar} ${k.name}</span>` : '';
-            }).join('');
+    function toggleAdminSectionAccordion(secKey) {
+        collapsedAdminSections[secKey] = !collapsedAdminSections[secKey];
+        renderAdminTasksList();
+    }
 
-            const row = document.createElement('div');
-            row.className = 'admin-task-row';
-            row.innerHTML = `
-                <div style="display:flex; align-items:center; gap:10px; flex:1;">
-                    <span style="font-size:1.4rem;">${task.icon}</span>
-                    <div>
-                        <div style="font-weight:800;">${task.title}</div>
-                        <div style="margin-top:3px;">${badges}</div>
+    function createAdminTaskRowElement(task, idx) {
+        const badges = (task.assignedKids || []).map(kId => {
+            const k = appData.kids.find(x => x.id === kId);
+            if (!k) return '';
+            const lateSec = (task.lateSecondsByKid && Number(task.lateSecondsByKid[kId])) || 0;
+            const isDone = !!(task.statusByKid && task.statusByKid[kId]);
+            if (isDone && lateSec > 0) {
+                const bg = getLateHexColor(lateSec);
+                const txt = lateSec > 9 * 60 ? '#fff' : '#2d3436';
+                return `<span class="badge-kid" style="background:${bg}; color:${txt}; border:1px solid rgba(0,0,0,0.15);">${k.avatar} ${k.name} (+${formatLateDuration(lateSec)})</span>`;
+            }
+            return `<span class="badge-kid" style="background:${k.color}">${k.avatar} ${k.name}${isDone ? ' ✔' : ''}</span>`;
+        }).join('');
+
+        const timeBadge = task.dueTime ? `<span class="badge-time">⏰ Godzina: ${task.dueTime}</span>` : '';
+        const timerBadge = task.timerSeconds && Number(task.timerSeconds) > 0
+            ? `<span class="badge-timer-set">⏱️ Timer: ${formatSecondsToHms(task.timerSeconds)}</span>`
+            : '';
+
+        const row = document.createElement('div');
+        row.className = 'admin-task-row';
+        row.innerHTML = `
+            <div style="display:flex; align-items:center; gap:10px; flex:1;">
+                <span style="font-size:1.4rem;">${task.icon}</span>
+                <div>
+                    <div class="admin-task-title-txt" style="font-weight:800;"></div>
+                    <div style="margin-top:4px; display:flex; flex-wrap:wrap; gap:4px; align-items:center;">
+                        ${timeBadge}
+                        ${timerBadge}
+                        ${badges}
                     </div>
                 </div>
-                <div style="display:flex; gap:6px; align-items:center;">
-                    <button class="btn-move" onclick="moveAdminTask(${idx}, -1)">⬆️</button>
-                    <button class="btn-move" onclick="moveAdminTask(${idx}, 1)">⬇️</button>
-                    <button class="btn btn-warning" style="padding:5px 10px; font-size:0.8rem;" onclick="openEditModal('${task.id}')">✏️ Edytuj</button>
-                    <button class="btn btn-danger" style="padding:5px 10px; font-size:0.8rem;" onclick="deleteTask('${task.id}')">🗑️</button>
+            </div>
+            <div style="display:flex; gap:6px; align-items:center;">
+                <button type="button" class="btn-move" onclick="moveAdminTask(${idx}, -1)">⬆️</button>
+                <button type="button" class="btn-move" onclick="moveAdminTask(${idx}, 1)">⬇️</button>
+                <button type="button" class="btn btn-warning" style="padding:5px 10px; font-size:0.8rem;" onclick="openEditModal('${task.id}')">✏️ Edytuj</button>
+                <button type="button" class="btn btn-danger" style="padding:5px 10px; font-size:0.8rem;" onclick="deleteTask('${task.id}')">🗑️</button>
+            </div>
+        `;
+        row.querySelector('.admin-task-title-txt').textContent = task.title;
+        return row;
+    }
+
+    function renderAdminTasksList() {
+        const container = document.getElementById('adminTasksList');
+        if (!container) return;
+        container.innerHTML = '';
+
+        const sections = appData.sections || [];
+        const validSectionIds = new Set(sections.map(s => s.id));
+        const allTasks = appData.tasks || [];
+
+        sections.forEach(sec => {
+            const secTasksWithIdx = allTasks
+                .map((task, idx) => ({ task, idx }))
+                .filter(item => item.task.sectionId === sec.id);
+
+            const isCollapsed = !!collapsedAdminSections[sec.id];
+            const acc = document.createElement('div');
+            acc.className = 'admin-category-accordion';
+
+            const header = document.createElement('div');
+            header.className = 'admin-category-header';
+            header.onclick = (e) => {
+                if (e.target.tagName === 'BUTTON') return;
+                toggleAdminSectionAccordion(sec.id);
+            };
+            header.innerHTML = `
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span>${isCollapsed ? '▶' : '▼'}</span>
+                    <span style="font-size:1.35rem;">${sec.icon}</span>
+                    <span class="acc-sec-name"></span>
+                    <span style="font-size:0.82rem; color:var(--text-muted); font-weight:800;">(Zadań: ${secTasksWithIdx.length})</span>
+                </div>
+                <div style="display:flex; gap:6px;">
+                    <button type="button" class="btn btn-warning" style="padding:4px 9px; font-size:0.76rem;" onclick="openEditSectionModal('${sec.id}')">✏️ Edytuj sekcję</button>
                 </div>
             `;
-            container.appendChild(row);
+            header.querySelector('.acc-sec-name').textContent = sec.name;
+
+            const body = document.createElement('div');
+            body.className = `admin-category-body ${isCollapsed ? 'collapsed' : ''}`;
+
+            if (secTasksWithIdx.length === 0) {
+                body.innerHTML = `<div style="font-size:0.85rem; color:var(--text-muted); font-weight:700; padding:6px;">Brak zadań w tej sekcji.</div>`;
+            } else {
+                secTasksWithIdx.forEach(({ task, idx }) => { body.appendChild(createAdminTaskRowElement(task, idx)); });
+            }
+
+            acc.appendChild(header);
+            acc.appendChild(body);
+            container.appendChild(acc);
         });
+
+        const uncategorizedWithIdx = allTasks
+            .map((task, idx) => ({ task, idx }))
+            .filter(item => !item.task.sectionId || !validSectionIds.has(item.task.sectionId));
+
+        if (uncategorizedWithIdx.length > 0) {
+            const secKey = 'uncategorized_admin';
+            const isCollapsed = !!collapsedAdminSections[secKey];
+            const acc = document.createElement('div');
+            acc.className = 'admin-category-accordion';
+
+            const header = document.createElement('div');
+            header.className = 'admin-category-header';
+            header.style.background = '#f1f2f6';
+            header.onclick = () => toggleAdminSectionAccordion(secKey);
+            header.innerHTML = `
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span>${isCollapsed ? '▶' : '▼'}</span>
+                    <span style="font-size:1.35rem;">📌</span>
+                    <span>Bez sekcji (Ogólne)</span>
+                    <span style="font-size:0.82rem; color:var(--text-muted); font-weight:800;">(Zadań: ${uncategorizedWithIdx.length})</span>
+                </div>
+            `;
+
+            const body = document.createElement('div');
+            body.className = `admin-category-body ${isCollapsed ? 'collapsed' : ''}`;
+            uncategorizedWithIdx.forEach(({ task, idx }) => { body.appendChild(createAdminTaskRowElement(task, idx)); });
+
+            acc.appendChild(header);
+            acc.appendChild(body);
+            container.appendChild(acc);
+        }
     }
 
     function renderAdminRewardsList() {
@@ -1658,17 +2315,18 @@
                 <div style="display:flex; align-items:center; gap:10px; flex:1;">
                     <span style="font-size:1.4rem;">${rew.icon}</span>
                     <div>
-                        <div style="font-weight:800;">${rew.title}</div>
+                        <div class="admin-rew-title-txt" style="font-weight:800;"></div>
                         <div style="margin-top:3px;">${badges}</div>
                     </div>
                 </div>
                 <div style="display:flex; gap:6px; align-items:center;">
-                    <button class="btn-move" onclick="moveAdminReward(${idx}, -1)">⬆️</button>
-                    <button class="btn-move" onclick="moveAdminReward(${idx}, 1)">⬇️</button>
-                    <button class="btn btn-warning" style="padding:5px 10px; font-size:0.8rem;" onclick="openEditRewardModal('${rew.id}')">✏️ Edytuj</button>
-                    <button class="btn btn-danger" style="padding:5px 10px; font-size:0.8rem;" onclick="deleteReward('${rew.id}')">🗑️</button>
+                    <button type="button" class="btn-move" onclick="moveAdminReward(${idx}, -1)">⬆️</button>
+                    <button type="button" class="btn-move" onclick="moveAdminReward(${idx}, 1)">⬇️</button>
+                    <button type="button" class="btn btn-warning" style="padding:5px 10px; font-size:0.8rem;" onclick="openEditRewardModal('${rew.id}')">✏️ Edytuj</button>
+                    <button type="button" class="btn btn-danger" style="padding:5px 10px; font-size:0.8rem;" onclick="deleteReward('${rew.id}')">🗑️</button>
                 </div>
             `;
+            row.querySelector('.admin-rew-title-txt').textContent = rew.title;
             container.appendChild(row);
         });
     }
@@ -1680,7 +2338,7 @@
         appData.tasks[idx] = appData.tasks[target];
         appData.tasks[target] = temp;
         appData.kids.forEach(k => {
-            appData.tasks.filter(t => t.assignedKids.includes(k.id)).forEach((t, i) => {
+            appData.tasks.filter(t => (t.assignedKids || []).includes(k.id)).forEach((t, i) => {
                 if (!t.orderByKid) t.orderByKid = {};
                 t.orderByKid[k.id] = i;
             });
@@ -1696,7 +2354,7 @@
         appData.rewards[idx] = appData.rewards[target];
         appData.rewards[target] = temp;
         appData.kids.forEach(k => {
-            appData.rewards.filter(r => r.assignedKids.includes(k.id)).forEach((r, i) => {
+            appData.rewards.filter(r => (r.assignedKids || []).includes(k.id)).forEach((r, i) => {
                 if (!r.orderByKid) r.orderByKid = {};
                 r.orderByKid[k.id] = i;
             });
@@ -1720,14 +2378,18 @@
     function openEditModal(taskId) {
         const task = appData.tasks.find(t => t.id === taskId);
         if (!task) return;
+        populateSectionSelects();
         document.getElementById('editTaskId').value = task.id;
         document.getElementById('editTaskIcon').value = task.icon;
         document.getElementById('editTaskTitle').value = task.title;
+        document.getElementById('editTaskSectionSelect').value = task.sectionId || '';
+        document.getElementById('editTaskDueTime').value = task.dueTime || '';
+        document.getElementById('editTaskTimerDuration').value = formatSecondsToHms(task.timerSeconds || 0);
 
         const box = document.getElementById('editTaskKidsBox');
         box.innerHTML = '';
         appData.kids.forEach(kid => {
-            const checked = task.assignedKids.includes(kid.id) ? 'checked' : '';
+            const checked = (task.assignedKids || []).includes(kid.id) ? 'checked' : '';
             const lbl = document.createElement('label');
             lbl.className = 'kid-checkbox-label';
             lbl.innerHTML = `<input type="checkbox" name="editTaskKid" value="${kid.id}" ${checked}> <span>${kid.avatar} ${kid.name}</span>`;
@@ -1736,9 +2398,7 @@
         document.getElementById('editTaskModal').style.display = 'flex';
     }
 
-    function closeEditModal() {
-        document.getElementById('editTaskModal').style.display = 'none';
-    }
+    function closeEditModal() { document.getElementById('editTaskModal').style.display = 'none'; }
 
     function saveEditedTask() {
         const id = document.getElementById('editTaskId').value;
@@ -1748,6 +2408,9 @@
         if (checkedKids.length === 0) return alert('Przypisz zadanie do przynajmniej jednego dziecka!');
         task.icon = document.getElementById('editTaskIcon').value.trim() || '📌';
         task.title = document.getElementById('editTaskTitle').value.trim();
+        task.sectionId = document.getElementById('editTaskSectionSelect').value || '';
+        task.dueTime = document.getElementById('editTaskDueTime').value || '';
+        task.timerSeconds = parseHmsToSeconds(document.getElementById('editTaskTimerDuration').value);
         task.assignedKids = checkedKids;
         saveData();
         closeEditModal();
@@ -1764,7 +2427,7 @@
         const box = document.getElementById('editRewardKidsBox');
         box.innerHTML = '';
         appData.kids.forEach(kid => {
-            const checked = rew.assignedKids.includes(kid.id) ? 'checked' : '';
+            const checked = (rew.assignedKids || []).includes(kid.id) ? 'checked' : '';
             const lbl = document.createElement('label');
             lbl.className = 'kid-checkbox-label';
             lbl.innerHTML = `<input type="checkbox" name="editRewardKid" value="${kid.id}" ${checked}> <span>${kid.avatar} ${kid.name}</span>`;
@@ -1773,9 +2436,7 @@
         document.getElementById('editRewardModal').style.display = 'flex';
     }
 
-    function closeEditRewardModal() {
-        document.getElementById('editRewardModal').style.display = 'none';
-    }
+    function closeEditRewardModal() { document.getElementById('editRewardModal').style.display = 'none'; }
 
     function saveEditedReward() {
         const id = document.getElementById('editRewardId').value;
@@ -1793,6 +2454,7 @@
 
     function renderPresets() {
         const container = document.getElementById('presetsList');
+        if (!container) return;
         container.innerHTML = '';
         (appData.presets || []).forEach((preset, idx) => {
             const card = document.createElement('div');
@@ -1800,20 +2462,21 @@
             card.innerHTML = `
                 <div style="display:flex; justify-content:space-between; align-items:start;">
                     <div>
-                        <div style="font-weight:900; font-size:1.05rem;">${preset.name}</div>
+                        <div class="preset-name-txt" style="font-weight:900; font-size:1.05rem;"></div>
                         <div style="font-size:0.8rem; color:var(--text-muted); font-weight:700;">Zadań: ${(preset.tasks || []).length}</div>
                     </div>
                     <div style="display:flex; gap:4px;">
-                        <button class="btn-move" onclick="movePreset(${idx}, -1)">⬆️</button>
-                        <button class="btn-move" onclick="movePreset(${idx}, 1)">⬇️</button>
+                        <button type="button" class="btn-move" onclick="movePreset(${idx}, -1)">⬆️</button>
+                        <button type="button" class="btn-move" onclick="movePreset(${idx}, 1)">⬇️</button>
                     </div>
                 </div>
                 <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                    <button class="btn btn-success" style="flex:1; padding:6px 10px; font-size:0.8rem;" onclick="loadPreset('${preset.id}')">📂 Wczytaj</button>
-                    <button class="btn btn-warning" style="padding:6px 10px; font-size:0.8rem;" onclick="openEditPresetModal('${preset.id}')">✏️ Edytuj</button>
-                    <button class="btn btn-danger" style="padding:6px 10px; font-size:0.8rem;" onclick="deletePreset('${preset.id}')">🗑️</button>
+                    <button type="button" class="btn btn-success" style="flex:1; padding:6px 10px; font-size:0.8rem;" onclick="loadPreset('${preset.id}')">📂 Wczytaj</button>
+                    <button type="button" class="btn btn-warning" style="padding:6px 10px; font-size:0.8rem;" onclick="openEditPresetModal('${preset.id}')">✏️ Edytuj</button>
+                    <button type="button" class="btn btn-danger" style="padding:6px 10px; font-size:0.8rem;" onclick="deletePreset('${preset.id}')">🗑️</button>
                 </div>
             `;
+            card.querySelector('.preset-name-txt').textContent = preset.name;
             container.appendChild(card);
         });
     }
@@ -1830,15 +2493,18 @@
 
     function saveCurrentAsPreset() {
         const name = document.getElementById('newPresetName').value.trim();
-        if (!name) return alert('Podaj nazwę schematu!');
+        if (!name) return alert('Podaj nazwę schematu zadań!');
         appData.presets.push({
             id: 'preset_' + Date.now(),
             name: '📌 ' + name,
-            tasks: appData.tasks.map(t => ({
+            tasks: (appData.tasks || []).map(t => ({
                 id: 'pt_' + Math.random().toString(36).substring(2, 8),
                 title: t.title,
                 icon: t.icon,
-                assignedKids: [...t.assignedKids]
+                sectionId: t.sectionId || '',
+                dueTime: t.dueTime || '',
+                timerSeconds: t.timerSeconds || 0,
+                assignedKids: [...(t.assignedKids || [])]
             }))
         });
         document.getElementById('newPresetName').value = '';
@@ -1848,10 +2514,11 @@
 
     function loadPreset(presetId) {
         const preset = appData.presets.find(p => p.id === presetId);
-        if (!preset || !confirm(`Wczytać schemat "${preset.name}"?`)) return;
+        if (!preset || !confirm(`Wczytać schemat zadań "${preset.name}"?`)) return;
         const allKidIds = appData.kids.map(k => k.id);
         appData.tasks = (preset.tasks || []).map((pt, index) => {
-            let assigned = pt.assignedKids.includes('ALL') ? [...allKidIds] : pt.assignedKids.filter(id => allKidIds.includes(id));
+            const pKids = Array.isArray(pt.assignedKids) ? pt.assignedKids : ['ALL'];
+            let assigned = pKids.includes('ALL') ? [...allKidIds] : pKids.filter(id => allKidIds.includes(id));
             if (assigned.length === 0) assigned = [...allKidIds];
             const orderByKid = {};
             assigned.forEach(kId => orderByKid[kId] = index);
@@ -1859,18 +2526,23 @@
                 id: 't_' + Date.now() + '_' + index,
                 title: pt.title,
                 icon: pt.icon,
+                sectionId: pt.sectionId || '',
+                dueTime: pt.dueTime || '',
+                timerSeconds: pt.timerSeconds || 0,
                 assignedKids: assigned,
                 statusByKid: {},
-                orderByKid
+                orderByKid,
+                prevOrderByKid: {},
+                lateSecondsByKid: {}
             };
         });
         saveData();
         renderAdminTasksList();
-        alert('✅ Schemat wczytany!');
+        alert('✅ Schemat zadań wczytany!');
     }
 
     function deletePreset(presetId) {
-        if (!confirm('Usunąć ten schemat?')) return;
+        if (!confirm('Usunąć ten schemat zadań?')) return;
         appData.presets = appData.presets.filter(p => p.id !== presetId);
         saveData();
         renderPresets();
@@ -1891,13 +2563,63 @@
         (preset.tasks || []).forEach((pt, idx) => {
             const row = document.createElement('div');
             row.className = 'admin-task-row';
-            row.innerHTML = `
-                <input type="text" class="input-text" style="width:50px; text-align:center;" value="${pt.icon}" onchange="updatePresetTaskField('${preset.id}', ${idx}, 'icon', this.value)">
-                <input type="text" class="input-text" style="flex:1;" value="${pt.title}" onchange="updatePresetTaskField('${preset.id}', ${idx}, 'title', this.value)">
-                <button class="btn-move" onclick="movePresetTask('${preset.id}', ${idx}, -1)">⬆️</button>
-                <button class="btn-move" onclick="movePresetTask('${preset.id}', ${idx}, 1)">⬇️</button>
-                <button class="btn btn-danger" style="padding:5px 9px;" onclick="removePresetTask('${preset.id}', ${idx})">🗑️</button>
-            `;
+
+            const iconIn = document.createElement('input');
+            iconIn.type = 'text';
+            iconIn.className = 'input-text';
+            iconIn.style.cssText = 'width:50px; text-align:center;';
+            iconIn.value = pt.icon || '📌';
+            iconIn.onchange = () => updatePresetTaskField(preset.id, idx, 'icon', iconIn.value);
+
+            const titleIn = document.createElement('input');
+            titleIn.type = 'text';
+            titleIn.className = 'input-text';
+            titleIn.style.flex = '1';
+            titleIn.value = pt.title || '';
+            titleIn.onchange = () => updatePresetTaskField(preset.id, idx, 'title', titleIn.value);
+
+            const timeIn = document.createElement('input');
+            timeIn.type = 'time';
+            timeIn.className = 'input-text';
+            timeIn.style.width = '95px';
+            timeIn.value = pt.dueTime || '';
+            timeIn.onchange = () => updatePresetTaskField(preset.id, idx, 'dueTime', timeIn.value);
+
+            const timerIn = document.createElement('input');
+            timerIn.type = 'time';
+            timerIn.step = '1';
+            timerIn.className = 'input-text';
+            timerIn.style.width = '125px';
+            timerIn.value = formatSecondsToHms(pt.timerSeconds || 0);
+            timerIn.title = 'Timer (hh:mm:ss)';
+            timerIn.onchange = () => updatePresetTaskField(preset.id, idx, 'timerSeconds', parseHmsToSeconds(timerIn.value));
+
+            const btnUp = document.createElement('button');
+            btnUp.type = 'button';
+            btnUp.className = 'btn-move';
+            btnUp.textContent = '⬆️';
+            btnUp.onclick = () => movePresetTask(preset.id, idx, -1);
+
+            const btnDown = document.createElement('button');
+            btnDown.type = 'button';
+            btnDown.className = 'btn-move';
+            btnDown.textContent = '⬇️';
+            btnDown.onclick = () => movePresetTask(preset.id, idx, 1);
+
+            const btnDel = document.createElement('button');
+            btnDel.type = 'button';
+            btnDel.className = 'btn btn-danger';
+            btnDel.style.padding = '5px 9px';
+            btnDel.textContent = '🗑️';
+            btnDel.onclick = () => removePresetTask(preset.id, idx);
+
+            row.appendChild(iconIn);
+            row.appendChild(titleIn);
+            row.appendChild(timeIn);
+            row.appendChild(timerIn);
+            row.appendChild(btnUp);
+            row.appendChild(btnDown);
+            row.appendChild(btnDel);
             container.appendChild(row);
         });
     }
@@ -1936,10 +2658,14 @@
         if (!preset) return;
         const icon = document.getElementById('presetNewTaskIcon').value.trim() || '📌';
         const title = document.getElementById('presetNewTaskTitle').value.trim();
+        const dueTime = document.getElementById('presetNewTaskTime').value || '';
+        const timerSeconds = parseHmsToSeconds(document.getElementById('presetNewTaskTimer').value);
         if (!title) return;
         if (!preset.tasks) preset.tasks = [];
-        preset.tasks.push({ id: 'pt_' + Date.now(), icon, title, assignedKids: ['ALL'] });
+        preset.tasks.push({ id: 'pt_' + Date.now(), icon, title, dueTime, timerSeconds, assignedKids: ['ALL'] });
         document.getElementById('presetNewTaskTitle').value = '';
+        document.getElementById('presetNewTaskTime').value = '';
+        document.getElementById('presetNewTaskTimer').value = '00:00:00';
         saveData();
         renderEditedPresetTasks(preset);
     }
@@ -1955,14 +2681,483 @@
         closePresetModal();
     }
 
-    function closePresetModal() {
-        document.getElementById('editPresetModal').style.display = 'none';
+    function closePresetModal() { document.getElementById('editPresetModal').style.display = 'none'; }
+
+    function renderRewardPresets() {
+        const container = document.getElementById('rewardPresetsList');
+        if (!container) return;
+        container.innerHTML = '';
+        if (!appData.rewardPresets) appData.rewardPresets = [];
+
+        appData.rewardPresets.forEach((rpreset, idx) => {
+            const card = document.createElement('div');
+            card.className = 'preset-card';
+            card.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:start;">
+                    <div>
+                        <div class="rpreset-name-txt" style="font-weight:900; font-size:1.05rem;"></div>
+                        <div style="font-size:0.8rem; color:var(--text-muted); font-weight:700;">Nagród: ${(rpreset.rewards || []).length}</div>
+                    </div>
+                    <div style="display:flex; gap:4px;">
+                        <button type="button" class="btn-move" onclick="moveRewardPreset(${idx}, -1)">⬆️</button>
+                        <button type="button" class="btn-move" onclick="moveRewardPreset(${idx}, 1)">⬇️</button>
+                    </div>
+                </div>
+                <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                    <button type="button" class="btn btn-success" style="flex:1; padding:6px 10px; font-size:0.8rem;" onclick="loadRewardPreset('${rpreset.id}')">📂 Wczytaj</button>
+                    <button type="button" class="btn btn-warning" style="padding:6px 10px; font-size:0.8rem;" onclick="openEditRewardPresetModal('${rpreset.id}')">✏️ Edytuj</button>
+                    <button type="button" class="btn btn-danger" style="padding:6px 10px; font-size:0.8rem;" onclick="deleteRewardPreset('${rpreset.id}')">🗑️</button>
+                </div>
+            `;
+            card.querySelector('.rpreset-name-txt').textContent = rpreset.name;
+            container.appendChild(card);
+        });
     }
+
+    function moveRewardPreset(idx, dir) {
+        const target = idx + dir;
+        if (!appData.rewardPresets || target < 0 || target >= appData.rewardPresets.length) return;
+        const temp = appData.rewardPresets[idx];
+        appData.rewardPresets[idx] = appData.rewardPresets[target];
+        appData.rewardPresets[target] = temp;
+        saveData();
+        renderRewardPresets();
+    }
+
+    function saveCurrentRewardsAsPreset() {
+        const name = document.getElementById('newRewardPresetName').value.trim();
+        if (!name) return alert('Podaj nazwę schematu nagród!');
+        if (!appData.rewardPresets) appData.rewardPresets = [];
+        appData.rewardPresets.push({
+            id: 'rpreset_' + Date.now(),
+            name: '🎁 ' + name,
+            rewards: (appData.rewards || []).map(r => ({
+                id: 'pr_' + Math.random().toString(36).substring(2, 8),
+                title: r.title,
+                icon: r.icon,
+                assignedKids: [...(r.assignedKids || [])]
+            }))
+        });
+        document.getElementById('newRewardPresetName').value = '';
+        saveData();
+        renderRewardPresets();
+    }
+
+    function loadRewardPreset(presetId) {
+        const preset = (appData.rewardPresets || []).find(p => p.id === presetId);
+        if (!preset || !confirm(`Wczytać schemat nagród "${preset.name}"?`)) return;
+        const allKidIds = appData.kids.map(k => k.id);
+        appData.rewards = (preset.rewards || []).map((pr, index) => {
+            const pKids = Array.isArray(pr.assignedKids) ? pr.assignedKids : ['ALL'];
+            let assigned = pKids.includes('ALL') ? [...allKidIds] : pKids.filter(id => allKidIds.includes(id));
+            if (assigned.length === 0) assigned = [...allKidIds];
+            const orderByKid = {};
+            assigned.forEach(kId => orderByKid[kId] = index);
+            return {
+                id: 'r_' + Date.now() + '_' + index,
+                title: pr.title,
+                icon: pr.icon,
+                assignedKids: assigned,
+                statusByKid: {},
+                orderByKid
+            };
+        });
+        saveData();
+        renderAdminRewardsList();
+        alert('✅ Schemat nagród wczytany!');
+    }
+
+    function deleteRewardPreset(presetId) {
+        if (!confirm('Usunąć ten schemat nagród?')) return;
+        appData.rewardPresets = (appData.rewardPresets || []).filter(p => p.id !== presetId);
+        saveData();
+        renderRewardPresets();
+    }
+
+    function openEditRewardPresetModal(presetId) {
+        const preset = (appData.rewardPresets || []).find(p => p.id === presetId);
+        if (!preset) return;
+        document.getElementById('editRewardPresetId').value = preset.id;
+        document.getElementById('editRewardPresetNameInput').value = preset.name;
+        renderEditedRewardPresetItems(preset);
+        document.getElementById('editRewardPresetModal').style.display = 'flex';
+    }
+
+    function renderEditedRewardPresetItems(preset) {
+        const container = document.getElementById('editRewardPresetItemsContainer');
+        container.innerHTML = '';
+        (preset.rewards || []).forEach((pr, idx) => {
+            const row = document.createElement('div');
+            row.className = 'admin-task-row';
+
+            const iconIn = document.createElement('input');
+            iconIn.type = 'text';
+            iconIn.className = 'input-text';
+            iconIn.style.cssText = 'width:50px; text-align:center;';
+            iconIn.value = pr.icon || '🎁';
+            iconIn.onchange = () => updateRewardPresetField(preset.id, idx, 'icon', iconIn.value);
+
+            const titleIn = document.createElement('input');
+            titleIn.type = 'text';
+            titleIn.className = 'input-text';
+            titleIn.style.flex = '1';
+            titleIn.value = pr.title || '';
+            titleIn.onchange = () => updateRewardPresetField(preset.id, idx, 'title', titleIn.value);
+
+            const btnUp = document.createElement('button');
+            btnUp.type = 'button';
+            btnUp.className = 'btn-move';
+            btnUp.textContent = '⬆️';
+            btnUp.onclick = () => moveRewardPresetItem(preset.id, idx, -1);
+
+            const btnDown = document.createElement('button');
+            btnDown.type = 'button';
+            btnDown.className = 'btn-move';
+            btnDown.textContent = '⬇️';
+            btnDown.onclick = () => moveRewardPresetItem(preset.id, idx, 1);
+
+            const btnDel = document.createElement('button');
+            btnDel.type = 'button';
+            btnDel.className = 'btn btn-danger';
+            btnDel.style.padding = '5px 9px';
+            btnDel.textContent = '🗑️';
+            btnDel.onclick = () => removeRewardPresetItem(preset.id, idx);
+
+            row.appendChild(iconIn);
+            row.appendChild(titleIn);
+            row.appendChild(btnUp);
+            row.appendChild(btnDown);
+            row.appendChild(btnDel);
+            container.appendChild(row);
+        });
+    }
+
+    function updateRewardPresetField(presetId, idx, field, val) {
+        const preset = (appData.rewardPresets || []).find(p => p.id === presetId);
+        if (preset && preset.rewards[idx]) {
+            preset.rewards[idx][field] = val;
+            saveData();
+        }
+    }
+
+    function moveRewardPresetItem(presetId, idx, dir) {
+        const preset = (appData.rewardPresets || []).find(p => p.id === presetId);
+        if (!preset) return;
+        const target = idx + dir;
+        if (target < 0 || target >= preset.rewards.length) return;
+        const temp = preset.rewards[idx];
+        preset.rewards[idx] = preset.rewards[target];
+        preset.rewards[target] = temp;
+        saveData();
+        renderEditedRewardPresetItems(preset);
+    }
+
+    function removeRewardPresetItem(presetId, idx) {
+        const preset = (appData.rewardPresets || []).find(p => p.id === presetId);
+        if (!preset) return;
+        preset.rewards.splice(idx, 1);
+        saveData();
+        renderEditedRewardPresetItems(preset);
+    }
+
+    function addRewardToEditedPreset() {
+        const presetId = document.getElementById('editRewardPresetId').value;
+        const preset = (appData.rewardPresets || []).find(p => p.id === presetId);
+        if (!preset) return;
+        const icon = document.getElementById('rewardPresetNewIcon').value.trim() || '🎁';
+        const title = document.getElementById('rewardPresetNewTitle').value.trim();
+        if (!title) return;
+        if (!preset.rewards) preset.rewards = [];
+        preset.rewards.push({ id: 'pr_' + Date.now(), icon, title, assignedKids: ['ALL'] });
+        document.getElementById('rewardPresetNewTitle').value = '';
+        saveData();
+        renderEditedRewardPresetItems(preset);
+    }
+
+    function saveEditedRewardPresetModal() {
+        const presetId = document.getElementById('editRewardPresetId').value;
+        const preset = (appData.rewardPresets || []).find(p => p.id === presetId);
+        if (preset) {
+            preset.name = document.getElementById('editRewardPresetNameInput').value.trim() || preset.name;
+            saveData();
+            renderRewardPresets();
+        }
+        closeRewardPresetModal();
+    }
+
+    function closeRewardPresetModal() { document.getElementById('editRewardPresetModal').style.display = 'none'; }
 
     function changePin() {
         appData.pin = document.getElementById('newPinInput').value.trim();
         saveData();
         alert('Zapisano ustawienia kodu PIN!');
+    }
+
+    // ================= INTELIGENTNE PODPOWIADANIE ZADAŃ I NAGRÓD =================
+    const BUILTIN_TASK_SUGGESTIONS = [
+        { icon: '🛏️', title: 'Pościelić łóżko i przewietrzyć pokój' },
+        { icon: '🛏️', title: 'Pościelić łóżko' },
+        { icon: '🪥', title: 'Umyć zęby i ubrać się do szkoły' },
+        { icon: '🪥', title: 'Umyć zęby rano' },
+        { icon: '🪥', title: 'Umyć zęby wieczorem' },
+        { icon: '🧼', title: 'Umyć ręce po powrocie do domu' },
+        { icon: '🚿', title: 'Wziąć prysznic / Wykąpać się' },
+        { icon: '🪮', title: 'Uczesać włosy' },
+        { icon: '🧴', title: 'Posmarować ciało kremem' },
+        { icon: '👕', title: 'Przygotować ubrania na jutro' },
+        { icon: '👕', title: 'Włożyć brudne ubrania do kosza na pranie' },
+        { icon: '📚', title: 'Odrobić pracę domową' },
+        { icon: '📚', title: 'Odrobić lekcje z matematyki' },
+        { icon: '📚', title: 'Odrobić lekcje z języka polskiego' },
+        { icon: '🇬🇧', title: 'Powtórzyć słówka z języka angielskiego' },
+        { icon: '📖', title: 'Poczytać książkę przez 15 minut' },
+        { icon: '📖', title: 'Poczytać lekturę szkolną' },
+        { icon: '🎒', title: 'Spakować plecak na jutro' },
+        { icon: '🍱', title: 'Spakować drugie śniadanie i bidon z wodą' },
+        { icon: '🧹', title: 'Posprzątać swój pokój i biurko' },
+        { icon: '🧹', title: 'Odkurzyć swój pokój' },
+        { icon: '🧸', title: 'Poukładać zabawki i klocki na półce' },
+        { icon: '🍽️', title: 'Wstawić naczynia do zmywarki' },
+        { icon: '🍽️', title: 'Opróżnić zmywarkę' },
+        { icon: '🍽️', title: 'Nakryć do stołu przed obiadem' },
+        { icon: '🍽️', title: 'Sprzątnąć ze stołu po posiłku' },
+        { icon: '🗑️', title: 'Wynieść worek ze śmieciami' },
+        { icon: '🪴', title: 'Podlać kwiatki w pokoju' },
+        { icon: '🐕', title: 'Nakarmić psa i nalać świeżej wody' },
+        { icon: '🐕', title: 'Wyprowadzić psa na spacer' },
+        { icon: '🐱', title: 'Nakarmić kota i wyczyścić kuwetę' },
+        { icon: '🐠', title: 'Nakarmić rybki w akwarium' },
+        { icon: '⚽', title: 'Spakować strój na WF / trening' },
+        { icon: '🎹', title: 'Poćwiczyć grę na instrumencie' },
+        { icon: '💊', title: 'Wziąć witaminy' }
+    ];
+
+    const BUILTIN_REWARD_SUGGESTIONS = [
+        { icon: '🎮', title: '30 minut ulubionej gry lub bajki' },
+        { icon: '🎮', title: '1 godzina grania na konsoli / komputerze' },
+        { icon: '📺', title: 'Obejrzenie odcinka ulubionej bajki' },
+        { icon: '🍿', title: 'Wspólny wieczór filmowy z popcornem' },
+        { icon: '🍦', title: 'Wyjście na lody lub deser' },
+        { icon: '🍫', title: 'Słodka przekąska po obiedzie' },
+        { icon: '🍕', title: 'Domowa pizza na kolację' },
+        { icon: '🥞', title: 'Naleśniki lub gofry z owocami' },
+        { icon: '🚲', title: 'Wspólna wycieczka rowerowa' },
+        { icon: '🛝', title: 'Wyjście na plac zabaw lub salę zabaw' },
+        { icon: '🏊', title: 'Wyjście na basen / aquapark' },
+        { icon: '🎲', title: 'Wspólna gra w ulubioną grę planszową' },
+        { icon: '🧩', title: 'Układanie klocków LEGO razem z rodzicem' },
+        { icon: '🎟️', title: 'Wyjście do kina na wybrany film' },
+        { icon: '📖', title: 'Dłuższe czytanie przed snem (+15 minut)' },
+        { icon: '🌙', title: 'Pójście spać 30 minut później w weekend' },
+        { icon: '🪙', title: 'Dodatkowe kieszonkowe do skarbonki' },
+        { icon: '🎁', title: 'Mała niespodzianka / naklejki' }
+    ];
+
+    function normalizePl(str) {
+        return (str || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ł/g, 'l').trim();
+    }
+
+    function collectSuggestionsPool(type) {
+        const map = new Map();
+        const add = (icon, title) => {
+            if (!title || typeof title !== 'string') return;
+            const clean = title.trim();
+            if (!clean) return;
+            const key = normalizePl(clean);
+            if (!map.has(key)) map.set(key, { icon: icon || (type === 'reward' ? '🎁' : '📌'), title: clean });
+        };
+        if (type === 'task') {
+            (appData.tasks || []).forEach(t => add(t.icon, t.title));
+            (appData.presets || []).forEach(p => (p.tasks || []).forEach(pt => add(pt.icon, pt.title)));
+            BUILTIN_TASK_SUGGESTIONS.forEach(item => add(item.icon, item.title));
+        } else {
+            (appData.rewards || []).forEach(r => add(r.icon, r.title));
+            (appData.rewardPresets || []).forEach(rp => (rp.rewards || []).forEach(pr => add(pr.icon, pr.title)));
+            BUILTIN_REWARD_SUGGESTIONS.forEach(item => add(item.icon, item.title));
+        }
+        return Array.from(map.values());
+    }
+
+    function scoreSuggestionMatch(candidateTitle, queryRaw) {
+        const q = queryRaw.trim().toLowerCase();
+        const qNorm = normalizePl(queryRaw);
+        if (!qNorm) return 0;
+
+        const t = candidateTitle.toLowerCase();
+        const tNorm = normalizePl(candidateTitle);
+        if (t === q) return 0;
+
+        let score = 0;
+        if (t.startsWith(q)) score += 1000;
+        else if (tNorm.startsWith(qNorm)) score += 900;
+
+        const wordsNorm = tNorm.split(/\s+/);
+        const wordsExact = t.split(/\s+/);
+        if (wordsExact.some(w => w.startsWith(q))) score += 650;
+        else if (wordsNorm.some(w => w.startsWith(qNorm))) score += 600;
+
+        const idxNorm = tNorm.indexOf(qNorm);
+        if (idxNorm !== -1) score += Math.max(300 - idxNorm * 3, 120);
+
+        const queryTokens = qNorm.split(/\s+/).filter(Boolean);
+        if (queryTokens.length > 1) {
+            let matchedTokens = 0;
+            queryTokens.forEach(tok => {
+                if (wordsNorm.some(w => w.startsWith(tok))) {
+                    score += 180;
+                    matchedTokens++;
+                } else if (tNorm.includes(tok)) {
+                    score += 100;
+                    matchedTokens++;
+                }
+            });
+            if (matchedTokens === queryTokens.length) score += 250;
+        }
+
+        if (score > 0) score -= Math.min(candidateTitle.length * 0.4, 40);
+        return score;
+    }
+
+    function getSortedSuggestions(type, query) {
+        if (!query || !query.trim()) return [];
+        const pool = collectSuggestionsPool(type);
+        return pool
+            .map(item => ({ ...item, score: scoreSuggestionMatch(item.title, query) }))
+            .filter(item => item.score > 0)
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 7);
+    }
+
+    function attachAutocompleteToInput(inputId, type, onIconSelect) {
+        const inputEl = document.getElementById(inputId);
+        if (!inputEl || inputEl.dataset.autocompleteBound === 'true') return;
+        inputEl.dataset.autocompleteBound = 'true';
+        inputEl.setAttribute('autocomplete', 'off');
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'autocomplete-wrapper';
+        if (inputEl.style.flex) wrapper.style.flex = inputEl.style.flex;
+        if (inputEl.style.minWidth) wrapper.style.minWidth = inputEl.style.minWidth;
+
+        inputEl.parentNode.insertBefore(wrapper, inputEl);
+        wrapper.appendChild(inputEl);
+
+        const dropdown = document.createElement('div');
+        dropdown.className = 'autocomplete-dropdown';
+        wrapper.appendChild(dropdown);
+
+        let currentItems = [];
+        let activeIndex = -1;
+
+        const closeDropdown = () => {
+            dropdown.classList.remove('open');
+            dropdown.innerHTML = '';
+            currentItems = [];
+            activeIndex = -1;
+        };
+
+        const applySuggestion = (item) => {
+            inputEl.value = item.title;
+            if (typeof onIconSelect === 'function' && item.icon) onIconSelect(item.icon);
+            closeDropdown();
+            inputEl.focus();
+        };
+
+        const renderSuggestions = () => {
+            currentItems = getSortedSuggestions(type, inputEl.value);
+            activeIndex = -1;
+            if (currentItems.length === 0) {
+                closeDropdown();
+                return;
+            }
+            dropdown.innerHTML = '';
+            currentItems.forEach(item => {
+                const row = document.createElement('div');
+                row.className = 'autocomplete-item';
+                const iconSpan = document.createElement('span');
+                iconSpan.className = 'autocomplete-icon';
+                iconSpan.textContent = item.icon;
+                const textSpan = document.createElement('span');
+                textSpan.textContent = item.title;
+                row.appendChild(iconSpan);
+                row.appendChild(textSpan);
+                row.addEventListener('mousedown', (e) => { e.preventDefault(); applySuggestion(item); });
+                dropdown.appendChild(row);
+            });
+            dropdown.classList.add('open');
+        };
+
+        inputEl.addEventListener('input', renderSuggestions);
+        inputEl.addEventListener('focus', renderSuggestions);
+        inputEl.addEventListener('blur', () => setTimeout(closeDropdown, 150));
+
+        inputEl.addEventListener('keydown', (e) => {
+            if (!dropdown.classList.contains('open') || currentItems.length === 0) return;
+            const rows = dropdown.querySelectorAll('.autocomplete-item');
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                activeIndex = (activeIndex + 1) % currentItems.length;
+                rows.forEach((r, i) => r.classList.toggle('active', i === activeIndex));
+                if (rows[activeIndex]) rows[activeIndex].scrollIntoView({ block: 'nearest' });
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                activeIndex = (activeIndex - 1 + currentItems.length) % currentItems.length;
+                rows.forEach((r, i) => r.classList.toggle('active', i === activeIndex));
+                if (rows[activeIndex]) rows[activeIndex].scrollIntoView({ block: 'nearest' });
+            } else if (e.key === 'Enter' && activeIndex >= 0) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                applySuggestion(currentItems[activeIndex]);
+            } else if (e.key === 'Escape') {
+                closeDropdown();
+            }
+        });
+    }
+
+    function setupAllAutocompletes() {
+        attachAutocompleteToInput('newTaskText', 'task', (icon) => {
+            selectedEmoji = icon;
+            if (!EMOJIS.includes(icon)) EMOJIS.unshift(icon);
+            const picker = document.getElementById('emojiPicker');
+            if (picker) {
+                Array.from(picker.querySelectorAll('.emoji-option')).forEach(el => {
+                    el.classList.toggle('selected', el.textContent === icon);
+                });
+            }
+        });
+        attachAutocompleteToInput('editTaskTitle', 'task', (icon) => {
+            const el = document.getElementById('editTaskIcon');
+            if (el) el.value = icon;
+        });
+        attachAutocompleteToInput('presetNewTaskTitle', 'task', (icon) => {
+            const el = document.getElementById('presetNewTaskIcon');
+            if (el) el.value = icon;
+        });
+        attachAutocompleteToInput('newRewardText', 'reward', (icon) => {
+            selectedRewardEmoji = icon;
+            if (!REWARD_EMOJIS.includes(icon)) REWARD_EMOJIS.unshift(icon);
+            const picker = document.getElementById('rewardEmojiPicker');
+            if (picker) {
+                Array.from(picker.querySelectorAll('.emoji-option')).forEach(el => {
+                    el.classList.toggle('selected', el.textContent === icon);
+                });
+            }
+        });
+        attachAutocompleteToInput('editRewardTitle', 'reward', (icon) => {
+            const el = document.getElementById('editRewardIcon');
+            if (el) el.value = icon;
+        });
+        attachAutocompleteToInput('rewardPresetNewTitle', 'reward', (icon) => {
+            const el = document.getElementById('rewardPresetNewIcon');
+            if (el) el.value = icon;
+        });
+        (appData.kids || []).forEach(kid => {
+            attachAutocompleteToInput(`kidInput_${kid.id}`, 'task', (icon) => {
+                kidSelectedEmoji[kid.id] = icon;
+                const el = document.getElementById(`kidEmoji_${kid.id}`);
+                if (el) el.value = icon;
+            });
+        });
     }
 
     // START APLIKACJI
@@ -1974,6 +3169,7 @@
     } else {
         isInitialCloudSyncDone = true;
     }
+    // KONIEC PLIKU - KOD KOMPLETNY
 </script>
 </body>
 </html>
